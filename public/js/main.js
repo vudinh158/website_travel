@@ -3,7 +3,6 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  initThemeToggle();
   initSearchAutocomplete();
   initWishlistButtons();
   initNewsletterForm();
@@ -12,26 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initNumberCounters();
   initHeroParallax();
 });
-
-/* 1. Theme Toggle (Dark / Light) */
-function initThemeToggle() {
-  const toggleBtn = document.getElementById('theme-toggle-btn');
-  const currentTheme = localStorage.getItem('wanderlust_theme') || 'light';
-
-  document.documentElement.setAttribute('data-theme', currentTheme);
-
-  if (toggleBtn) {
-    toggleBtn.innerHTML = currentTheme === 'dark' ? '<i class="bi bi-sun-fill text-warning fs-5"></i>' : '<i class="bi bi-moon-stars-fill fs-5"></i>';
-
-    toggleBtn.addEventListener('click', () => {
-      const activeTheme = document.documentElement.getAttribute('data-theme');
-      const newTheme = activeTheme === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('wanderlust_theme', newTheme);
-      toggleBtn.innerHTML = newTheme === 'dark' ? '<i class="bi bi-sun-fill text-warning fs-5"></i>' : '<i class="bi bi-moon-stars-fill fs-5"></i>';
-    });
-  }
-}
 
 /* 2. Scroll Reveal Animations via IntersectionObserver */
 function initScrollReveal() {

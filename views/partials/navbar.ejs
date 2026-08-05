@@ -39,13 +39,6 @@
           <a class="nav-link fw-semibold <%= currentPath === '/contact' ? 'active text-primary' : '' %>" href="/contact">Contact</a>
         </li>
 
-        <!-- Theme Switcher Button -->
-        <li class="nav-item">
-          <button id="theme-toggle-btn" class="btn btn-sm btn-outline-secondary rounded-circle ms-lg-2" title="Toggle Light/Dark Theme">
-            <i class="bi bi-moon-stars-fill"></i>
-          </button>
-        </li>
-
         <% if (isAuthenticated) { %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" data-bs-toggle="dropdown">
