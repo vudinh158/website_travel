@@ -1,0 +1,79 @@
+<div class="card border-0 shadow-sm p-4 rounded-4" style="max-width: 900px;">
+  <h4 class="fw-bold mb-4"><i class="bi bi-journal-plus text-primary me-2"></i> Create New Blog Article</h4>
+  
+  <% if (typeof error !== 'undefined' && error) { %>
+    <div class="alert alert-danger rounded-4 mb-4"><%= error %></div>
+  <% } %>
+
+  <form action="/admin/blogs/create" method="POST" enctype="multipart/form-data">
+    <div class="row g-3 mb-4">
+      <div class="col-md-8">
+        <label class="form-label small fw-bold">Article Title</label>
+        <input type="text" name="title" class="form-control form-control-lg" placeholder="e.g. 10 Essential Travel Tips for First-Time Explorers in Bali" required>
+      </div>
+      
+      <div class="col-md-4">
+        <label class="form-label small fw-bold">Category</label>
+        <select name="categoryId" class="form-select form-select-lg" required>
+          <% if (categories && categories.length > 0) { %>
+            <% categories.forEach(cat => { %>
+              <option value="<%= cat.id %>"><%= cat.name %></option>
+            <% }) %>
+          <% } else { %>
+            <option value="1">Travel Guides</option>
+          <% } %>
+        </select>
+      </div>
+
+      <div class="col-12">
+        <label class="form-label small fw-bold">SEO URL Slug (Optional)</label>
+        <input type="text" name="slug" class="form-control text-lowercase" placeholder="e.g. 10-essential-travel-tips-bali (Leave empty to auto-generate from Title)">
+        <small class="text-muted">Clean URL for SEO. E.g: <code>/blog/10-essential-travel-tips-bali</code></small>
+      </div>
+
+      <div class="col-12">
+        <label class="form-label small fw-bold">Featured Header Image</label>
+        <input type="file" name="featuredImage" class="form-control" accept="image/*">
+        <small class="text-muted">High resolution landscape image (recommended 1200x630px).</small>
+      </div>
+
+      <div class="col-12">
+        <label class="form-label small fw-bold">Short Excerpt / Summary</label>
+        <textarea name="excerpt" class="form-control" rows="2" placeholder="Brief 1-2 sentence summary to display on blog list cards..."></textarea>
+      </div>
+
+      <div class="col-12">
+        <label class="form-label small fw-bold">Article Main Content</label>
+        <textarea name="content" class="form-control" rows="12" placeholder="Write your full article content here. Formatting HTML tags like <h3>, <p>, <ul>, <strong>, <blockquote> are supported..." required></textarea>
+        <small class="text-muted">Format text with paragraphs, bullet points, and subheadings for maximum readability.</small>
+      </div>
+
+      <!-- SEO Meta Fields -->
+      <div class="col-12 border-top pt-4">
+        <h5 class="fw-bold text-primary mb-3"><i class="bi bi-search me-2"></i> SEO Meta Information</h5>
+      </div>
+
+      <div class="col-12">
+        <label class="form-label small fw-bold">SEO Title</label>
+        <input type="text" name="metaTitle" class="form-control" placeholder="Meta title for Google search results (defaults to Title)">
+      </div>
+
+      <div class="col-12">
+        <label class="form-label small fw-bold">SEO Meta Description</label>
+        <textarea name="metaDescription" class="form-control" rows="2" placeholder="Short description for Google search snippets (150-160 characters recommended)..."></textarea>
+      </div>
+
+      <div class="col-12 border-top pt-3">
+        <div class="form-check form-switch mt-2">
+          <input class="form-check-input" type="checkbox" name="isPublished" id="isPublished" checked>
+          <label class="form-check-label fw-bold" for="isPublished">Publish immediately to live website</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex gap-3">
+      <button type="submit" class="btn btn-primary rounded-pill px-5 fw-bold">Publish Blog Article</button>
+      <a href="/admin/blogs" class="btn btn-outline-secondary rounded-pill px-4">Cancel</a>
+    </div>
+  </form>
+</div>

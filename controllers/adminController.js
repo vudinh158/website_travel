@@ -1,4 +1,4 @@
-const { Tour, Destination, Category, Booking, User, Review, Blog, Coupon, Contact, NewsletterSubscriber, Payment, Setting, TourImage } = require('../models');
+const { Tour, Destination, Category, Booking, User, Review, Blog, BlogCategory, Coupon, Contact, NewsletterSubscriber, Payment, Setting, TourImage } = require('../models');
 const { formatCurrency, formatDate, truncateText } = require('../helpers/formatters');
 const { Op } = require('sequelize');
 
@@ -913,6 +913,159 @@ const postAdminQuickCreateDestination = async (req, res) => {
   }
 };
 
+/**
+ * Render Admin Blog Posts List
+ */
+const getAdminBlogs = async (req, res, next) => {
+  try {
+    const blogs = await Blog.findAll({
+      include: [
+        { model: BlogCategory, as: 'category' },
+        { model: User, as: 'author', attributes: ['id', 'name', 'avatar'] }
+      ],
+      order: [['createdAt', 'DESC']]
+    });
+
+    res.render('pages/admin/blogs/index', {
+      title: 'Manage Blog Posts | Admin Panel',
+      blogs,
+      formatDate,
+      truncateText,
+      success: req.query.success,
+      error: req.query.error
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+/**
+ * Render Admin Create Blog Post Form
+ */
+const getAdminCreateBlog = async (req, res, next) => {
+  try {
+    const categories = await BlogCategory.findAll({ order: [['name', 'ASC']] });
+    res.render('pages/admin/blogs/create', {
+      title: 'Create New Blog Post | Admin Panel',
+      categories
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+/**
+ * Process Admin Create Blog Post
+ */
+const postAdminCreateBlog = async (req, res, next) => {
+  try {
+    const { title, slug: customSlug, categoryId, excerpt, content, metaTitle, metaDescription, isPublished } = req.body;
+    
+    if (!title || !content || !categoryId) {
+      return res.redirect('/admin/blogs/create?error=' + encodeURIComponent('Title, category, and content are required.'));
+    }
+
+    const slug = customSlug ? slugify(customSlug) : slugify(title);
+    let featuredImage = 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1200&q=80';
+    if (req.file) {
+      featuredImage = '/uploads/' + req.file.filename;
+    }
+
+    const authorId = req.user ? req.user.id : 1;
+
+    await Blog.create({
+      title: title.trim(),
+      slug,
+      categoryId: parseInt(categoryId, 10),
+      authorId,
+      featuredImage,
+      excerpt: excerpt ? excerpt.trim() : title.trim(),
+      content,
+      metaTitle: metaTitle ? metaTitle.trim() : title.trim(),
+      metaDescription: metaDescription ? metaDescription.trim() : excerpt,
+      isPublished: isPublished === 'on' || isPublished === 'true' || isPublished === true
+    });
+
+    return res.redirect('/admin/blogs?success=' + encodeURIComponent('Blog post created successfully!'));
+  } catch (err) {
+    next(err);
+  }
+};
+
+/**
+ * Render Admin Edit Blog Post Form
+ */
+const getAdminEditBlog = async (req, res, next) => {
+  try {
+    const blog = await Blog.findByPk(req.params.id);
+    if (!blog) {
+      return res.redirect('/admin/blogs?error=' + encodeURIComponent('Blog post not found.'));
+    }
+
+    const categories = await BlogCategory.findAll({ order: [['name', 'ASC']] });
+    res.render('pages/admin/blogs/edit', {
+      title: `Edit Blog: ${blog.title} | Admin Panel`,
+      blog,
+      categories,
+      success: req.query.success,
+      error: req.query.error
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+/**
+ * Process Admin Edit Blog Post
+ */
+const postAdminEditBlog = async (req, res, next) => {
+  try {
+    const blog = await Blog.findByPk(req.params.id);
+    if (!blog) {
+      return res.redirect('/admin/blogs?error=' + encodeURIComponent('Blog post not found.'));
+    }
+
+    const { title, slug: customSlug, categoryId, excerpt, content, metaTitle, metaDescription, isPublished } = req.body;
+    
+    if (!title || !content || !categoryId) {
+      return res.redirect(`/admin/blogs/${blog.id}/edit?error=` + encodeURIComponent('Title, category, and content are required.'));
+    }
+
+    blog.title = title.trim();
+    if (customSlug) blog.slug = slugify(customSlug);
+    blog.categoryId = parseInt(categoryId, 10);
+    blog.excerpt = excerpt ? excerpt.trim() : blog.excerpt;
+    blog.content = content;
+    blog.metaTitle = metaTitle ? metaTitle.trim() : blog.metaTitle;
+    blog.metaDescription = metaDescription ? metaDescription.trim() : blog.metaDescription;
+    blog.isPublished = isPublished === 'on' || isPublished === 'true' || isPublished === true;
+
+    if (req.file) {
+      blog.featuredImage = '/uploads/' + req.file.filename;
+    }
+
+    await blog.save();
+    return res.redirect('/admin/blogs?success=' + encodeURIComponent('Blog post updated successfully!'));
+  } catch (err) {
+    next(err);
+  }
+};
+
+/**
+ * Process Admin Delete Blog Post
+ */
+const postAdminDeleteBlog = async (req, res, next) => {
+  try {
+    const blog = await Blog.findByPk(req.params.id);
+    if (blog) {
+      await blog.destroy();
+    }
+    return res.redirect('/admin/blogs?success=' + encodeURIComponent('Blog post deleted successfully.'));
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   getAdminDashboard,
   getAdminTours,
@@ -944,5 +1097,11 @@ module.exports = {
   postAdminCreateCoupon,
   getAdminContacts,
   getAdminNewsletters,
-  getAdminSettings
+  getAdminSettings,
+  getAdminBlogs,
+  getAdminCreateBlog,
+  postAdminCreateBlog,
+  getAdminEditBlog,
+  postAdminEditBlog,
+  postAdminDeleteBlog
 };

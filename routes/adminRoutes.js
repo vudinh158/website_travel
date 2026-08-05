@@ -62,4 +62,12 @@ router.get('/newsletters', adminController.getAdminNewsletters);
 // Settings
 router.get('/settings', adminController.getAdminSettings);
 
+// Blog Posts Management
+router.get('/blogs', adminController.getAdminBlogs);
+router.get('/blogs/create', adminController.getAdminCreateBlog);
+router.post('/blogs/create', upload.single('featuredImage'), adminController.postAdminCreateBlog);
+router.get('/blogs/:id/edit', adminController.getAdminEditBlog);
+router.post('/blogs/:id/edit', upload.single('featuredImage'), adminController.postAdminEditBlog);
+router.post('/blogs/:id/delete', adminController.postAdminDeleteBlog);
+
 module.exports = router;
