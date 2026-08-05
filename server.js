@@ -88,8 +88,8 @@ async function startServer() {
       await seedDatabase();
     }
 
-    app.listen(PORT, () => {
-      console.log(`🚀 WanderLust Tour Booking Website running at: http://localhost:${PORT}`);
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`🚀 WanderLust Tour Booking Website running on port ${PORT}`);
     });
   } catch (error) {
     console.error('❌ Unable to connect to database:', error);
