@@ -1,0 +1,16 @@
+<div class="bg-primary text-white py-5 mb-5">
+  <div class="container text-center">
+    <h1 class="display-4 fw-extrabold mb-2">Travel Blog & Inspiration</h1>
+    <p class="fs-5 opacity-90 mb-0">Guides, itineraries, and expert packing advice from seasoned travelers.</p>
+  </div>
+</div>
+
+<div class="container mb-5">
+  <div class="row g-4">
+    <% blogs.forEach(blog => { %>
+      <div class="col-md-4">
+        <%- include('../../partials/blog_card', { blog: blog }) %>
+      </div>
+    <% }) %>
+  </div>
+</div>

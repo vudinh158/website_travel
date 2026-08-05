@@ -1,0 +1,23 @@
+<h4 class="fw-bold mb-4">Website & Platform Settings</h4>
+
+<div class="card border-0 shadow-sm p-4 rounded-4" style="max-width: 700px;">
+  <form action="/admin/settings" method="POST">
+    <div class="mb-3">
+      <label class="form-label small fw-bold">Platform Site Name</label>
+      <input type="text" name="site_name" class="form-control" value="WanderLust Tours">
+    </div>
+    <div class="mb-3">
+      <label class="form-label small fw-bold">Support Email</label>
+      <input type="email" name="site_email" class="form-control" value="support@wanderlust.com">
+    </div>
+    <div class="mb-3">
+      <label class="form-label small fw-bold">Hotline Phone</label>
+      <input type="text" name="site_phone" class="form-control" value="+1 (800) 555-WANDER">
+    </div>
+    <div class="mb-3">
+      <label class="form-label small fw-bold">Default Platform Currency</label>
+      <input type="text" name="currency" class="form-control" value="USD">
+    </div>
+    <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold">Save System Settings</button>
+  </form>
+</div>

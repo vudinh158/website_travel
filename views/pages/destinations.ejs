@@ -1,0 +1,16 @@
+<div class="bg-primary text-white py-5 mb-5">
+  <div class="container text-center">
+    <h1 class="display-4 fw-extrabold mb-2">Explore World Destinations</h1>
+    <p class="fs-5 opacity-90 mb-0">From tropical islands to snow-capped mountain ranges.</p>
+  </div>
+</div>
+
+<div class="container mb-5">
+  <div class="row g-4">
+    <% destinations.forEach(dest => { %>
+      <div class="col-md-4 col-sm-6">
+        <%- include('../../partials/destination_card', { destination: dest }) %>
+      </div>
+    <% }) %>
+  </div>
+</div>

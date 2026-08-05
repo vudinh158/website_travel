@@ -1,0 +1,80 @@
+<div class="row g-4 mb-4">
+  <div class="col-md-3">
+    <div class="card border-0 shadow-sm p-4 rounded-4 bg-primary text-white">
+      <h6 class="fw-bold mb-1 opacity-75">Total Revenue</h6>
+      <h2 class="fw-extrabold mb-0">$<%= totalRevenue.toFixed(2) %></h2>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card border-0 shadow-sm p-4 rounded-4 bg-success text-white">
+      <h6 class="fw-bold mb-1 opacity-75">Total Bookings</h6>
+      <h2 class="fw-extrabold mb-0"><%= totalBookings %></h2>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card border-0 shadow-sm p-4 rounded-4 bg-dark text-white">
+      <h6 class="fw-bold mb-1 opacity-75">Active Tours</h6>
+      <h2 class="fw-extrabold mb-0"><%= totalTours %></h2>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card border-0 shadow-sm p-4 rounded-4 bg-info text-white">
+      <h6 class="fw-bold mb-1 opacity-75">Registered Customers</h6>
+      <h2 class="fw-extrabold mb-0"><%= totalCustomers %></h2>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-8">
+    <div class="card border-0 shadow-sm p-4 rounded-4">
+      <h5 class="fw-bold mb-3">Recent Booking Orders</h5>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead>
+            <tr>
+              <th>Booking Code</th>
+              <th>Customer</th>
+              <th>Tour</th>
+              <th>Total Paid</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% recentOrders.forEach(o => { %>
+              <tr>
+                <td class="fw-bold text-primary"><%= o.bookingCode %></td>
+                <td><%= o.user ? o.user.name : o.contactName %></td>
+                <td><%= o.tour ? o.tour.name : 'Tour Package' %></td>
+                <td class="fw-bold">$<%= o.finalAmount %></td>
+                <td>
+                  <span class="badge bg-<%= o.bookingStatus === 'confirmed' ? 'success' : o.bookingStatus === 'cancelled' ? 'danger' : 'warning' %>">
+                    <%= o.bookingStatus %>
+                  </span>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card border-0 shadow-sm p-4 rounded-4 mb-4">
+      <h5 class="fw-bold mb-3">Most Popular Tours</h5>
+      <ul class="list-unstyled mb-0">
+        <% popularTours.forEach(t => { %>
+          <li class="d-flex align-items-center gap-3 py-2 border-bottom">
+            <img src="<%= t.featuredImage %>" class="rounded" width="45" height="45" style="object-fit:cover;">
+            <div class="flex-grow-1">
+              <div class="fw-bold small text-truncate" style="max-width: 180px;"><%= t.name %></div>
+              <div class="small text-muted"><i class="bi bi-star-fill text-warning"></i> <%= t.rating %> (<%= t.totalReviews %> reviews)</div>
+            </div>
+            <span class="fw-bold text-primary small">$<%= t.discountPrice || t.price %></span>
+          </li>
+        <% }) %>
+      </ul>
+    </div>
+  </div>
+</div>

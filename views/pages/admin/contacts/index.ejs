@@ -1,0 +1,28 @@
+<h4 class="fw-bold mb-4">Contact Form Submissions</h4>
+
+<div class="card border-0 shadow-sm p-4 rounded-4">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Subject</th>
+          <th>Message</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% contacts.forEach(m => { %>
+          <tr>
+            <td class="fw-bold"><%= m.name %></td>
+            <td><%= m.email %></td>
+            <td><%= m.subject || 'Inquiry' %></td>
+            <td>"<%= m.message %>"</td>
+            <td><%= formatDate(m.createdAt) %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>

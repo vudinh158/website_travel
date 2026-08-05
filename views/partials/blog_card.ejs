@@ -1,0 +1,20 @@
+<div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+  <img src="<%= blog.featuredImage %>" class="card-img-top" alt="<%= blog.title %>" style="height: 200px; object-fit: cover;" loading="lazy">
+  <div class="card-body p-4 d-flex flex-column">
+    <div class="small text-muted mb-2">
+      <i class="bi bi-calendar-event me-1"></i> <%= formatDate(blog.createdAt) %>
+    </div>
+    <h5 class="fw-bold mb-2">
+      <a href="/blog/<%= blog.slug %>" class="text-decoration-none text-dark hover-primary">
+        <%= blog.title %>
+      </a>
+    </h5>
+    <p class="text-muted small flex-grow-1"><%= truncateText(blog.excerpt, 90) %></p>
+    <div class="pt-3 border-top mt-auto d-flex justify-content-between align-items-center">
+      <span class="small fw-semibold text-primary"><%= blog.author ? blog.author.name : 'Travel Expert' %></span>
+      <a href="/blog/<%= blog.slug %>" class="btn btn-sm btn-link text-primary text-decoration-none fw-bold p-0">
+        Read Article <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</div>

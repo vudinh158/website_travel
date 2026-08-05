@@ -1,0 +1,52 @@
+<h4 class="fw-bold mb-4">Bookings Management</h4>
+
+<% if (success) { %><div class="alert alert-success rounded-4 mb-4"><%= success %></div><% } %>
+
+<div class="card border-0 shadow-sm p-4 rounded-4">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th>Booking Code</th>
+          <th>Customer</th>
+          <th>Tour</th>
+          <th>Departure Date</th>
+          <th>Guests</th>
+          <th>Total Paid</th>
+          <th>Status</th>
+          <th>Update Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% bookings.forEach(b => { %>
+          <tr>
+            <td class="fw-bold text-primary"><%= b.bookingCode %></td>
+            <td>
+              <div class="fw-bold"><%= b.contactName %></div>
+              <small class="text-muted"><%= b.contactEmail %></small>
+            </td>
+            <td><%= b.tour ? b.tour.name : 'Tour Package' %></td>
+            <td><%= formatDate(b.departureDate) %></td>
+            <td><%= b.guestCount %></td>
+            <td class="fw-bold">$<%= b.finalAmount %></td>
+            <td>
+              <span class="badge bg-<%= b.bookingStatus === 'confirmed' ? 'success' : b.bookingStatus === 'cancelled' ? 'danger' : 'warning' %>">
+                <%= b.bookingStatus %>
+              </span>
+            </td>
+            <td>
+              <form action="/admin/bookings/<%= b.id %>/status" method="POST" class="d-flex gap-1">
+                <select name="bookingStatus" class="form-select form-select-sm" onchange="this.form.submit()">
+                  <option value="confirmed" <%= b.bookingStatus === 'confirmed' ? 'selected' : '' %>>Confirmed</option>
+                  <option value="pending" <%= b.bookingStatus === 'pending' ? 'selected' : '' %>>Pending</option>
+                  <option value="cancelled" <%= b.bookingStatus === 'cancelled' ? 'selected' : '' %>>Cancelled</option>
+                  <option value="completed" <%= b.bookingStatus === 'completed' ? 'selected' : '' %>>Completed</option>
+                </select>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>

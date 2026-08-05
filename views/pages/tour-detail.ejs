@@ -1,0 +1,252 @@
+<!-- Tour Header Banner & Breadcrumbs -->
+<div class="container py-4">
+  <nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item"><a href="/tours">Tours</a></li>
+      <li class="breadcrumb-item active"><%= tour.name %></li>
+    </ol>
+  </nav>
+
+  <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-3">
+    <div>
+      <span class="badge bg-primary text-white mb-2"><%= tour.category ? tour.category.name : 'Tour' %></span>
+      <h1 class="display-5 fw-extrabold mb-2"><%= tour.name %></h1>
+      <div class="d-flex flex-wrap align-items-center gap-3 text-muted small">
+        <span><i class="bi bi-geo-alt-fill text-danger me-1"></i> <%= tour.destination ? tour.destination.name : 'Worldwide' %></span>
+        <span><i class="bi bi-clock-fill text-primary me-1"></i> <%= tour.duration %></span>
+        <span><i class="bi bi-star-fill text-warning me-1"></i> <strong><%= tour.rating.toFixed(1) %></strong> (<%= tour.totalReviews %> reviews)</span>
+      </div>
+    </div>
+    <div class="d-flex gap-2">
+      <button class="btn btn-outline-secondary btn-toggle-wishlist rounded-pill" data-tour-id="<%= tour.id %>">
+        <i class="bi bi-heart me-1"></i> Save to Wishlist
+      </button>
+    </div>
+  </div>
+
+  <!-- Gallery Grid -->
+  <div class="row g-2 rounded-4 overflow-hidden mb-5">
+    <div class="col-md-8">
+      <img src="<%= tour.featuredImage %>" alt="<%= tour.name %>" class="w-100 h-100" style="min-height: 380px; object-fit: cover;">
+    </div>
+    <div class="col-md-4 d-flex flex-column gap-2">
+      <% if (tour.images && tour.images.length > 0) { %>
+        <% tour.images.slice(0, 2).forEach(img => { %>
+          <img src="<%= img.imageUrl %>" class="w-100 h-100" style="height: 185px; object-fit: cover;">
+        <% }) %>
+      <% } else { %>
+        <img src="<%= tour.featuredImage %>" class="w-100 h-100" style="height: 185px; object-fit: cover;">
+      <% } %>
+    </div>
+  </div>
+
+  <div class="row g-5">
+    <!-- Left Details Column -->
+    <div class="col-lg-8">
+      <!-- Tour Highlights -->
+      <% if (tour.highlights) { %>
+        <div class="card border-0 shadow-sm p-4 rounded-4 mb-4 bg-light">
+          <h4 class="fw-bold mb-3"><i class="bi bi-award-fill text-warning me-2"></i> Tour Highlights</h4>
+          <ul class="row g-2 list-unstyled mb-0">
+            <% (typeof tour.highlights === 'string' ? JSON.parse(tour.highlights) : tour.highlights).forEach(h => { %>
+              <li class="col-md-6 d-flex align-items-start gap-2">
+                <i class="bi bi-check-circle-fill text-success fs-5"></i>
+                <span><%= h %></span>
+              </li>
+            <% }) %>
+          </ul>
+        </div>
+      <% } %>
+
+      <!-- Overview Description -->
+      <div class="mb-5">
+        <h4 class="fw-bold mb-3">Overview</h4>
+        <p class="fs-6 leading-relaxed text-secondary"><%= tour.fullDescription || tour.shortDescription %></p>
+      </div>
+
+      <!-- Included & Excluded Services -->
+      <div class="row g-4 mb-5">
+        <div class="col-md-6">
+          <div class="card h-100 border-0 shadow-sm p-4 rounded-4 border-top border-4 border-success">
+            <h5 class="fw-bold text-success mb-3"><i class="bi bi-check-lg me-1"></i> What's Included</h5>
+            <ul class="list-unstyled d-flex flex-column gap-2 mb-0 small">
+              <% if (tour.includedServices) { %>
+                <% (typeof tour.includedServices === 'string' ? JSON.parse(tour.includedServices) : tour.includedServices).forEach(inc => { %>
+                  <li class="d-flex align-items-center gap-2"><i class="bi bi-check2 text-success fw-bold"></i> <%= inc %></li>
+                <% }) %>
+              <% } %>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card h-100 border-0 shadow-sm p-4 rounded-4 border-top border-4 border-danger">
+            <h5 class="fw-bold text-danger mb-3"><i class="bi bi-x-lg me-1"></i> What's Excluded</h5>
+            <ul class="list-unstyled d-flex flex-column gap-2 mb-0 small text-muted">
+              <% if (tour.excludedServices) { %>
+                <% (typeof tour.excludedServices === 'string' ? JSON.parse(tour.excludedServices) : tour.excludedServices).forEach(exc => { %>
+                  <li class="d-flex align-items-center gap-2"><i class="bi bi-x text-danger fw-bold fs-5"></i> <%= exc %></li>
+                <% }) %>
+              <% } %>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Day-by-Day Itinerary Accordion -->
+      <div class="mb-5">
+        <h4 class="fw-bold mb-3"><i class="bi bi-map-fill text-primary me-2"></i> Day-by-Day Itinerary</h4>
+        <div class="accordion accordion-wanderlust" id="itineraryAccordion">
+          <% if (tour.itinerary) { %>
+            <% (typeof tour.itinerary === 'string' ? JSON.parse(tour.itinerary) : tour.itinerary).forEach((item, index) => { %>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="heading<%= index %>">
+                  <button class="accordion-button <%= index !== 0 ? 'collapsed' : '' %>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= index %>">
+                    <span class="badge bg-primary me-3">Day <%= item.day %></span> <%= item.title %>
+                  </button>
+                </h2>
+                <div id="collapse<%= index %>" class="accordion-collapse collapse <%= index === 0 ? 'show' : '' %>" data-bs-parent="#itineraryAccordion">
+                  <div class="accordion-body text-secondary">
+                    <%= item.description %>
+                  </div>
+                </div>
+              </div>
+            <% }) %>
+          <% } %>
+        </div>
+      </div>
+
+      <!-- Meeting Point & Map -->
+      <% if (tour.googleMapsEmbed) { %>
+        <div class="mb-5">
+          <h4 class="fw-bold mb-3"><i class="bi bi-geo-alt-fill text-danger me-2"></i> Meeting Point Location</h4>
+          <p class="text-muted small mb-3"><strong>Meeting Point:</strong> <%= tour.meetingPoint || tour.departureLocation %></p>
+          <div class="rounded-4 overflow-hidden shadow-sm" style="height: 320px;">
+            <iframe src="<%= tour.googleMapsEmbed %>" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+          </div>
+        </div>
+      <% } %>
+
+      <!-- Customer Reviews -->
+      <div class="mb-5">
+        <h4 class="fw-bold mb-3"><i class="bi bi-star-fill text-warning me-2"></i> Traveler Reviews</h4>
+        <% if (tour.reviews && tour.reviews.length > 0) { %>
+          <div class="d-flex flex-column gap-3">
+            <% tour.reviews.forEach(rev => { %>
+              <div class="card border-0 shadow-sm p-3 rounded-4">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <div class="d-flex align-items-center gap-2">
+                    <img src="<%= rev.user ? rev.user.avatar : '/images/default-avatar.png' %>" class="rounded-circle" width="36" height="36" style="object-fit:cover;">
+                    <span class="fw-bold"><%= rev.user ? rev.user.name : 'Verified Guest' %></span>
+                  </div>
+                  <div class="text-warning small">
+                    <% for(let i=0; i<rev.rating; i++) { %> <i class="bi bi-star-fill"></i> <% } %>
+                  </div>
+                </div>
+                <h6 class="fw-bold mb-1"><%= rev.title %></h6>
+                <p class="text-muted small mb-0"><%= rev.comment %></p>
+              </div>
+            <% }) %>
+          </div>
+        <% } else { %>
+          <p class="text-muted">No reviews yet. Be the first traveler to leave a review after your trip!</p>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- Right Sticky Booking Card Widget -->
+    <div class="col-lg-4">
+      <div class="sticky-booking-widget">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div>
+            <span class="text-muted small d-block">Price per guest</span>
+            <% if (tour.discountPrice) { %>
+              <span class="text-decoration-line-through text-muted small me-1">$<%= tour.price %></span>
+              <span class="fs-3 fw-extrabold text-primary" id="unit-price" data-price="<%= tour.discountPrice %>">$<%= tour.discountPrice %></span>
+            <% } else { %>
+              <span class="fs-3 fw-extrabold text-primary" id="unit-price" data-price="<%= tour.price %>">$<%= tour.price %></span>
+            <% } %>
+          </div>
+          <span class="badge bg-success px-3 py-2">Available</span>
+        </div>
+
+        <hr class="my-3">
+
+        <form action="/checkout" method="GET" id="booking-form">
+          <input type="hidden" name="tourId" value="<%= tour.id %>">
+
+          <!-- Departure Date Picker -->
+          <div class="mb-3">
+            <label class="form-label small fw-bold text-muted">Select Departure Date</label>
+            <select name="departureDate" class="form-select form-select-lg" required>
+              <% if (tour.schedules && tour.schedules.length > 0) { %>
+                <% tour.schedules.forEach(sch => { %>
+                  <option value="<%= sch.departureDate %>"><%= formatDate(sch.departureDate) %> (<%= sch.availableSlots %> slots left)</option>
+                <% }) %>
+              <% } else { %>
+                <option value="2026-09-01">Sep 01, 2026 (Guaranteed)</option>
+                <option value="2026-09-15">Sep 15, 2026 (Guaranteed)</option>
+                <option value="2026-10-01">Oct 01, 2026 (Guaranteed)</option>
+              <% } %>
+            </select>
+          </div>
+
+          <!-- Guests Picker -->
+          <div class="mb-4">
+            <label class="form-label small fw-bold text-muted">Number of Guests</label>
+            <div class="input-group input-group-lg">
+              <button class="btn btn-outline-secondary" type="button" id="btn-minus-guest">-</button>
+              <input type="number" name="guests" id="guest-count-input" class="form-control text-center fw-bold" value="1" min="1" max="10" readonly>
+              <button class="btn btn-outline-secondary" type="button" id="btn-plus-guest">+</button>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mb-4 p-3 bg-light rounded-3">
+            <span class="fw-bold">Estimated Total</span>
+            <span class="fs-4 fw-extrabold text-primary" id="calculated-total">$<%= tour.discountPrice || tour.price %></span>
+          </div>
+
+          <button type="submit" class="btn btn-accent btn-lg w-100 py-3 rounded-pill fw-bold shadow-lg">
+            Book This Tour Now <i class="bi bi-arrow-right ms-1"></i>
+          </button>
+        </form>
+
+        <div class="mt-4 pt-3 border-top text-center text-muted small">
+          <p class="mb-1"><i class="bi bi-shield-check text-success me-1"></i> Free Cancellation up to 14 Days</p>
+          <p class="mb-0"><i class="bi bi-lock-fill text-primary me-1"></i> Instant Instant Confirmation</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const guestInput = document.getElementById('guest-count-input');
+    const unitPrice = parseFloat(document.getElementById('unit-price').getAttribute('data-price'));
+    const totalEl = document.getElementById('calculated-total');
+
+    function updateTotal() {
+      const count = parseInt(guestInput.value || 1, 10);
+      const total = unitPrice * count;
+      totalEl.innerText = '$' + total.toFixed(2);
+    }
+
+    document.getElementById('btn-minus-guest').addEventListener('click', () => {
+      let val = parseInt(guestInput.value || 1, 10);
+      if (val > 1) {
+        guestInput.value = val - 1;
+        updateTotal();
+      }
+    });
+
+    document.getElementById('btn-plus-guest').addEventListener('click', () => {
+      let val = parseInt(guestInput.value || 1, 10);
+      if (val < 10) {
+        guestInput.value = val + 1;
+        updateTotal();
+      }
+    });
+  });
+</script>

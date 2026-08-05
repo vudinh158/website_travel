@@ -1,0 +1,22 @@
+<h4 class="fw-bold mb-4">Newsletter Subscribers</h4>
+
+<div class="card border-0 shadow-sm p-4 rounded-4" style="max-width: 600px;">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th>Email Address</th>
+          <th>Subscribed Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% subscribers.forEach(s => { %>
+          <tr>
+            <td class="fw-bold text-primary"><%= s.email %></td>
+            <td><%= formatDate(s.createdAt) %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>

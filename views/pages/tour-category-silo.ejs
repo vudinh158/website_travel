@@ -1,0 +1,40 @@
+<div class="bg-primary text-white py-5 mb-5 promo-shimmer">
+  <div class="container text-center reveal-up">
+    <span class="badge bg-warning text-dark px-3 py-2 rounded-pill mb-2"><i class="<%= category.icon %> me-1"></i> Travel Collection</span>
+    <h1 class="display-4 fw-extrabold mb-2"><%= category.name %> Tour Packages</h1>
+    <p class="fs-5 opacity-90 mb-0 max-w-2xl mx-auto"><%= category.description || 'Explore curated tour packages in this travel category.' %></p>
+  </div>
+</div>
+
+<div class="container mb-5">
+  <!-- Breadcrumb Navigation -->
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item"><a href="/tours">Tours</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><%= category.name %></li>
+    </ol>
+  </nav>
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-bold mb-0">Active Tours in <%= category.name %></h3>
+    <span class="badge bg-light text-dark border fs-6 px-3 py-2"><%= tours.length %> Tour Package(s)</span>
+  </div>
+
+  <% if (tours.length === 0) { %>
+    <div class="card border-0 shadow-sm p-5 text-center rounded-4">
+      <i class="bi bi-compass fs-1 text-muted mb-2"></i>
+      <h4>No Tours in This Category Yet</h4>
+      <p class="text-muted">Check back soon or explore other travel categories.</p>
+      <a href="/tours" class="btn btn-wanderlust w-auto mx-auto rounded-pill px-4">Back to All Tours</a>
+    </div>
+  <% } else { %>
+    <div class="row g-4">
+      <% tours.forEach((tour, index) => { %>
+        <div class="col-lg-4 col-md-6 reveal-up delay-<%= (index%3)+1 %>">
+          <%- include('../../partials/tour_card', { tour: tour }) %>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</div>

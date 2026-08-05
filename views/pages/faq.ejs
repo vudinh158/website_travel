@@ -1,0 +1,25 @@
+<div class="bg-primary text-white py-5 mb-5">
+  <div class="container text-center">
+    <h1 class="display-4 fw-extrabold mb-2">Frequently Asked Questions</h1>
+    <p class="fs-5 opacity-90 mb-0">Got questions? We've got answers.</p>
+  </div>
+</div>
+
+<div class="container mb-5" style="max-width: 800px;">
+  <div class="accordion accordion-wanderlust" id="faqAccordion">
+    <% faqs.forEach((faq, index) => { %>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="faqHeading<%= index %>">
+          <button class="accordion-button <%= index !== 0 ? 'collapsed' : '' %>" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse<%= index %>">
+            <%= faq.question %>
+          </button>
+        </h2>
+        <div id="faqCollapse<%= index %>" class="accordion-collapse collapse <%= index === 0 ? 'show' : '' %>" data-bs-parent="#faqAccordion">
+          <div class="accordion-body text-secondary">
+            <%= faq.answer %>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</div>

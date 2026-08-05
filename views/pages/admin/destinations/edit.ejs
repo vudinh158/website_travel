@@ -1,0 +1,68 @@
+<div class="card border-0 shadow-sm p-4 rounded-4" style="max-width: 900px;">
+  <h4 class="fw-bold mb-4">Edit Destination: <%= destination.name %></h4>
+  <form action="/admin/destinations/<%= destination.id %>/edit" method="POST" enctype="multipart/form-data">
+    <div class="row g-3 mb-4">
+      <div class="col-md-6">
+        <label class="form-label small fw-bold">Destination Name</label>
+        <input type="text" name="name" class="form-control" value="<%= destination.name %>" required>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label small fw-bold">Country</label>
+        <input type="text" name="country" class="form-control" value="<%= destination.country || '' %>" required>
+      </div>
+
+      <div class="col-12">
+        <label class="form-label small fw-bold">SEO URL Slug</label>
+        <input type="text" name="slug" class="form-control text-lowercase" value="<%= destination.slug %>" required>
+        <small class="text-muted">Clean URL for SEO. E.g: <code>/destinations/<%= destination.slug %></code></small>
+      </div>
+
+      <div class="col-12">
+        <label class="form-label small fw-bold">Current Banner</label>
+        <div class="mb-2">
+          <img src="<%= destination.banner %>" class="rounded-3 border" width="160" height="90" style="object-fit:cover;">
+        </div>
+        <label class="form-label small fw-bold">Change Banner Image</label>
+        <input type="file" name="banner" class="form-control" accept="image/*">
+      </div>
+
+      <div class="col-12">
+        <label class="form-label small fw-bold">Short Description</label>
+        <textarea name="description" class="form-control" rows="3" required><%= destination.description %></textarea>
+      </div>
+
+      <% const attractionList = destination.attractions ? (typeof destination.attractions === 'string' ? JSON.parse(destination.attractions).join(', ') : destination.attractions.join(', ')) : ''; %>
+      <div class="col-12">
+        <label class="form-label small fw-bold">Key Attractions (comma-separated)</label>
+        <input type="text" name="attractions" class="form-control" value="<%= attractionList %>">
+      </div>
+
+      <div class="col-12">
+        <label class="form-label small fw-bold">Traveler's Guide</label>
+        <textarea name="travelGuide" class="form-control" rows="4"><%= destination.travelGuide || '' %></textarea>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label small fw-bold">Meta Title (SEO)</label>
+        <input type="text" name="metaTitle" class="form-control" value="<%= destination.metaTitle || '' %>">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label small fw-bold">Meta Description (SEO)</label>
+        <input type="text" name="metaDescription" class="form-control" value="<%= destination.metaDescription || '' %>">
+      </div>
+
+      <div class="col-12">
+        <div class="form-check form-switch mt-2">
+          <input class="form-check-input" type="checkbox" name="isPopular" id="isPopular" <%= destination.isPopular ? 'checked' : '' %>>
+          <label class="form-check-label fw-bold" for="isPopular">Mark as Popular Destination (Featured on Home Page)</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex gap-3">
+      <button type="submit" class="btn btn-primary rounded-pill px-5 fw-bold">Update Destination</button>
+      <a href="/admin/destinations" class="btn btn-outline-secondary rounded-pill px-4">Cancel</a>
+    </div>
+  </form>
+</div>

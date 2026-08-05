@@ -1,0 +1,104 @@
+<div class="card border-0 shadow-sm p-4 rounded-4" style="max-width: 650px;">
+  <h4 class="fw-bold mb-4">Edit Category: <%= category.name %></h4>
+  <form action="/admin/categories/<%= category.id %>/edit" method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+      <label class="form-label small fw-bold">Category Name</label>
+      <input type="text" name="name" class="form-control" value="<%= category.name %>" required>
+    </div>
+    
+    <div class="mb-3">
+      <label class="form-label small fw-bold">SEO URL Slug</label>
+      <input type="text" name="slug" class="form-control text-lowercase" value="<%= category.slug %>" required>
+      <small class="text-muted">Clean URL for SEO. E.g: <code>/tours/category/<%= category.slug %></code></small>
+    </div>
+
+    <!-- Visual Icon Picker -->
+    <div class="mb-3">
+      <label class="form-label small fw-bold">Select Category Icon</label>
+      <div class="input-group mb-2">
+        <span class="input-group-text bg-light"><i id="editIconPreview" class="<%= category.icon || 'bi bi-compass-fill' %> text-primary fs-5"></i></span>
+        <input type="text" name="icon" id="editIconInput" class="form-control" value="<%= category.icon || 'bi bi-compass-fill' %>">
+      </div>
+      <div class="small text-muted mb-2">Click an icon below to select quickly, or type any custom Bootstrap icon class above:</div>
+      
+      <div id="editIconGrid" class="d-flex flex-wrap gap-2 p-2 bg-light rounded-3 border">
+        <% 
+          const currentIcon = category.icon || 'bi bi-compass-fill';
+          const presetIcons = [
+            { icon: 'bi bi-compass-fill', title: 'Compass' },
+            { icon: 'bi bi-sun-fill', title: 'Beach / Sun' },
+            { icon: 'bi bi-water', title: 'Island / Water' },
+            { icon: 'bi bi-tsunami', title: 'Adventure / Waves' },
+            { icon: 'bi bi-tree-fill', title: 'Nature / Mountain' },
+            { icon: 'bi bi-bank', title: 'Cultural / Heritage' },
+            { icon: 'bi bi-ship-front-fill', title: 'Cruise / Yacht' },
+            { icon: 'bi bi-anchor', title: 'Anchor' },
+            { icon: 'bi bi-backpack-fill', title: 'Trekking / Hiking' },
+            { icon: 'bi bi-airplane-engines-fill', title: 'Flight / Travel' },
+            { icon: 'bi bi-building', title: 'City Tour' },
+            { icon: 'bi bi-star-fill', title: 'Luxury / Premium' },
+            { icon: 'bi bi-camera-reels-fill', title: 'Wildlife / Safari' },
+            { icon: 'bi bi-bicycle', title: 'Cycling' },
+            { icon: 'bi bi-cup-hot-fill', title: 'Culinary / Food' }
+          ];
+        %>
+        <% presetIcons.forEach(item => { %>
+          <button type="button" class="btn btn-sm <%= currentIcon === item.icon ? 'btn-primary text-white' : 'btn-outline-secondary' %> icon-btn" data-icon="<%= item.icon %>" title="<%= item.title %>">
+            <i class="<%= item.icon %> fs-5"></i>
+          </button>
+        <% }) %>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label small fw-bold">Description</label>
+      <textarea name="description" class="form-control" rows="3"><%= category.description || '' %></textarea>
+    </div>
+    
+    <div class="mb-4">
+      <% if (category.image) { %>
+        <div class="mb-2">
+          <img src="<%= category.image %>" class="rounded-3 border" width="100" height="70" style="object-fit:cover;">
+        </div>
+      <% } %>
+      <label class="form-label small fw-bold">Change Image (Optional)</label>
+      <input type="file" name="image" class="form-control" accept="image/*">
+    </div>
+
+    <div class="d-flex gap-3">
+      <button type="submit" class="btn btn-primary rounded-pill px-5 fw-bold">Update Category</button>
+      <a href="/admin/categories" class="btn btn-outline-secondary rounded-pill px-4">Cancel</a>
+    </div>
+  </form>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const inputEl = document.getElementById('editIconInput');
+    const previewEl = document.getElementById('editIconPreview');
+    const gridEl = document.getElementById('editIconGrid');
+
+    if (inputEl && previewEl && gridEl) {
+      inputEl.addEventListener('input', function() {
+        previewEl.className = (this.value || 'bi bi-compass-fill') + ' text-primary fs-5';
+      });
+
+      const btns = gridEl.querySelectorAll('.icon-btn');
+      btns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          btns.forEach(b => {
+            b.classList.remove('btn-primary', 'text-white');
+            b.classList.add('btn-outline-secondary');
+          });
+          this.classList.remove('btn-outline-secondary');
+          this.classList.add('btn-primary', 'text-white');
+
+          const val = this.getAttribute('data-icon');
+          inputEl.value = val;
+          previewEl.className = val + ' text-primary fs-5';
+        });
+      });
+    }
+  });
+</script>

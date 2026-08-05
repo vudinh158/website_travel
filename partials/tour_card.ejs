@@ -1,0 +1,44 @@
+<div class="tour-card">
+  <div class="tour-card-img-wrapper">
+    <img src="<%= tour.featuredImage %>" alt="<%= tour.name %>" class="tour-card-img" loading="lazy">
+    <% if (tour.isFeatured) { %>
+      <span class="tour-badge-featured">Featured</span>
+    <% } %>
+    <button class="wishlist-btn btn-toggle-wishlist" data-tour-id="<%= tour.id %>" title="Save to Wishlist">
+      <i class="bi bi-heart"></i>
+    </button>
+  </div>
+  <div class="p-3 d-flex flex-column flex-grow-1">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <span class="badge bg-light text-primary border"><i class="bi bi-clock me-1"></i> <%= tour.duration %></span>
+      <div class="small fw-bold text-warning">
+        <i class="bi bi-star-fill"></i> <%= tour.rating.toFixed(1) %> (<%= tour.totalReviews %>)
+      </div>
+    </div>
+
+    <h5 class="fw-bold mb-2">
+      <a href="/tours/<%= tour.slug %>" class="text-decoration-none text-dark hover-primary">
+        <%= tour.name %>
+      </a>
+    </h5>
+
+    <p class="text-muted small mb-3 flex-grow-1">
+      <i class="bi bi-geo-alt me-1 text-danger"></i> <%= tour.destination ? tour.destination.name : 'Worldwide' %>
+    </p>
+
+    <div class="pt-3 border-top d-flex justify-content-between align-items-center mt-auto">
+      <div>
+        <span class="small text-muted d-block">Starting from</span>
+        <% if (tour.discountPrice) { %>
+          <span class="text-decoration-line-through text-muted small me-1">$<%= tour.price %></span>
+          <span class="fw-extrabold fs-5 text-primary">$<%= tour.discountPrice %></span>
+        <% } else { %>
+          <span class="fw-extrabold fs-5 text-primary">$<%= tour.price %></span>
+        <% } %>
+      </div>
+      <a href="/tours/<%= tour.slug %>" class="btn btn-sm btn-wanderlust">
+        Details <i class="bi bi-arrow-right ms-1"></i>
+      </a>
+    </div>
+  </div>
+</div>

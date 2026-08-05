@@ -1,0 +1,29 @@
+<div class="container py-4" style="max-width: 900px;">
+  <span class="badge bg-primary px-3 py-2 rounded-pill mb-3"><%= blog.category ? blog.category.name : 'Travel' %></span>
+  <h1 class="display-4 fw-extrabold mb-3"><%= blog.title %></h1>
+  
+  <div class="d-flex align-items-center gap-3 mb-4 pb-3 border-bottom text-muted small">
+    <img src="<%= blog.author ? blog.author.avatar : '/images/default-avatar.png' %>" class="rounded-circle" width="40" height="40" style="object-fit:cover;">
+    <div>
+      <div class="fw-bold text-dark"><%= blog.author ? blog.author.name : 'Travel Expert' %></div>
+      <div>Published on <%= formatDate(blog.createdAt) %> • <%= blog.viewsCount %> views</div>
+    </div>
+  </div>
+
+  <img src="<%= blog.featuredImage %>" alt="<%= blog.title %>" class="w-100 rounded-4 shadow-sm mb-5" style="max-height: 450px; object-fit: cover;">
+
+  <div class="blog-content leading-relaxed fs-5 text-secondary mb-5">
+    <%- blog.content %>
+  </div>
+
+  <hr class="my-5">
+
+  <h3 class="fw-bold mb-4">Related Travel Articles</h3>
+  <div class="row g-4">
+    <% relatedBlogs.forEach(rel => { %>
+      <div class="col-md-4">
+        <%- include('../../partials/blog_card', { blog: rel }) %>
+      </div>
+    <% }) %>
+  </div>
+</div>

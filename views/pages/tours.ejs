@@ -1,0 +1,100 @@
+<!-- Directory Hero Header -->
+<div class="bg-primary text-white py-5 mb-5 shadow-sm promo-shimmer">
+  <div class="container text-center reveal-up">
+    <span class="badge bg-warning text-dark fw-bold px-3 py-2 rounded-pill mb-3 text-uppercase animate-float">
+      <i class="bi bi-compass-fill me-1"></i> Curated Travel Collections
+    </span>
+    <h1 class="display-4 fw-extrabold mb-2">Explore All Tours & Categories</h1>
+    <p class="fs-5 opacity-90 mb-4 max-w-2xl mx-auto">Discover handcrafted tour packages organized by travel experiences and top destinations worldwide.</p>
+    
+    <!-- Quick Category Navigation Bar -->
+    <div class="d-flex flex-wrap justify-content-center gap-2 mt-3">
+      <% categorySilos.forEach(cat => { %>
+        <a href="#cat-<%= cat.slug %>" class="btn btn-sm btn-light rounded-pill fw-bold px-3 py-2 shadow-sm">
+          <i class="<%= cat.icon %> text-primary me-1"></i> <%= cat.name %> (<%= cat.tours ? cat.tours.length : 0 %>)
+        </a>
+      <% }) %>
+    </div>
+  </div>
+</div>
+
+<div class="container mb-5">
+  <!-- SECTION 1: THEMATIC CATEGORIES -->
+  <div class="mb-5">
+    <div class="border-bottom pb-3 mb-4">
+      <span class="text-primary fw-bold text-uppercase small">Travel Experiences</span>
+      <h2 class="fw-extrabold mb-0"><i class="bi bi-layers-fill text-primary me-2"></i> Browse by Travel Category</h2>
+    </div>
+
+    <% categorySilos.forEach((cat, index) => { %>
+      <div id="cat-<%= cat.slug %>" class="card border-0 shadow-sm rounded-4 p-4 mb-5 reveal-up delay-<%= (index%3)+1 %>">
+        <!-- Category Header -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-3 border-bottom">
+          <div class="d-flex align-items-center gap-3">
+            <div class="p-3 bg-primary bg-opacity-10 text-primary rounded-4 fs-2">
+              <i class="<%= cat.icon %>"></i>
+            </div>
+            <div>
+              <span class="badge bg-primary text-white mb-1"><%= cat.tours ? cat.tours.length : 0 %> Active Tour Packages</span>
+              <h3 class="fw-extrabold mb-1"><%= cat.name %></h3>
+              <p class="text-muted small mb-0"><%= cat.description || 'Curated travel packages in this category.' %></p>
+            </div>
+          </div>
+          <a href="/tours/category/<%= cat.slug %>" class="btn btn-outline-primary rounded-pill fw-bold mt-2 mt-sm-0">
+            View All <%= cat.name %> Tours <i class="bi bi-arrow-right ms-1"></i>
+          </a>
+        </div>
+
+        <!-- Child Tour Grid -->
+        <% if (cat.tours && cat.tours.length > 0) { %>
+          <div class="row g-4">
+            <% cat.tours.forEach(tour => { %>
+              <div class="col-lg-4 col-md-6">
+                <%- include('../../partials/tour_card', { tour: tour }) %>
+              </div>
+            <% }) %>
+          </div>
+        <% } else { %>
+          <div class="p-4 bg-light rounded-3 text-center text-muted">
+            <p class="mb-0">No active tours currently listed in this category.</p>
+          </div>
+        <% } %>
+      </div>
+    <% }) %>
+  </div>
+
+  <!-- SECTION 2: GEOGRAPHIC DESTINATIONS -->
+  <div class="mb-5">
+    <div class="border-bottom pb-3 mb-4">
+      <span class="text-primary fw-bold text-uppercase small">Destinations & Regions</span>
+      <h2 class="fw-extrabold mb-0"><i class="bi bi-geo-alt-fill text-danger me-2"></i> Explore by Destination</h2>
+    </div>
+
+    <div class="row g-4">
+      <% destinationSilos.forEach((dest, index) => { %>
+        <div class="col-md-6 reveal-up delay-<%= (index%2)+1 %>">
+          <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+            <div class="position-relative" style="height: 180px;">
+              <img src="<%= dest.banner %>" class="w-100 h-100" style="object-fit:cover;">
+              <div class="position-absolute inset-0 bg-dark bg-opacity-50 d-flex align-items-end p-3 text-white">
+                <div>
+                  <span class="badge bg-warning text-dark mb-1"><%= dest.country %></span>
+                  <h4 class="fw-bold mb-0"><%= dest.name %> Travel Hub</h4>
+                </div>
+              </div>
+            </div>
+            <div class="card-body p-4 d-flex flex-column">
+              <p class="text-muted small flex-grow-1"><%= truncateText(dest.description, 100) %></p>
+              <div class="pt-3 border-top d-flex justify-content-between align-items-center mt-auto">
+                <span class="fw-bold text-primary small"><i class="bi bi-map me-1"></i> <%= dest.tours ? dest.tours.length : 0 %> Linked Tours</span>
+                <a href="/destinations/<%= dest.slug %>" class="btn btn-sm btn-wanderlust rounded-pill">
+                  Explore <%= dest.name %> <i class="bi bi-chevron-right ms-1"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</div>

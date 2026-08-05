@@ -1,0 +1,40 @@
+<h4 class="fw-bold mb-4">Customer Reviews Moderation</h4>
+
+<% if (success) { %><div class="alert alert-success rounded-4 mb-4"><%= success %></div><% } %>
+
+<div class="card border-0 shadow-sm p-4 rounded-4">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Tour</th>
+          <th>Rating</th>
+          <th>Review Comment</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% reviews.forEach(r => { %>
+          <tr>
+            <td class="fw-bold"><%= r.user ? r.user.name : 'Guest' %></td>
+            <td><%= r.tour ? r.tour.name : 'Tour' %></td>
+            <td><i class="bi bi-star-fill text-warning"></i> <%= r.rating %>/5</td>
+            <td>"<%= r.comment %>"</td>
+            <td><span class="badge bg-<%= r.status === 'approved' ? 'success' : 'warning' %>"><%= r.status %></span></td>
+            <td>
+              <% if (r.status !== 'approved') { %>
+                <form action="/admin/reviews/<%= r.id %>/approve" method="POST">
+                  <button type="submit" class="btn btn-sm btn-success rounded-pill px-3">Approve</button>
+                </form>
+              <% } else { %>
+                <span class="text-muted small">Approved</span>
+              <% } %>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>

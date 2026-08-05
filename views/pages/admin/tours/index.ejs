@@ -1,0 +1,60 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h4 class="fw-bold mb-0">Tour Packages Management</h4>
+  <a href="/admin/tours/create" class="btn btn-primary rounded-pill px-4 fw-bold"><i class="bi bi-plus-lg me-1"></i> Add New Tour</a>
+</div>
+
+<% if (success) { %><div class="alert alert-success rounded-4 mb-4"><%= success %></div><% } %>
+<% if (error) { %><div class="alert alert-danger rounded-4 mb-4"><%= error %></div><% } %>
+
+<div class="card border-0 shadow-sm p-4 rounded-4">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th>Tour Name</th>
+          <th>Destination</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Duration</th>
+          <th>Rating</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% tours.forEach(t => { %>
+          <tr>
+            <td>
+              <div class="d-flex align-items-center gap-3">
+                <img src="<%= t.featuredImage %>" class="rounded-3" width="50" height="50" style="object-fit:cover;">
+                <div>
+                  <div class="fw-bold"><%= t.name %></div>
+                  <small class="text-muted"><%= t.slug %></small>
+                </div>
+              </div>
+            </td>
+            <td><%= t.destination ? t.destination.name : 'Unassigned' %></td>
+            <td><span class="badge bg-light text-dark border"><%= t.category ? t.category.name : 'Category' %></span></td>
+            <td>
+              <% if (t.discountPrice) { %>
+                <span class="text-decoration-line-through text-muted small me-1">$<%= t.price %></span>
+                <span class="fw-bold text-success">$<%= t.discountPrice %></span>
+              <% } else { %>
+                <span class="fw-bold">$<%= t.price %></span>
+              <% } %>
+            </td>
+            <td><%= t.duration %></td>
+            <td><i class="bi bi-star-fill text-warning"></i> <%= t.rating.toFixed(1) %></td>
+            <td>
+              <div class="d-flex gap-2">
+                <a href="/admin/tours/<%= t.id %>/edit" class="btn btn-outline-primary btn-sm rounded-circle" title="Edit Tour"><i class="bi bi-pencil"></i></a>
+                <form action="/admin/tours/<%= t.id %>/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this tour?');">
+                  <button type="submit" class="btn btn-outline-danger btn-sm rounded-circle" title="Delete Tour"><i class="bi bi-trash"></i></button>
+                </form>
+              </div>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,411 @@
+<div class="card border-0 shadow-sm p-4 rounded-4" style="max-width: 950px;">
+  <h4 class="fw-bold mb-4">Create New Tour Package</h4>
+  <form action="/admin/tours/create" method="POST" enctype="multipart/form-data">
+    <div class="row g-3 mb-4">
+      <!-- Tour Basic Information -->
+      <div class="col-md-8">
+        <label class="form-label small fw-bold">Tour Name</label>
+        <input type="text" name="name" class="form-control" placeholder="e.g. Serengeti Luxury Safari Expedition" required>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label small fw-bold">Duration String</label>
+        <input type="text" name="duration" class="form-control" placeholder="e.g. 5 Days / 4 Nights" required>
+      </div>
+
+      <div class="col-12">
+        <label class="form-label small fw-bold">SEO URL Slug (Optional)</label>
+        <input type="text" name="slug" class="form-control text-lowercase" placeholder="e.g. serengeti-luxury-safari-expedition (Leave empty to auto-generate from name)">
+        <small class="text-muted">Custom URL structure for SEO. E.g: <code>/tours/serengeti-luxury-safari-expedition</code></small>
+      </div>
+
+      <div class="col-md-6">
+        <div class="d-flex justify-content-between align-items-center">
+          <label class="form-label small fw-bold mb-1">Destination</label>
+          <button type="button" class="btn btn-link btn-sm p-0 text-decoration-none fw-bold small" data-bs-toggle="modal" data-bs-target="#quickAddDestinationModal">
+            <i class="bi bi-plus-circle-fill"></i> Add New Destination
+          </button>
+        </div>
+        <select name="destinationId" id="destinationSelect" class="form-select" required>
+          <% destinations.forEach(d => { %>
+            <option value="<%= d.id %>"><%= d.name %></option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div class="col-md-6">
+        <div class="d-flex justify-content-between align-items-center">
+          <label class="form-label small fw-bold mb-1">Category</label>
+          <button type="button" class="btn btn-link btn-sm p-0 text-decoration-none fw-bold small" data-bs-toggle="modal" data-bs-target="#quickAddCategoryModal">
+            <i class="bi bi-plus-circle-fill"></i> Add New Category
+          </button>
+        </div>
+        <select name="categoryId" id="categorySelect" class="form-select" required>
+          <% categories.forEach(c => { %>
+            <option value="<%= c.id %>"><%= c.name %></option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label small fw-bold">Base Price ($)</label>
+        <input type="number" step="0.01" name="price" class="form-control" placeholder="1299.00" required>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label small fw-bold">Discount Price ($) (Optional)</label>
+        <input type="number" step="0.01" name="discountPrice" class="form-control" placeholder="999.00">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label small fw-bold">Departure Location</label>
+        <input type="text" name="departureLocation" class="form-control" placeholder="e.g. International Airport Gate 2">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label small fw-bold">Meeting Point</label>
+        <input type="text" name="meetingPoint" class="form-control" placeholder="e.g. Hotel Lobby / Port terminal">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label small fw-bold">Featured Main Image</label>
+        <input type="file" name="featuredImage" class="form-control" accept="image/*">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label small fw-bold">Tour Gallery Images (Multiple)</label>
+        <input type="file" name="galleryImages" class="form-control" accept="image/*" multiple>
+        <small class="text-muted">Select multiple photos for tour gallery slider.</small>
+      </div>
+
+      <div class="col-12">
+        <label class="form-label small fw-bold">Short Description Summary</label>
+        <textarea name="shortDescription" class="form-control" rows="2" placeholder="Brief summary of the tour expedition..." required></textarea>
+      </div>
+
+      <div class="col-12">
+        <label class="form-label small fw-bold">Full Overview Description</label>
+        <textarea name="fullDescription" class="form-control" rows="4" placeholder="Comprehensive tour overview and highlights..." required></textarea>
+      </div>
+
+      <!-- Tour Highlights, Includes & Excludes -->
+      <div class="col-12 border-top pt-4">
+        <h5 class="fw-bold text-primary mb-3"><i class="bi bi-stars me-2"></i> Tour Highlights & Inclusions</h5>
+      </div>
+
+      <div class="col-12">
+        <label class="form-label small fw-bold"><i class="bi bi-award-fill text-warning me-1"></i> Tour Highlights (One item per line)</label>
+        <textarea name="highlights" class="form-control" rows="3" placeholder="Explore Sacred Monkey Forest&#10;Visit Uluwatu Sunset Temple&#10;Private Speedboat Ride to Islands"></textarea>
+        <small class="text-muted">Enter key highlights, 1 highlight per line.</small>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label small fw-bold text-success"><i class="bi bi-check-circle-fill me-1"></i> What's Included (One item per line)</label>
+        <textarea name="includedServices" class="form-control border-success-subtle" rows="4" placeholder="5-Star Hotel Accommodation&#10;English Speaking Tour Guide&#10;Daily Buffet Breakfast&#10;Airport Pickup & Dropoff"></textarea>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label small fw-bold text-danger"><i class="bi bi-x-circle-fill me-1"></i> What's Excluded (One item per line)</label>
+        <textarea name="excludedServices" class="form-control border-danger-subtle" rows="4" placeholder="International Flight Tickets&#10;Personal Expenses & Shopping&#10;Travel Insurance&#10;Driver & Guide Tips"></textarea>
+      </div>
+
+      <!-- Dynamic Day-by-Day Interactive Itinerary Builder -->
+      <div class="col-12 border-top pt-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div>
+            <h5 class="fw-bold text-primary mb-1"><i class="bi bi-map-fill me-2"></i> Day-by-Day Travel Itinerary Builder</h5>
+            <p class="text-muted small mb-0">Add days and enter activities easily. Click "+ Add Day" for more days.</p>
+          </div>
+          <button type="button" class="btn btn-primary rounded-pill btn-sm px-3 fw-bold" onclick="addItineraryDay()">
+            <i class="bi bi-plus-circle-fill me-1"></i> + Add Day
+          </button>
+        </div>
+
+        <div id="itineraryContainer" class="d-flex flex-column gap-3 mb-3">
+          <!-- Rendered dynamically via JS -->
+        </div>
+
+        <input type="hidden" name="itinerary" id="itineraryJSON">
+      </div>
+
+      <!-- Map & Policies -->
+      <div class="col-12 border-top pt-4">
+        <h5 class="fw-bold text-primary mb-3"><i class="bi bi-info-circle-fill me-2"></i> Location Map & Policy</h5>
+      </div>
+
+      <div class="col-12">
+        <label class="form-label small fw-bold">Google Maps Embed Link (src URL)</label>
+        <input type="text" name="googleMapsEmbed" class="form-control" placeholder="https://www.google.com/maps/embed?pb=...">
+        <small class="text-muted">Paste Google Maps <code>iframe src</code> link to display interactive map on tour page.</small>
+      </div>
+
+      <div class="col-12">
+        <label class="form-label small fw-bold">Cancellation Policy</label>
+        <textarea name="cancellationPolicy" class="form-control" rows="2" placeholder="e.g. Free cancellation up to 48 hours before departure date. 50% refund within 24 hours."></textarea>
+      </div>
+
+      <!-- Toggles -->
+      <div class="col-md-6 border-top pt-3">
+        <div class="form-check form-switch mt-2">
+          <input class="form-check-input" type="checkbox" name="isFeatured" id="isFeatured">
+          <label class="form-check-label fw-bold" for="isFeatured">Mark as Featured Tour</label>
+        </div>
+      </div>
+
+      <div class="col-md-6 border-top pt-3">
+        <div class="form-check form-switch mt-2">
+          <input class="form-check-input" type="checkbox" name="isBestSeller" id="isBestSeller">
+          <label class="form-check-label fw-bold" for="isBestSeller">Mark as Best Seller</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex gap-3">
+      <button type="submit" class="btn btn-primary rounded-pill px-5 fw-bold">Save & Publish Tour</button>
+      <a href="/admin/tours" class="btn btn-outline-secondary rounded-pill px-4">Cancel</a>
+    </div>
+  </form>
+</div>
+
+<!-- Modal Quick Add Category -->
+<div class="modal fade" id="quickAddCategoryModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content rounded-4 border-0 p-3">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold"><i class="bi bi-grid-plus text-primary me-2"></i> Quick Add New Category</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <form id="quickAddCategoryForm">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label small fw-bold">Category Name</label>
+            <input type="text" id="quickCatName" class="form-control" placeholder="e.g. Wildlife Safari" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label small fw-bold">Select Category Icon</label>
+            <div class="input-group mb-2">
+              <span class="input-group-text bg-light"><i id="quickIconPreview" class="bi bi-compass-fill text-primary fs-5"></i></span>
+              <input type="text" id="quickCatIcon" class="form-control" placeholder="bi bi-compass-fill" value="bi bi-compass-fill">
+            </div>
+            <div class="small text-muted mb-2">Click an icon below to select quickly, or type any custom Bootstrap icon class above:</div>
+            
+            <div id="quickIconGrid" class="d-flex flex-wrap gap-2 p-2 bg-light rounded-3 border">
+              <button type="button" class="btn btn-sm btn-primary text-white icon-btn" data-icon="bi bi-compass-fill" title="Compass"><i class="bi bi-compass-fill fs-5"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-secondary icon-btn" data-icon="bi bi-sun-fill" title="Beach / Sun"><i class="bi bi-sun-fill fs-5"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-secondary icon-btn" data-icon="bi bi-water" title="Island / Water"><i class="bi bi-water fs-5"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-secondary icon-btn" data-icon="bi bi-tsunami" title="Adventure / Waves"><i class="bi bi-tsunami fs-5"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-secondary icon-btn" data-icon="bi bi-tree-fill" title="Nature / Mountain"><i class="bi bi-tree-fill fs-5"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-secondary icon-btn" data-icon="bi bi-bank" title="Cultural / Heritage"><i class="bi bi-bank fs-5"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-secondary icon-btn" data-icon="bi bi-ship-front-fill" title="Cruise / Yacht"><i class="bi bi-ship-front-fill fs-5"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-secondary icon-btn" data-icon="bi bi-anchor" title="Anchor"><i class="bi bi-anchor fs-5"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-secondary icon-btn" data-icon="bi bi-backpack-fill" title="Trekking / Hiking"><i class="bi bi-backpack-fill fs-5"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-secondary icon-btn" data-icon="bi bi-airplane-engines-fill" title="Flight / Travel"><i class="bi bi-airplane-engines-fill fs-5"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-secondary icon-btn" data-icon="bi bi-building" title="City Tour"><i class="bi bi-building fs-5"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-secondary icon-btn" data-icon="bi bi-star-fill" title="Luxury / Premium"><i class="bi bi-star-fill fs-5"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-secondary icon-btn" data-icon="bi bi-camera-reels-fill" title="Wildlife / Safari"><i class="bi bi-camera-reels-fill fs-5"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-secondary icon-btn" data-icon="bi bi-bicycle" title="Cycling"><i class="bi bi-bicycle fs-5"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-secondary icon-btn" data-icon="bi bi-cup-hot-fill" title="Culinary / Food"><i class="bi bi-cup-hot-fill fs-5"></i></button>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label small fw-bold">Description (Optional)</label>
+            <textarea id="quickCatDesc" class="form-control" rows="2"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="submit" class="btn btn-primary rounded-pill px-4 w-100 fw-bold">Create Category & Select</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Quick Add Destination -->
+<div class="modal fade" id="quickAddDestinationModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content rounded-4 border-0 p-3">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold"><i class="bi bi-geo-alt-fill text-danger me-2"></i> Quick Add New Destination</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <form id="quickAddDestinationForm">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label small fw-bold">Destination Name</label>
+            <input type="text" id="quickDestName" class="form-control" placeholder="e.g. Phu Quoc, Vietnam" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label small fw-bold">Country</label>
+            <input type="text" id="quickDestCountry" class="form-control" placeholder="e.g. Vietnam" required>
+          </div>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="submit" class="btn btn-primary rounded-pill px-4 w-100 fw-bold">Create Destination & Select</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Interactive Itinerary Builder JS
+  let itineraryDays = [];
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+  }
+
+  function renderItinerary() {
+    const container = document.getElementById('itineraryContainer');
+    container.innerHTML = '';
+
+    if (itineraryDays.length === 0) {
+      container.innerHTML = '<div class="p-3 bg-light rounded-3 text-center text-muted small">No itinerary days added yet. Click "+ Add Day" to add Day 1 activities.</div>';
+      document.getElementById('itineraryJSON').value = '';
+      return;
+    }
+
+    itineraryDays.forEach((item, index) => {
+      const card = document.createElement('div');
+      card.className = 'card border shadow-sm p-3 rounded-4 bg-white position-relative';
+      card.innerHTML = `
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <span class="badge bg-primary px-3 py-2 fs-6"><i class="bi bi-calendar-event me-1"></i> Day ${index + 1}</span>
+          <button type="button" class="btn btn-outline-danger btn-sm rounded-circle p-1 d-flex align-items-center justify-content-center" style="width:28px; height:28px;" onclick="removeItineraryDay(${index})" title="Delete Day ${index + 1}">
+            <i class="bi bi-trash fs-6"></i>
+          </button>
+        </div>
+        <div class="row g-2">
+          <div class="col-12">
+            <input type="text" class="form-control form-control-sm fw-bold" placeholder="Day Title (e.g. Arrival in Bali & Hotel Check-in)" value="${escapeHtml(item.title)}" oninput="updateItineraryDay(${index}, 'title', this.value)">
+          </div>
+          <div class="col-12">
+            <textarea class="form-control form-control-sm" rows="2" placeholder="Activities description for Day ${index + 1}..." oninput="updateItineraryDay(${index}, 'description', this.value)">${escapeHtml(item.description)}</textarea>
+          </div>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+
+    updateItineraryJSON();
+  }
+
+  function addItineraryDay(title = '', description = '') {
+    itineraryDays.push({ day: itineraryDays.length + 1, title, description });
+    renderItinerary();
+  }
+
+  function removeItineraryDay(index) {
+    itineraryDays.splice(index, 1);
+    renderItinerary();
+  }
+
+  function updateItineraryDay(index, key, val) {
+    if (itineraryDays[index]) {
+      itineraryDays[index][key] = val;
+      updateItineraryJSON();
+    }
+  }
+
+  function updateItineraryJSON() {
+    document.getElementById('itineraryJSON').value = JSON.stringify(itineraryDays);
+  }
+
+  // Initialize with 2 default days for easy setup
+  addItineraryDay('Arrival & Hotel Check-in', 'Meet tour guide at airport and transfer to hotel.');
+  addItineraryDay('City Sightseeing & Culture Tour', 'Full day guided tour exploring main attractions.');
+
+  // AJAX Quick Add Category
+  document.getElementById('quickAddCategoryForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const name = document.getElementById('quickCatName').value;
+    const icon = document.getElementById('quickCatIcon').value;
+    const description = document.getElementById('quickCatDesc').value;
+
+    try {
+      const res = await fetch('/admin/categories/quick-create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, icon, description })
+      });
+      const data = await res.json();
+      if (data.success) {
+        const select = document.getElementById('categorySelect');
+        const opt = document.createElement('option');
+        opt.value = data.category.id;
+        opt.textContent = data.category.name;
+        opt.selected = true;
+        select.appendChild(opt);
+
+        const modalEl = document.getElementById('quickAddCategoryModal');
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        modal.hide();
+        document.getElementById('quickAddCategoryForm').reset();
+      } else {
+        alert(data.message || 'Error creating category');
+      }
+    } catch(err) {
+      alert('Error creating category: ' + err.message);
+    }
+  });
+
+  // AJAX Quick Add Destination
+  document.getElementById('quickAddDestinationForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const name = document.getElementById('quickDestName').value;
+    const country = document.getElementById('quickDestCountry').value;
+
+    try {
+      const res = await fetch('/admin/destinations/quick-create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, country })
+      });
+      const data = await res.json();
+      if (data.success) {
+        const select = document.getElementById('destinationSelect');
+        const opt = document.createElement('option');
+        opt.value = data.destination.id;
+        opt.textContent = data.destination.name;
+        opt.selected = true;
+        select.appendChild(opt);
+
+        const modalEl = document.getElementById('quickAddDestinationModal');
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        modal.hide();
+        document.getElementById('quickAddDestinationForm').reset();
+      } else {
+        alert(data.message || 'Error creating destination');
+      }
+    } catch(err) {
+      alert('Error creating destination: ' + err.message);
+    }
+  });
+
+  // Quick Category Icon Picker Initializer
+  (function() {
+    const inputEl = document.getElementById('quickCatIcon');
+    const previewEl = document.getElementById('quickIconPreview');
+    const gridEl = document.getElementById('quickIconGrid');
+    if (inputEl && previewEl && gridEl) {
+      inputEl.addEventListener('input', function() {
+        previewEl.className = (this.value || 'bi bi-compass-fill') + ' text-primary fs-5';
+      });
+      const btns = gridEl.querySelectorAll('.icon-btn');
+      btns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          btns.forEach(b => {
+            b.classList.remove('btn-primary', 'text-white');
+            b.classList.add('btn-outline-secondary');
+          });
+          this.classList.remove('btn-outline-secondary');
+          this.classList.add('btn-primary', 'text-white');
+          const val = this.getAttribute('data-icon');
+          inputEl.value = val;
+          previewEl.className = val + ' text-primary fs-5';
+        });
+      });
+    }
+  })();
+</script>
