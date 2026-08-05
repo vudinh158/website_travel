@@ -1,0 +1,7 @@
+node_modules/
+.env
+*.log
+database/travel_tour.sqlite
+public/uploads/*
+!public/uploads/.gitkeep
+.DS_Store
