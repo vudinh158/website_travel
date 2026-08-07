@@ -2,6 +2,7 @@ const { Tour, TourSchedule, Booking, BookingDetail, Payment, Coupon, User } = re
 const { createPaymentIntent } = require('../services/stripeService');
 const { sendBookingConfirmationEmail } = require('../services/emailService');
 const { formatCurrency, formatDate } = require('../helpers/formatters');
+const bcrypt = require('bcryptjs');
 
 /**
  * Render Checkout Page
@@ -133,13 +134,23 @@ const processBooking = async (req, res, next) => {
     // Create Payment Intent via Stripe Service
     const paymentIntent = await createPaymentIntent(finalAmount, 'usd', { bookingCode, tourId: tour.id });
 
-    // Determine User ID (Logged-in user, existing user by email, or null for guests)
+    // Determine User ID (Logged-in user, existing user by email, or auto-create guest customer account)
     let userId = req.user ? req.user.id : null;
     if (!userId && contactEmail) {
-      const existingUser = await User.findOne({ where: { email: contactEmail.trim().toLowerCase() } });
-      if (existingUser) {
-        userId = existingUser.id;
+      const emailClean = contactEmail.trim().toLowerCase();
+      let user = await User.findOne({ where: { email: emailClean } });
+      if (!user) {
+        // Auto-create customer account for guest checkout to satisfy database constraints
+        const defaultPassword = await bcrypt.hash('GuestPass2026!', 10);
+        user = await User.create({
+          name: contactName || 'Guest Customer',
+          email: emailClean,
+          phone: contactPhone || null,
+          password: defaultPassword,
+          role: 'customer'
+        });
       }
+      userId = user.id;
     }
 
     // Save Booking in Database
