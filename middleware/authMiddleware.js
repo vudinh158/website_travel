@@ -63,7 +63,7 @@ const isAdmin = (req, res, next) => {
   }
 
   return res.status(403).render('pages/404', {
-    title: '403 Forbidden - WanderLust',
+    title: '403 Forbidden - Tranoi Travel',
     message: 'Access Denied: You need Administrator privileges to view this page.'
   });
 };

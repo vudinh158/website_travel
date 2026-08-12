@@ -51,12 +51,12 @@ const getHome = async (req, res, next) => {
       limit: 3
     });
 
-    const schemaOrg = generateSchemaOrg.organization('WanderLust Tours', process.env.APP_URL);
+    const schemaOrg = generateSchemaOrg.organization('Tranoi Travel', process.env.APP_URL || 'https://tranoitravel.com');
 
     res.render('pages/index', {
-      title: 'WanderLust Tours | Curated Luxury Travel & Expeditions',
-      metaTitle: 'WanderLust Tours - Book Unforgettable Travel Experiences',
-      metaDescription: 'Discover handcrafted tour packages, tropical island escapes, cultural heritage journeys, and mountain treks across the globe.',
+      title: 'Tranoi Travel | Travel more, plan less',
+      metaTitle: 'Tranoi Travel - Travel More, Plan Less',
+      metaDescription: 'Tailored, curated travel itineraries within our specialty destinations. Travel more, plan less with Tranoi Travel.',
       featuredTours,
       bestSellerTours,
       popularDestinations,
@@ -78,9 +78,9 @@ const getHome = async (req, res, next) => {
  */
 const getAbout = (req, res) => {
   res.render('pages/about', {
-    title: 'About Us | WanderLust Tours',
-    metaTitle: 'About WanderLust Tours - Our Story & Vision',
-    metaDescription: 'Learn about our passion for creating memorable, sustainable, and authentic tour booking experiences world-wide.'
+    title: 'About Us | Tranoi Travel',
+    metaTitle: 'About Tranoi Travel - Travel More, Plan Less',
+    metaDescription: 'Learn about Tranoi Travel and our approach to curated, tailored itineraries within specialty destinations.'
   });
 };
 
@@ -89,9 +89,9 @@ const getAbout = (req, res) => {
  */
 const getContact = (req, res) => {
   res.render('pages/contact', {
-    title: 'Contact Us | WanderLust Tours',
-    metaTitle: 'Contact WanderLust Tours 24/7 Support Team',
-    metaDescription: 'Get in touch with our travel specialists for custom tour planning, inquiries, and booking assistance.',
+    title: 'Contact Us | Tranoi Travel',
+    metaTitle: 'Contact Tranoi Travel Support Team',
+    metaDescription: 'Get in touch with our travel specialists for curated tour inquiries and booking assistance.',
     success: req.query.success || null,
     error: req.query.error || null
   });
@@ -115,18 +115,18 @@ const postContact = async (req, res, next) => {
  */
 const getFAQ = (req, res) => {
   const faqs = [
-    { question: 'How do I book a tour on WanderLust?', answer: 'Simply browse our tours, select your departure date and guest count, click Book Now, and complete the instant checkout process using Stripe payment.' },
+    { question: 'How do I book a tour on Tranoi Travel?', answer: 'Simply browse our tours, select your departure date and guest count, click Book Now, and complete the instant checkout process using Stripe payment.' },
     { question: 'What is your tour cancellation policy?', answer: 'Cancellations made 14 days or more before the departure date qualify for a full 100% refund. Cancellations between 7 and 13 days qualify for a 50% refund.' },
-    { question: 'Are airport transfers included in tours?', answer: 'Yes! Most of our multi-day packages include private VIP air-conditioned airport pick-up and drop-off.' },
+    { question: 'Are airport transfers included in tours?', answer: 'Yes, most of our multi-day packages include private VIP air-conditioned airport pick-up and drop-off.' },
     { question: 'Can I apply promotional coupons?', answer: 'Yes, during checkout on the payment step, enter your coupon code (e.g. WELCOME10) to enjoy instant savings.' },
-    { question: 'Is my payment secure?', answer: 'Absolutley. We use Stripe Payment Gateway with 256-bit SSL encryption. We never store credit card numbers directly on our servers.' }
+    { question: 'Is my payment secure?', answer: 'Absolutely. We use Stripe Payment Gateway with 256-bit SSL encryption. We never store credit card numbers directly on our servers.' }
   ];
 
   const schemaOrg = generateSchemaOrg.faq(faqs);
 
   res.render('pages/faq', {
-    title: 'Frequently Asked Questions | WanderLust Tours',
-    metaTitle: 'WanderLust Tours FAQ - Booking & Travel Help',
+    title: 'Frequently Asked Questions | Tranoi Travel',
+    metaTitle: 'Tranoi Travel FAQ - Booking & Travel Help',
     metaDescription: 'Find answers to common questions regarding booking, payments, tour cancellations, and airport transfers.',
     faqs,
     schemaOrg
@@ -138,8 +138,8 @@ const getFAQ = (req, res) => {
  */
 const getPrivacy = (req, res) => {
   res.render('pages/privacy', {
-    title: 'Privacy Policy | WanderLust Tours',
-    metaTitle: 'Privacy Policy - WanderLust Tours',
+    title: 'Privacy Policy | Tranoi Travel',
+    metaTitle: 'Privacy Policy - Tranoi Travel',
     metaDescription: 'Read our privacy policy regarding how we protect and manage your personal travel information.'
   });
 };
@@ -149,9 +149,9 @@ const getPrivacy = (req, res) => {
  */
 const getTerms = (req, res) => {
   res.render('pages/terms', {
-    title: 'Terms & Conditions | WanderLust Tours',
-    metaTitle: 'Terms & Conditions - WanderLust Tours',
-    metaDescription: 'Terms of service and user agreements for booking tours with WanderLust.'
+    title: 'Terms & Conditions | Tranoi Travel',
+    metaTitle: 'Terms & Conditions - Tranoi Travel',
+    metaDescription: 'Terms of service and user agreements for booking tours with Tranoi Travel.'
   });
 };
 

@@ -122,7 +122,7 @@ const getAdminDashboard = async (req, res, next) => {
     const cancelledCount = await Booking.count({ where: { bookingStatus: 'cancelled' } });
 
     res.render('pages/admin/index', {
-      title: 'Admin Dashboard | WanderLust',
+      title: 'Admin Dashboard | Tranoi Travel',
       metaTitle: 'Admin Analytics & Management',
       metaDescription: 'Manage website tours, bookings, customers, and view revenue analytics.',
       totalRevenue,

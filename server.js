@@ -89,7 +89,7 @@ async function startServer() {
     }
 
     app.listen(PORT, '0.0.0.0', () => {
-      console.log(`🚀 WanderLust Tour Booking Website running on port ${PORT}`);
+      console.log(`🚀 Tranoi Travel Booking Website running on port ${PORT}`);
     });
   } catch (error) {
     console.error('❌ Unable to connect to database:', error);

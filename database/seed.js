@@ -23,7 +23,7 @@ async function seedDatabase() {
       avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80',
       phone: '+1 800-555-0199',
       address: '777 Travel Way, Suite 100, San Francisco, CA',
-      bio: 'Lead Travel Director & Curator at WanderLust Tours with over 15 years of world exploration.'
+      bio: 'Lead Travel Director & Curator at Tranoi Travel with over 15 years of world exploration.'
     });
 
     const demoUser = await User.create({
@@ -428,9 +428,9 @@ async function seedDatabase() {
 
     // 11. System Settings
     console.log('🌱 Seeding System Settings...');
-    await Setting.create({ key: 'site_name', value: 'WanderLust Tours', group: 'general' });
-    await Setting.create({ key: 'site_email', value: 'support@wanderlust.com', group: 'general' });
-    await Setting.create({ key: 'site_phone', value: '+1 (800) 555-WANDER', group: 'general' });
+    await Setting.create({ key: 'site_name', value: 'Tranoi Travel', group: 'general' });
+    await Setting.create({ key: 'site_email', value: 'support@tranoitravel.com', group: 'general' });
+    await Setting.create({ key: 'site_phone', value: '+1 (800) 555-TRANOI', group: 'general' });
     await Setting.create({ key: 'currency', value: 'USD', group: 'general' });
 
     console.log('🎉 DB Seeding completed successfully!');

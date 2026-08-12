@@ -61,9 +61,9 @@ const getTours = async (req, res, next) => {
     ], process.env.APP_URL);
 
     res.render('pages/tours', {
-      title: 'Explore All Tour Packages & Categories | WanderLust Tours',
-      metaTitle: 'Travel Tour Collections & Category Clusters',
-      metaDescription: 'Browse tours organized by travel experiences: Island getaways, Alpine treks, cultural heritage, and luxury cruises.',
+      title: 'Explore All Tour Packages & Categories | Tranoi Travel',
+      metaTitle: 'Travel Tour Collections - Tranoi Travel',
+      metaDescription: 'Browse curated tour packages within our specialty destinations with Tranoi Travel.',
       categorySilos,
       destinationSilos,
       allTours,
@@ -114,7 +114,7 @@ const getCategorySilo = async (req, res, next) => {
     ], process.env.APP_URL);
 
     res.render('pages/tour-category-silo', {
-      title: `${category.name} Tour Packages & Expeditions | WanderLust`,
+      title: `${category.name} Tour Packages & Expeditions | Tranoi Travel`,
       metaTitle: `${category.name} Travel Category`,
       metaDescription: category.description || `Explore top-rated ${category.name} tour packages worldwide.`,
       category,
@@ -155,7 +155,7 @@ const getTourDetail = async (req, res, next) => {
 
     if (!tour) {
       return res.status(404).render('pages/404', {
-        title: 'Tour Not Found - WanderLust',
+        title: 'Tour Not Found - Tranoi Travel',
         metaTitle: 'Tour Not Found',
         metaDescription: 'The requested tour does not exist.',
         message: 'The tour you are searching for is unavailable or has been archived.'
@@ -180,7 +180,7 @@ const getTourDetail = async (req, res, next) => {
     ], process.env.APP_URL);
 
     res.render('pages/tour-detail', {
-      title: `${tour.name} | WanderLust Tours`,
+      title: `${tour.name} | Tranoi Travel`,
       metaTitle: tour.metaTitle || `${tour.name} - Tour Booking`,
       metaDescription: tour.metaDescription || tour.shortDescription,
       tour,

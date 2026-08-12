@@ -1,13 +1,14 @@
 /* ==========================================================================
-   WanderLust Tours - Dynamic Visual Theme & Motion Design System
+   Tranoi Travel - Brand Identity & Motion Design System
    ========================================================================== */
 
 :root {
-  --primary-color: #0077b6;
-  --primary-hover: #023e8a;
-  --secondary-color: #ff6b6b;
-  --accent-gold: #ffb703;
-  --accent-teal: #2ec4b6;
+  --primary-color: #004AAD;
+  --primary-hover: #003380;
+  --secondary-color: #FF8F4C;
+  --accent-orange: #FF8F4C;
+  --accent-gold: #FF8F4C;
+  --accent-teal: #004AAD;
   --dark-bg: #0f172a;
   --dark-card: #1e293b;
   --light-bg: #f8fafc;
@@ -21,15 +22,17 @@
   --glass-border: rgba(255, 255, 255, 0.3);
   --shadow-sm: 0 4px 6px -1px rgba(0,0,0,0.05);
   --shadow-md: 0 12px 28px -6px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-  --shadow-lg: 0 25px 50px -12px rgba(0, 119, 182, 0.25);
+  --shadow-lg: 0 25px 50px -12px rgba(0, 74, 173, 0.25);
   --radius-sm: 10px;
   --radius-md: 18px;
   --radius-lg: 28px;
   --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  --bs-primary: #004AAD;
+  --bs-primary-rgb: 0, 74, 173;
 }
 
 body {
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-family: 'Lato', system-ui, -apple-system, sans-serif;
   background-color: var(--light-bg);
   color: var(--text-dark);
   transition: var(--transition-smooth);
@@ -52,9 +55,9 @@ body {
 
 /* 2. Pulse Glow */
 @keyframes pulseGlow {
-  0% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.6); }
-  70% { box-shadow: 0 0 0 15px rgba(255, 107, 107, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(255, 143, 76, 0.6); }
+  70% { box-shadow: 0 0 0 15px rgba(255, 143, 76, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 143, 76, 0); }
 }
 
 .pulse-glow {
@@ -68,7 +71,7 @@ body {
 }
 
 .promo-shimmer {
-  background: linear-gradient(110deg, #0077b6 20%, #0096c7 40%, #023e8a 60%, #0077b6 80%);
+  background: linear-gradient(110deg, #004AAD 20%, #0066d6 40%, #003380 60%, #004AAD 80%);
   background-size: 200% 100%;
   animation: shimmer 6s linear infinite;
 }
@@ -140,12 +143,22 @@ body {
   transition: var(--transition-smooth);
 }
 
+.navbar-brand-logo {
+  height: 60px;
+  max-height: 70px;
+  width: auto;
+  object-fit: contain;
+  transition: var(--transition-smooth);
+}
+
+.navbar-brand-logo:hover {
+  transform: scale(1.04);
+}
+
 .brand-logo {
   font-size: 1.6rem;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--primary-color);
   transition: var(--transition-smooth);
 }
 
@@ -175,7 +188,7 @@ body {
 }
 
 .hero-search-card:hover {
-  box-shadow: 0 30px 60px -12px rgba(0, 119, 182, 0.35);
+  box-shadow: 0 30px 60px -12px rgba(0, 74, 173, 0.35);
 }
 
 /* Cards & Micro-interactions */
@@ -194,7 +207,7 @@ body {
 .tour-card:hover {
   transform: translateY(-10px) scale(1.01);
   box-shadow: var(--shadow-md);
-  border-color: rgba(0, 119, 182, 0.3);
+  border-color: rgba(0, 74, 173, 0.3);
 }
 
 .tour-card-img-wrapper {
@@ -218,7 +231,7 @@ body {
   position: absolute;
   top: 14px;
   left: 14px;
-  background: linear-gradient(135deg, var(--secondary-color), #f72585);
+  background: linear-gradient(135deg, var(--secondary-color), #e67e38);
   color: white;
   padding: 5px 14px;
   border-radius: 20px;
@@ -226,7 +239,7 @@ body {
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+  box-shadow: 0 4px 12px rgba(255, 143, 76, 0.4);
 }
 
 .wishlist-btn {
@@ -313,7 +326,7 @@ body {
 
 /* Custom Buttons & Hover Animations */
 .btn-wanderlust {
-  background: linear-gradient(135deg, var(--primary-color), #0096c7);
+  background: linear-gradient(135deg, var(--primary-color), #0066d6);
   color: white;
   border: none;
   font-weight: 700;
@@ -325,14 +338,14 @@ body {
 }
 
 .btn-wanderlust:hover {
-  background: linear-gradient(135deg, var(--primary-hover), #0077b6);
+  background: linear-gradient(135deg, var(--primary-hover), #004AAD);
   color: white;
   transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(0, 119, 182, 0.4);
+  box-shadow: 0 10px 25px rgba(0, 74, 173, 0.4);
 }
 
 .btn-accent {
-  background: linear-gradient(135deg, var(--secondary-color), #f72585);
+  background: linear-gradient(135deg, var(--secondary-color), #e67e38);
   color: white;
   border: none;
   font-weight: 700;
@@ -344,7 +357,7 @@ body {
 .btn-accent:hover {
   color: white;
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 12px 30px rgba(255, 107, 107, 0.45);
+  box-shadow: 0 12px 30px rgba(255, 143, 76, 0.45);
 }
 
 /* Accordion Styling & Smooth Micro Transitions */
@@ -363,7 +376,7 @@ body {
 }
 
 .accordion-wanderlust .accordion-button:not(.collapsed) {
-  background-color: rgba(0, 119, 182, 0.1);
+  background-color: rgba(0, 74, 173, 0.1);
   color: var(--primary-color);
   font-weight: 800;
 }

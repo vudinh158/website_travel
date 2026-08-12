@@ -39,9 +39,9 @@ const getBlogs = async (req, res, next) => {
     const tags = await Tag.findAll();
 
     res.render('pages/blog', {
-      title: 'Travel Blog & Inspiration | WanderLust Tours',
-      metaTitle: 'Travel Blog - Expert Guides & Packing Tips',
-      metaDescription: 'Read our latest travel guides, hidden gem destinations, and expert packing advice.',
+      title: 'Travel Blog & Inspiration | Tranoi Travel',
+      metaTitle: 'Travel Blog - Expert Guides & Destination Insights',
+      metaDescription: 'Read our latest travel guides and destination insights from Tranoi Travel.',
       blogs,
       categories,
       tags,
@@ -95,7 +95,7 @@ const getBlogDetail = async (req, res, next) => {
     const schemaOrg = generateSchemaOrg.blogPosting(blog, process.env.APP_URL);
 
     res.render('pages/blog-detail', {
-      title: `${blog.title} | WanderLust Blog`,
+      title: `${blog.title} | Tranoi Travel Blog`,
       metaTitle: blog.metaTitle || blog.title,
       metaDescription: blog.metaDescription || blog.excerpt,
       blog,

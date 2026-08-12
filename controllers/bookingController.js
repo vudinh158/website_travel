@@ -27,8 +27,8 @@ const getCheckout = async (req, res, next) => {
     const totalAmount = basePrice * guestCount;
 
     res.render('pages/checkout', {
-      title: 'Checkout & Payment | WanderLust Tours',
-      metaTitle: 'Secure Booking Checkout - WanderLust',
+      title: 'Checkout & Payment | Tranoi Travel',
+      metaTitle: 'Secure Booking Checkout - Tranoi Travel',
       metaDescription: 'Complete your tour booking with secure instant Stripe payment.',
       tour,
       scheduleId: scheduleId || null,
@@ -129,7 +129,7 @@ const processBooking = async (req, res, next) => {
     }
 
     const finalAmount = Math.max(0, subtotal - discountAmount);
-    const bookingCode = 'WL-' + Math.floor(100000 + Math.random() * 900000);
+    const bookingCode = 'TT-' + Math.floor(100000 + Math.random() * 900000);
 
     // Create Payment Intent via Stripe Service
     const paymentIntent = await createPaymentIntent(finalAmount, 'usd', { bookingCode, tourId: tour.id });
@@ -221,7 +221,7 @@ const getBookingSuccess = async (req, res, next) => {
     if (!booking) return res.redirect('/');
 
     res.render('pages/booking-success', {
-      title: 'Booking Confirmed! | WanderLust Tours',
+      title: 'Booking Confirmed! | Tranoi Travel',
       metaTitle: 'Booking Confirmation',
       metaDescription: 'Your tour booking has been confirmed.',
       booking,
@@ -238,7 +238,7 @@ const getBookingSuccess = async (req, res, next) => {
  */
 const getBookingFailed = (req, res) => {
   res.render('pages/booking-failed', {
-    title: 'Booking Failed | WanderLust Tours',
+    title: 'Booking Failed | Tranoi Travel',
     metaTitle: 'Payment Issue',
     metaDescription: 'There was an issue processing your booking payment.',
     error: req.query.error || 'Your payment transaction could not be authorized.'

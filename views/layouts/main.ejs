@@ -3,23 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= typeof title !== 'undefined' ? title : 'WanderLust Tours' %></title>
+  <title><%= typeof title !== 'undefined' ? title : 'Tranoi Travel | Travel more, plan less' %></title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/images/logo/logo-icon.png">
 
   <!-- SEO Meta Tags -->
-  <meta name="title" content="<%= typeof metaTitle !== 'undefined' ? metaTitle : 'WanderLust Tours' %>">
-  <meta name="description" content="<%= typeof metaDescription !== 'undefined' ? metaDescription : 'Book unforgettable tour packages and luxury travel expeditions worldwide.' %>">
-  <link rel="canonical" href="<%= typeof canonicalUrl !== 'undefined' ? canonicalUrl : 'http://localhost:3000' + (typeof currentPath !== 'undefined' ? currentPath : '') %>">
+  <meta name="title" content="<%= typeof metaTitle !== 'undefined' ? metaTitle : 'Tranoi Travel | Travel more, plan less' %>">
+  <meta name="description" content="<%= typeof metaDescription !== 'undefined' ? metaDescription : 'Tailored, curated travel itineraries within our specialty destinations. Travel more, plan less with Tranoi Travel.' %>">
+  <link rel="canonical" href="<%= typeof canonicalUrl !== 'undefined' ? canonicalUrl : 'https://tranoitravel.com' + (typeof currentPath !== 'undefined' ? currentPath : '') %>">
 
   <!-- OpenGraph / Facebook -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="<%= typeof metaTitle !== 'undefined' ? metaTitle : 'WanderLust Tours' %>">
-  <meta property="og:description" content="<%= typeof metaDescription !== 'undefined' ? metaDescription : 'Book luxury tour packages worldwide.' %>">
-  <meta property="og:url" content="http://localhost:3000">
+  <meta property="og:title" content="<%= typeof metaTitle !== 'undefined' ? metaTitle : 'Tranoi Travel | Travel more, plan less' %>">
+  <meta property="og:description" content="<%= typeof metaDescription !== 'undefined' ? metaDescription : 'Curated travel packages within specialty destinations. Travel more, plan less with Tranoi Travel.' %>">
+  <meta property="og:url" content="https://tranoitravel.com">
+  <meta property="og:image" content="/images/logo/logo-full.png">
 
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="<%= typeof metaTitle !== 'undefined' ? metaTitle : 'WanderLust Tours' %>">
-  <meta name="twitter:description" content="<%= typeof metaDescription !== 'undefined' ? metaDescription : 'Book luxury tour packages worldwide.' %>">
+  <meta name="twitter:title" content="<%= typeof metaTitle !== 'undefined' ? metaTitle : 'Tranoi Travel | Travel more, plan less' %>">
+  <meta name="twitter:description" content="<%= typeof metaDescription !== 'undefined' ? metaDescription : 'Curated travel packages within specialty destinations.' %>">
+  <meta name="twitter:image" content="/images/logo/logo-full.png">
 
   <!-- Schema.org JSON-LD -->
   <% if (typeof schemaOrg !== 'undefined' && schemaOrg) { %>
@@ -28,10 +33,10 @@
     </script>
   <% } %>
 
-  <!-- Google Fonts -->
+  <!-- Google Fonts: Lato -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
 
   <!-- Bootstrap 5 CSS & Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">

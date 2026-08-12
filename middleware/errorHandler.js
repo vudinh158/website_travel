@@ -4,7 +4,7 @@
 
 const notFoundHandler = (req, res, next) => {
   res.status(404).render('pages/404', {
-    title: '404 - Page Not Found | WanderLust Tours',
+    title: '404 - Page Not Found | Tranoi Travel',
     metaTitle: 'Page Not Found',
     metaDescription: 'The page you are looking for does not exist.',
     message: 'Oops! The travel destination or page you are looking for could not be found.'
@@ -26,7 +26,7 @@ const errorHandler = (err, req, res, next) => {
   }
 
   res.status(statusCode).render('pages/404', {
-    title: `${statusCode} Error | WanderLust Tours`,
+    title: `${statusCode} Error | Tranoi Travel`,
     metaTitle: 'Server Error',
     metaDescription: 'An unexpected error occurred.',
     message: process.env.NODE_ENV === 'development' ? err.message : 'Something went wrong on our server. Please try again later.'

@@ -20,7 +20,7 @@ const getDashboard = async (req, res, next) => {
     const wishlistCount = await Wishlist.count({ where: { userId } });
 
     res.render('pages/dashboard/index', {
-      title: 'User Dashboard | WanderLust Tours',
+      title: 'User Dashboard | Tranoi Travel',
       metaTitle: 'User Dashboard Overview',
       metaDescription: 'Manage your tour bookings, profile settings, and saved wishlist.',
       user: req.user,
@@ -54,7 +54,7 @@ const getBookingHistory = async (req, res, next) => {
     });
 
     res.render('pages/dashboard/bookings', {
-      title: 'My Booking History | WanderLust Tours',
+      title: 'My Booking History | Tranoi Travel',
       metaTitle: 'My Tour Bookings',
       metaDescription: 'View your current and past tour reservations.',
       bookings,
@@ -84,7 +84,7 @@ const getWishlist = async (req, res, next) => {
     });
 
     res.render('pages/dashboard/wishlist', {
-      title: 'My Saved Wishlist | WanderLust Tours',
+      title: 'My Saved Wishlist | Tranoi Travel',
       metaTitle: 'Saved Favorite Tours',
       metaDescription: 'View your saved favorite travel packages.',
       wishlistItems,
@@ -122,7 +122,7 @@ const toggleWishlist = async (req, res) => {
  */
 const getProfile = (req, res) => {
   res.render('pages/dashboard/profile', {
-    title: 'Edit Profile | WanderLust Tours',
+    title: 'Edit Profile | Tranoi Travel',
     metaTitle: 'Profile Settings',
     metaDescription: 'Update your account profile and password.',
     user: req.user,

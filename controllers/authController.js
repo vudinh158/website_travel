@@ -9,8 +9,8 @@ const { sendPasswordResetEmail } = require('../services/emailService');
 const getLogin = (req, res) => {
   if (req.user) return res.redirect('/dashboard');
   res.render('pages/login', {
-    title: 'Login - WanderLust Tours',
-    metaTitle: 'Login to Your Account | WanderLust Tours',
+    title: 'Login - Tranoi Travel',
+    metaTitle: 'Login to Your Account | Tranoi Travel',
     metaDescription: 'Login to access your tour bookings, saved wishlist, and travel itinerary.',
     error: req.query.error || null,
     success: req.query.success || null
@@ -31,7 +31,7 @@ const postLogin = async (req, res) => {
 
     if (!user) {
       return res.render('pages/login', {
-        title: 'Login - WanderLust Tours',
+        title: 'Login - Tranoi Travel',
         metaTitle: 'Login | WanderLust',
         metaDescription: 'Login to your account',
         error: 'Invalid email address or password.',
@@ -42,7 +42,7 @@ const postLogin = async (req, res) => {
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
       return res.render('pages/login', {
-        title: 'Login - WanderLust Tours',
+        title: 'Login - Tranoi Travel',
         metaTitle: 'Login | WanderLust',
         metaDescription: 'Login to your account',
         error: 'Invalid email address or password.',
@@ -69,7 +69,7 @@ const postLogin = async (req, res) => {
   } catch (err) {
     console.error('Login error:', err);
     return res.render('pages/login', {
-      title: 'Login - WanderLust Tours',
+      title: 'Login - Tranoi Travel',
       metaTitle: 'Login',
       metaDescription: 'Login error',
       error: 'An error occurred during login. Please try again.',
@@ -84,8 +84,8 @@ const postLogin = async (req, res) => {
 const getRegister = (req, res) => {
   if (req.user) return res.redirect('/dashboard');
   res.render('pages/register', {
-    title: 'Register Account - WanderLust Tours',
-    metaTitle: 'Create an Account | WanderLust Tours',
+    title: 'Register Account - Tranoi Travel',
+    metaTitle: 'Create an Account | Tranoi Travel',
     metaDescription: 'Sign up for free to book tours, save destinations, and get exclusive travel discounts.',
     error: null,
     formData: {}
@@ -100,7 +100,7 @@ const postRegister = async (req, res) => {
 
   if (password !== confirmPassword) {
     return res.render('pages/register', {
-      title: 'Register Account - WanderLust Tours',
+      title: 'Register Account - Tranoi Travel',
       metaTitle: 'Create an Account',
       metaDescription: 'Sign up for free',
       error: 'Passwords do not match.',
@@ -112,7 +112,7 @@ const postRegister = async (req, res) => {
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
       return res.render('pages/register', {
-        title: 'Register Account - WanderLust Tours',
+        title: 'Register Account - Tranoi Travel',
         metaTitle: 'Create an Account',
         metaDescription: 'Sign up for free',
         error: 'Email address is already registered.',
@@ -145,7 +145,7 @@ const postRegister = async (req, res) => {
   } catch (err) {
     console.error('Registration error:', err);
     return res.render('pages/register', {
-      title: 'Register Account - WanderLust Tours',
+      title: 'Register Account - Tranoi Travel',
       metaTitle: 'Create an Account',
       metaDescription: 'Sign up for free',
       error: 'Registration failed. Please check your information.',
@@ -170,8 +170,8 @@ const logout = (req, res) => {
  */
 const getForgotPassword = (req, res) => {
   res.render('pages/forgot-password', {
-    title: 'Forgot Password - WanderLust Tours',
-    metaTitle: 'Reset Your Password | WanderLust Tours',
+    title: 'Forgot Password - Tranoi Travel',
+    metaTitle: 'Reset Your Password | Tranoi Travel',
     metaDescription: 'Enter your email to receive password reset instructions.',
     error: null,
     success: null
@@ -187,7 +187,7 @@ const postForgotPassword = async (req, res) => {
     const user = await User.findOne({ where: { email } });
     if (!user) {
       return res.render('pages/forgot-password', {
-        title: 'Forgot Password - WanderLust Tours',
+        title: 'Forgot Password - Tranoi Travel',
         metaTitle: 'Reset Password',
         metaDescription: 'Password reset',
         error: null,
@@ -204,7 +204,7 @@ const postForgotPassword = async (req, res) => {
     await sendPasswordResetEmail(user.email, resetUrl);
 
     return res.render('pages/forgot-password', {
-      title: 'Forgot Password - WanderLust Tours',
+      title: 'Forgot Password - Tranoi Travel',
       metaTitle: 'Reset Password',
       metaDescription: 'Password reset',
       error: null,
@@ -228,7 +228,7 @@ const postForgotPassword = async (req, res) => {
 const getResetPassword = (req, res) => {
   const { token } = req.query;
   res.render('pages/reset-password', {
-    title: 'Reset Password - WanderLust Tours',
+    title: 'Reset Password - Tranoi Travel',
     metaTitle: 'Set New Password',
     metaDescription: 'Enter your new password.',
     token,

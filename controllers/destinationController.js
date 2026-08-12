@@ -12,9 +12,9 @@ const getDestinations = async (req, res, next) => {
     });
 
     res.render('pages/destinations', {
-      title: 'Top Travel Destinations Worldwide | WanderLust Tours',
-      metaTitle: 'Explore World Destinations & Travel Guides',
-      metaDescription: 'Browse tropical islands, alpine peaks, ancient cities, and cultural destinations.',
+      title: 'Top Travel Destinations Worldwide | Tranoi Travel',
+      metaTitle: 'Explore Specialty Travel Destinations - Tranoi Travel',
+      metaDescription: 'Browse curated travel destinations and specialty tours with Tranoi Travel.',
       destinations,
       formatCurrency,
       truncateText
@@ -60,7 +60,7 @@ const getDestinationDetail = async (req, res, next) => {
     ], process.env.APP_URL);
 
     res.render('pages/destination-detail', {
-      title: `${destination.name} Travel Guide & Tours | WanderLust`,
+      title: `${destination.name} Travel Guide & Tours | Tranoi Travel`,
       metaTitle: destination.metaTitle || `${destination.name} Guide`,
       metaDescription: destination.metaDescription || destination.description,
       destination,
