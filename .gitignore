@@ -5,3 +5,4 @@ database/travel_tour.sqlite
 public/uploads/*
 !public/uploads/.gitkeep
 .DS_Store
+Tranoi_Travel_Brand_Guidelines.docx
