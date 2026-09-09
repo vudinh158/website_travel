@@ -185,29 +185,35 @@ const postSubscribeNewsletter = async (req, res) => {
  * Search Autocomplete API
  */
 const searchAutocomplete = async (req, res) => {
-  const query = req.query.q || '';
-  if (query.length < 2) return res.json({ tours: [], destinations: [] });
+  const query = (req.query.q || '').trim();
+  if (query.length < 1) return res.json({ tours: [], destinations: [] });
 
   try {
     const tours = await Tour.findAll({
       where: {
-        name: { [Op.like]: `%${query}%` },
-        status: 'active'
+        [Op.or]: [
+          { name: { [Op.like]: `%${query}%` } },
+          { shortDescription: { [Op.like]: `%${query}%` } }
+        ]
       },
-      attributes: ['id', 'name', 'slug', 'featuredImage', 'price'],
-      limit: 5
+      attributes: ['id', 'name', 'slug', 'featuredImage', 'price', 'discountPrice', 'duration'],
+      limit: 6
     });
 
     const destinations = await Destination.findAll({
       where: {
-        name: { [Op.like]: `%${query}%` }
+        [Op.or]: [
+          { name: { [Op.like]: `%${query}%` } },
+          { country: { [Op.like]: `%${query}%` } }
+        ]
       },
-      attributes: ['id', 'name', 'slug', 'banner'],
-      limit: 5
+      attributes: ['id', 'name', 'slug', 'banner', 'country'],
+      limit: 4
     });
 
     return res.json({ tours, destinations });
   } catch (err) {
+    console.error('Search Autocomplete Error:', err);
     return res.status(500).json({ tours: [], destinations: [] });
   }
 };

@@ -83,7 +83,7 @@ function initHeroParallax() {
   });
 }
 
-/* 5. Search Autocomplete */
+/* 5. Search Autocomplete with Live Motion Animation */
 function initSearchAutocomplete() {
   const searchInput = document.getElementById('global-search-input');
   const resultsContainer = document.getElementById('search-results-dropdown');
@@ -91,64 +91,109 @@ function initSearchAutocomplete() {
   if (!searchInput || !resultsContainer) return;
 
   let debounceTimer;
+
   searchInput.addEventListener('input', (e) => {
     clearTimeout(debounceTimer);
     const query = e.target.value.trim();
 
-    if (query.length < 2) {
+    if (query.length < 1) {
       resultsContainer.classList.add('d-none');
+      resultsContainer.classList.remove('show-animated');
       resultsContainer.innerHTML = '';
       return;
     }
+
+    // Show quick loading state
+    resultsContainer.innerHTML = `
+      <div class="p-3 text-center text-muted small">
+        <div class="spinner-border spinner-border-sm text-primary me-2" role="status"></div>
+        Searching tours for "${escapeHtml(query)}"...
+      </div>
+    `;
+    resultsContainer.classList.remove('d-none');
+    resultsContainer.classList.add('show-animated');
 
     debounceTimer = setTimeout(async () => {
       try {
         const res = await fetch(`/api/v1/search/autocomplete?q=${encodeURIComponent(query)}`);
         const data = await res.json();
 
-        if (data.tours.length === 0 && data.destinations.length === 0) {
-          resultsContainer.innerHTML = '<div class="p-3 text-muted">No matching tours or destinations found.</div>';
+        if ((!data.tours || data.tours.length === 0) && (!data.destinations || data.destinations.length === 0)) {
+          resultsContainer.innerHTML = `
+            <div class="p-3 text-center text-muted small">
+              <i class="bi bi-search me-1 text-secondary"></i> No matching tours found for "<strong>${escapeHtml(query)}</strong>".
+            </div>
+          `;
         } else {
           let html = '';
-          if (data.tours.length > 0) {
-            html += '<div class="px-3 pt-2 text-uppercase text-muted fw-bold small">Tours</div>';
+          if (data.tours && data.tours.length > 0) {
+            html += '<div class="px-3 pt-2 pb-1 text-uppercase text-muted fw-bold small border-bottom bg-light"><i class="bi bi-compass me-1 text-primary"></i> Tour Packages (' + data.tours.length + ')</div>';
             data.tours.forEach(tour => {
+              const displayPrice = tour.discountPrice || tour.price;
               html += `
-                <a href="/tours/${tour.slug}" class="dropdown-item d-flex align-items-center gap-2 py-2">
-                  <img src="${tour.featuredImage}" class="rounded" width="40" height="40" style="object-fit:cover;">
-                  <div>
-                    <div class="fw-bold text-truncate" style="max-width:250px;">${tour.name}</div>
-                    <div class="small text-primary">$${tour.price}</div>
+                <a href="/tours/${tour.slug}" class="dropdown-item d-flex align-items-center gap-3 py-2 px-3 border-bottom search-item-hover">
+                  <img src="${tour.featuredImage || '/images/default-tour.jpg'}" class="rounded-3 shadow-sm" width="48" height="48" style="object-fit:cover;">
+                  <div class="flex-grow-1 overflow-hidden">
+                    <div class="fw-bold text-dark text-truncate small mb-0">${escapeHtml(tour.name)}</div>
+                    <div class="d-flex align-items-center gap-2 mt-1">
+                      <span class="badge bg-primary-subtle text-primary fw-semibold" style="font-size:0.75rem;">${escapeHtml(tour.duration || 'Flexible')}</span>
+                      <span class="fw-bold text-success small">$${displayPrice}</span>
+                    </div>
                   </div>
+                  <i class="bi bi-chevron-right text-muted small"></i>
                 </a>
               `;
             });
           }
-          if (data.destinations.length > 0) {
-            html += '<div class="px-3 pt-2 text-uppercase text-muted fw-bold small">Destinations</div>';
+
+          if (data.destinations && data.destinations.length > 0) {
+            html += '<div class="px-3 pt-2 pb-1 text-uppercase text-muted fw-bold small border-bottom bg-light mt-1"><i class="bi bi-geo-alt-fill me-1 text-danger"></i> Destinations</div>';
             data.destinations.forEach(dest => {
               html += `
-                <a href="/destinations/${dest.slug}" class="dropdown-item d-flex align-items-center gap-2 py-2">
-                  <i class="bi bi-geo-alt-fill text-danger fs-5"></i>
-                  <div class="fw-bold">${dest.name}</div>
+                <a href="/destinations/${dest.slug}" class="dropdown-item d-flex align-items-center gap-3 py-2 px-3 search-item-hover">
+                  <img src="${dest.banner || '/images/default-dest.jpg'}" class="rounded-circle shadow-sm" width="36" height="36" style="object-fit:cover;">
+                  <div class="flex-grow-1">
+                    <div class="fw-bold text-dark small mb-0">${escapeHtml(dest.name)}</div>
+                    <small class="text-muted">${escapeHtml(dest.country || '')}</small>
+                  </div>
+                  <i class="bi bi-arrow-right-short fs-5 text-muted"></i>
                 </a>
               `;
             });
           }
+
           resultsContainer.innerHTML = html;
         }
         resultsContainer.classList.remove('d-none');
+        resultsContainer.classList.add('show-animated');
       } catch (err) {
         console.error('Search error:', err);
       }
-    }, 300);
+    }, 180);
   });
 
+  // Handle Enter Key press
+  searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      const query = searchInput.value.trim();
+      if (query.length > 0) {
+        window.location.href = `/tours?search=${encodeURIComponent(query)}`;
+      }
+    }
+  });
+
+  // Close dropdown on outside click
   document.addEventListener('click', (e) => {
     if (!searchInput.contains(e.target) && !resultsContainer.contains(e.target)) {
       resultsContainer.classList.add('d-none');
+      resultsContainer.classList.remove('show-animated');
     }
   });
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
 }
 
 /* 6. Wishlist Toggle with Pulse Animation */
