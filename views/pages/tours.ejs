@@ -74,20 +74,20 @@
       <% destinationSilos.forEach((dest, index) => { %>
         <div class="col-md-6 reveal-up delay-<%= (index%2)+1 %>">
           <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
-            <div class="position-relative" style="height: 180px;">
+            <div class="position-relative" style="height: 220px;">
               <img src="<%= dest.banner %>" class="w-100 h-100" style="object-fit:cover;">
-              <div class="position-absolute inset-0 bg-dark bg-opacity-50 d-flex align-items-end p-3 text-white">
+              <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-end p-4 text-white" style="background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.75) 100%);">
                 <div>
-                  <span class="badge bg-warning text-dark mb-1"><%= dest.country %></span>
-                  <h4 class="fw-bold mb-0"><%= dest.name %> Travel Hub</h4>
+                  <span class="badge bg-warning text-dark fw-bold mb-2 px-3 py-1.5 rounded-pill"><i class="bi bi-geo-alt-fill me-1"></i><%= dest.country %></span>
+                  <h4 class="fw-bold mb-0 text-white"><%= dest.name %> Travel Hub</h4>
                 </div>
               </div>
             </div>
-            <div class="card-body p-4 d-flex flex-column">
-              <p class="text-muted small flex-grow-1"><%= truncateText(dest.description, 100) %></p>
+            <div class="card-body p-4 d-flex flex-column bg-white">
+              <p class="text-muted small flex-grow-1 mb-3"><%= truncateText(dest.description, 110) %></p>
               <div class="pt-3 border-top d-flex justify-content-between align-items-center mt-auto">
-                <span class="fw-bold text-primary small"><i class="bi bi-map me-1"></i> <%= dest.tours ? dest.tours.length : 0 %> Linked Tours</span>
-                <a href="/destinations/<%= dest.slug %>" class="btn btn-sm btn-wanderlust rounded-pill">
+                <span class="fw-bold text-primary small"><i class="bi bi-compass me-1"></i> <%= dest.tours ? dest.tours.length : 0 %> Linked Tours</span>
+                <a href="/destinations/<%= dest.slug %>" class="btn btn-sm btn-primary rounded-pill px-4 fw-bold shadow-sm">
                   Explore <%= dest.name %> <i class="bi bi-chevron-right ms-1"></i>
                 </a>
               </div>
