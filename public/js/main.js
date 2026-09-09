@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollReveal();
   initNumberCounters();
   initHeroParallax();
+  init3DTiltEffects();
 });
 
 /* 2. Scroll Reveal Animations via IntersectionObserver */
@@ -337,4 +338,33 @@ function showToast(message, type = 'info') {
   setTimeout(() => {
     toastEl.remove();
   }, 4000);
+}
+
+/* 8. Interactive 3D Card Tilt Controller */
+function init3DTiltEffects() {
+  const tiltCards = document.querySelectorAll('.card-3d-tilt, .hero-3d-glass, .card-hover-3d');
+
+  tiltCards.forEach(card => {
+    if (card.parentElement) {
+      card.parentElement.style.perspective = '1200px';
+    }
+
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const rotateX = -((y - centerY) / centerY) * 10; // Max tilt 10deg
+      const rotateY = ((x - centerX) / centerX) * 10;
+
+      card.style.transform = `perspective(1200px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.02, 1.02, 1.02)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = `perspective(1200px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+    });
+  });
 }

@@ -7,6 +7,15 @@
     <h1 class="display-4 fw-extrabold mb-2">Explore All Tours & Categories</h1>
     <p class="fs-5 opacity-90 mb-4 max-w-2xl mx-auto">Discover handcrafted tour packages organized by travel experiences and top destinations worldwide.</p>
     
+    <!-- Hero Search Bar -->
+    <form action="/tours" method="GET" class="max-w-xl mx-auto mb-4">
+      <div class="input-group input-group-lg shadow-lg rounded-pill overflow-hidden bg-white p-1">
+        <span class="input-group-text bg-transparent border-0 ps-3"><i class="bi bi-search text-primary fs-5"></i></span>
+        <input type="text" name="search" class="form-control border-0 shadow-none fs-6 text-dark" placeholder="Search tours, destinations, activities..." value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>">
+        <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold">Search</button>
+      </div>
+    </form>
+
     <!-- Quick Category Navigation Bar -->
     <div class="d-flex flex-wrap justify-content-center gap-2 mt-3">
       <% categorySilos.forEach(cat => { %>
@@ -19,6 +28,38 @@
 </div>
 
 <div class="container mb-5">
+  <!-- DYNAMIC SEARCH RESULTS SECTION -->
+  <% if (typeof searchQuery !== 'undefined' && searchQuery) { %>
+    <div class="card border-0 shadow-sm rounded-4 p-4 mb-5 bg-white border-top border-primary border-4 reveal-up">
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-3 border-bottom">
+        <div>
+          <span class="badge bg-primary text-white mb-1 px-3 py-1.5 rounded-pill"><%= allTours ? allTours.length : 0 %> Tour(s) Found</span>
+          <h3 class="fw-extrabold mb-0">Search Results for "<span class="text-primary"><%= searchQuery %></span>"</h3>
+        </div>
+        <a href="/tours" class="btn btn-outline-secondary rounded-pill btn-sm px-3 fw-bold mt-2 mt-sm-0">
+          <i class="bi bi-x-circle me-1"></i> Clear Search Results
+        </a>
+      </div>
+
+      <% if (allTours && allTours.length > 0) { %>
+        <div class="row g-4">
+          <% allTours.forEach(tour => { %>
+            <div class="col-lg-4 col-md-6">
+              <%- include('../partials/tour_card', { tour: tour }) %>
+            </div>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <div class="p-5 text-center text-muted">
+          <i class="bi bi-search fs-1 text-secondary d-block mb-3"></i>
+          <h5>No tour packages matched "<%= searchQuery %>"</h5>
+          <p class="small mb-3">Try searching for alternative destinations like Bali, Swiss Alps, Kyoto, or Yacht.</p>
+          <a href="/tours" class="btn btn-primary rounded-pill px-4 fw-bold">Browse All Tours</a>
+        </div>
+      <% } %>
+    </div>
+  <% } %>
+
   <!-- SECTION 1: THEMATIC CATEGORIES -->
   <div class="mb-5">
     <div class="border-bottom pb-3 mb-4">
@@ -50,7 +91,7 @@
           <div class="row g-4">
             <% cat.tours.forEach(tour => { %>
               <div class="col-lg-4 col-md-6">
-                <%- include('../../partials/tour_card', { tour: tour }) %>
+                <%- include('../partials/tour_card', { tour: tour }) %>
               </div>
             <% }) %>
           </div>

@@ -89,6 +89,66 @@ body {
   animation: heartBeat 0.8s ease-in-out;
 }
 
+/* 5. 3D Floating & Interactive Depth Animations */
+@keyframes float3D {
+  0% {
+    transform: translateY(0px) rotateX(0deg) rotateY(0deg) translateZ(0px);
+  }
+  25% {
+    transform: translateY(-12px) rotateX(6deg) rotateY(10deg) translateZ(25px);
+  }
+  50% {
+    transform: translateY(-6px) rotateX(-5deg) rotateY(-8deg) translateZ(40px);
+  }
+  75% {
+    transform: translateY(-16px) rotateX(7deg) rotateY(-10deg) translateZ(20px);
+  }
+  100% {
+    transform: translateY(0px) rotateX(0deg) rotateY(0deg) translateZ(0px);
+  }
+}
+
+.animate-float-3d {
+  transform-style: preserve-3d;
+  animation: float3D 6s ease-in-out infinite;
+}
+
+.perspective-container {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.card-3d-tilt {
+  transform-style: preserve-3d;
+  transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+.card-3d-tilt:hover {
+  box-shadow: 0 25px 50px -12px rgba(0, 74, 173, 0.28) !important;
+}
+
+.layer-3d-lift {
+  transform: translateZ(35px);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.layer-3d-deep {
+  transform: translateZ(60px);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-3d-glass {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 30px 60px rgba(0, 74, 173, 0.2), inset 0 0 30px rgba(255, 255, 255, 0.6);
+  transform-style: preserve-3d;
+  border-radius: var(--radius-md);
+  padding: 32px;
+}
+
 /* ==========================================================================
    Scroll Reveal Animations
    ========================================================================== */
