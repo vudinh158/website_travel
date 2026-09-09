@@ -8,7 +8,8 @@ const { Op } = require('sequelize');
  */
 const getTours = async (req, res, next) => {
   try {
-    const { destination, category, search } = req.query;
+    const { destination, category } = req.query;
+    const searchQuery = (req.query.search || req.query.q || '').trim();
 
     // Fetch Categories with their linked Tours
     const categorySilos = await Category.findAll({
@@ -36,13 +37,13 @@ const getTours = async (req, res, next) => {
       ]
     });
 
-    // All active tours for general query fallback
+    // Search & Filter Query Handler
     let whereClause = { status: 'active' };
-    if (search) {
+    if (searchQuery) {
       whereClause[Op.or] = [
-        { name: { [Op.like]: `%${search}%` } },
-        { shortDescription: { [Op.like]: `%${search}%` } },
-        { departureLocation: { [Op.like]: `%${search}%` } }
+        { name: { [Op.like]: `%${searchQuery}%` } },
+        { shortDescription: { [Op.like]: `%${searchQuery}%` } },
+        { departureLocation: { [Op.like]: `%${searchQuery}%` } }
       ];
     }
 
@@ -61,13 +62,14 @@ const getTours = async (req, res, next) => {
     ], process.env.APP_URL);
 
     res.render('pages/tours', {
-      title: 'Explore All Tour Packages & Categories | Tranoi Travel',
+      title: searchQuery ? `Search Results for "${searchQuery}" | Tranoi Travel` : 'Explore All Tour Packages & Categories | Tranoi Travel',
       metaTitle: 'Travel Tour Collections - Tranoi Travel',
       metaDescription: 'Browse curated tour packages within our specialty destinations with Tranoi Travel.',
       categorySilos,
       destinationSilos,
       allTours,
       query: req.query,
+      searchQuery: searchQuery,
       schemaOrg: breadcrumbSchema,
       formatCurrency,
       formatDate,
