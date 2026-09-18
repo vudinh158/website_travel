@@ -1,141 +1,179 @@
-<!-- Directory Hero Header -->
-<div class="bg-primary text-white py-5 mb-5 shadow-sm promo-shimmer">
-  <div class="container text-center reveal-up">
-    <span class="badge bg-warning text-dark fw-bold px-3 py-2 rounded-pill mb-3 text-uppercase animate-float">
-      <i class="bi bi-compass-fill me-1"></i> Curated Travel Collections
-    </span>
-    <h1 class="display-4 fw-extrabold mb-2">Explore All Tours & Categories</h1>
-    <p class="fs-5 opacity-90 mb-4 max-w-2xl mx-auto">Discover handcrafted tour packages organized by travel experiences and top destinations worldwide.</p>
-    
-    <!-- Hero Search Bar -->
-    <form action="/tours" method="GET" class="max-w-xl mx-auto mb-4">
-      <div class="input-group input-group-lg shadow-lg rounded-pill overflow-hidden bg-white p-1">
-        <span class="input-group-text bg-transparent border-0 ps-3"><i class="bi bi-search text-primary fs-5"></i></span>
-        <input type="text" name="search" class="form-control border-0 shadow-none fs-6 text-dark" placeholder="Search tours, destinations, activities..." value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>">
-        <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold">Search</button>
-      </div>
-    </form>
-
-    <!-- Quick Category Navigation Bar -->
-    <div class="d-flex flex-wrap justify-content-center gap-2 mt-3">
-      <% categorySilos.forEach(cat => { %>
-        <a href="#cat-<%= cat.slug %>" class="btn btn-sm btn-light rounded-pill fw-bold px-3 py-2 shadow-sm">
-          <i class="<%= cat.icon %> text-primary me-1"></i> <%= cat.name %> (<%= cat.tours ? cat.tours.length : 0 %>)
-        </a>
-      <% }) %>
-    </div>
+<!-- Tours Hub Header -->
+<div class="bg-primary text-white py-5 mb-5" style="background: linear-gradient(135deg, #004AAD 0%, #002d6b 100%);">
+  <div class="container py-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-3">
+        <li class="breadcrumb-item"><a href="/" class="text-white-50 text-decoration-none">Home</a></li>
+        <li class="breadcrumb-item active text-white" aria-current="page">Vietnam Tours</li>
+      </ol>
+    </nav>
+    <span class="badge bg-accent text-white px-3 py-2 rounded-pill fw-bold text-uppercase mb-2">Bookable Tours</span>
+    <h1 class="display-4 fw-extrabold text-white mb-2">Curated Vietnam Tour Packages</h1>
+    <p class="fs-5 text-white-50 mb-0" style="max-width: 720px;">
+      Explore our signature long-duration Vietnam itineraries. Every tour offers our in-page toggle between fully chauffeured Private and smart Partial-guided formats.
+    </p>
   </div>
 </div>
 
 <div class="container mb-5">
-  <!-- DYNAMIC SEARCH RESULTS SECTION -->
-  <% if (typeof searchQuery !== 'undefined' && searchQuery) { %>
-    <div class="card border-0 shadow-sm rounded-4 p-4 mb-5 bg-white border-top border-primary border-4 reveal-up">
-      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-3 border-bottom">
-        <div>
-          <span class="badge bg-primary text-white mb-1 px-3 py-1.5 rounded-pill"><%= allTours ? allTours.length : 0 %> Tour(s) Found</span>
-          <h3 class="fw-extrabold mb-0">Search Results for "<span class="text-primary"><%= searchQuery %></span>"</h3>
-        </div>
-        <a href="/tours" class="btn btn-outline-secondary rounded-pill btn-sm px-3 fw-bold mt-2 mt-sm-0">
-          <i class="bi bi-x-circle me-1"></i> Clear Search Results
-        </a>
-      </div>
-
-      <% if (allTours && allTours.length > 0) { %>
-        <div class="row g-4">
-          <% allTours.forEach(tour => { %>
-            <div class="col-lg-4 col-md-6">
-              <%- include('../partials/tour_card', { tour: tour }) %>
-            </div>
-          <% }) %>
-        </div>
-      <% } else { %>
-        <div class="p-5 text-center text-muted">
-          <i class="bi bi-search fs-1 text-secondary d-block mb-3"></i>
-          <h5>No tour packages matched "<%= searchQuery %>"</h5>
-          <p class="small mb-3">Try searching for alternative destinations like Bali, Swiss Alps, Kyoto, or Yacht.</p>
-          <a href="/tours" class="btn btn-primary rounded-pill px-4 fw-bold">Browse All Tours</a>
-        </div>
-      <% } %>
-    </div>
-  <% } %>
-
-  <!-- SECTION 1: THEMATIC CATEGORIES -->
-  <div class="mb-5">
-    <div class="border-bottom pb-3 mb-4">
-      <span class="text-primary fw-bold text-uppercase small">Travel Experiences</span>
-      <h2 class="fw-extrabold mb-0"><i class="bi bi-layers-fill text-primary me-2"></i> Browse by Travel Category</h2>
-    </div>
-
-    <% categorySilos.forEach((cat, index) => { %>
-      <div id="cat-<%= cat.slug %>" class="card border-0 shadow-sm rounded-4 p-4 mb-5 reveal-up delay-<%= (index%3)+1 %>">
-        <!-- Category Header -->
-        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-3 border-bottom">
-          <div class="d-flex align-items-center gap-3">
-            <div class="p-3 bg-primary bg-opacity-10 text-primary rounded-4 fs-2">
-              <i class="<%= cat.icon %>"></i>
-            </div>
-            <div>
-              <span class="badge bg-primary text-white mb-1"><%= cat.tours ? cat.tours.length : 0 %> Active Tour Packages</span>
-              <h3 class="fw-extrabold mb-1"><%= cat.name %></h3>
-              <p class="text-muted small mb-0"><%= cat.description || 'Curated travel packages in this category.' %></p>
-            </div>
+  <!-- Multi-Facet Filter Bar (Duration, Format, Region, Theme) -->
+  <div class="card border-0 rounded-4 shadow-sm p-4 mb-4 bg-white">
+    <form action="/tours" method="GET" id="tour-filter-form">
+      <div class="row g-3 align-items-end">
+        <!-- Search Keyword -->
+        <div class="col-lg-3 col-md-6">
+          <label class="form-label small fw-bold text-muted">Search Itineraries</label>
+          <div class="input-group">
+            <span class="input-group-text bg-light border-end-0"><i class="bi bi-search text-muted"></i></span>
+            <input type="text" name="search" class="form-control bg-light border-start-0" placeholder="e.g. Ha Long, Sapa, 10-Day" value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>">
           </div>
-          <a href="/tours/category/<%= cat.slug %>" class="btn btn-outline-primary rounded-pill fw-bold mt-2 mt-sm-0">
-            View All <%= cat.name %> Tours <i class="bi bi-arrow-right ms-1"></i>
+        </div>
+
+        <!-- Duration Filter (7, 10, 14, 21 Days) -->
+        <div class="col-lg-2 col-md-6 col-6">
+          <label class="form-label small fw-bold text-muted">Duration</label>
+          <select name="duration" class="form-select bg-light" onchange="this.form.submit()">
+            <option value="">Any Duration</option>
+            <option value="7" <%= query.duration == '7' ? 'selected' : '' %>>7 Days (1 Week)</option>
+            <option value="10" <%= query.duration == '10' ? 'selected' : '' %>>10 Days</option>
+            <option value="14" <%= query.duration == '14' ? 'selected' : '' %>>14 Days (2 Weeks)</option>
+            <option value="21" <%= query.duration == '21' ? 'selected' : '' %>>21 Days (3 Weeks)</option>
+          </select>
+        </div>
+
+        <!-- Format Filter (Private vs Partial-Guided) -->
+        <div class="col-lg-2 col-md-6 col-6">
+          <label class="form-label small fw-bold text-muted">Format Style</label>
+          <select name="format" class="form-select bg-light" onchange="this.form.submit()">
+            <option value="">All Formats</option>
+            <option value="partial-guided" <%= query.format == 'partial-guided' ? 'selected' : '' %>>Partial-Guided</option>
+            <option value="private" <%= query.format == 'private' ? 'selected' : '' %>>Private Chauffeured</option>
+          </select>
+        </div>
+
+        <!-- Region Filter -->
+        <div class="col-lg-2 col-md-6 col-6">
+          <label class="form-label small fw-bold text-muted">Region</label>
+          <select name="region" class="form-select bg-light" onchange="this.form.submit()">
+            <option value="all">All Regions</option>
+            <option value="north" <%= query.region == 'north' ? 'selected' : '' %>>North Vietnam</option>
+            <option value="central" <%= query.region == 'central' ? 'selected' : '' %>>Central Vietnam</option>
+            <option value="south" <%= query.region == 'south' ? 'selected' : '' %>>South Vietnam</option>
+            <option value="multi-region" <%= query.region == 'multi-region' ? 'selected' : '' %>>Multi-Region</option>
+          </select>
+        </div>
+
+        <!-- Theme Filter -->
+        <div class="col-lg-2 col-md-6 col-6">
+          <label class="form-label small fw-bold text-muted">Theme</label>
+          <select name="theme" class="form-select bg-light" onchange="this.form.submit()">
+            <option value="all">All Themes</option>
+            <option value="highlights" <%= query.theme == 'highlights' ? 'selected' : '' %>>Highlights</option>
+            <option value="family" <%= query.theme == 'family' ? 'selected' : '' %>>Family</option>
+            <option value="honeymoon" <%= query.theme == 'honeymoon' ? 'selected' : '' %>>Honeymoon</option>
+            <option value="adventure" <%= query.theme == 'adventure' ? 'selected' : '' %>>Adventure</option>
+            <option value="culinary" <%= query.theme == 'culinary' ? 'selected' : '' %>>Culinary</option>
+            <option value="eco-tours" <%= query.theme == 'eco-tours' ? 'selected' : '' %>>Eco-Tours</option>
+          </select>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="col-lg-1 col-md-12 text-end">
+          <a href="/tours" class="btn btn-outline-secondary w-100 rounded-3 text-nowrap" title="Reset Filters">
+            <i class="bi bi-arrow-counterclockwise"></i>
           </a>
         </div>
-
-        <!-- Child Tour Grid -->
-        <% if (cat.tours && cat.tours.length > 0) { %>
-          <div class="row g-4">
-            <% cat.tours.forEach(tour => { %>
-              <div class="col-lg-4 col-md-6">
-                <%- include('../partials/tour_card', { tour: tour }) %>
-              </div>
-            <% }) %>
-          </div>
-        <% } else { %>
-          <div class="p-4 bg-light rounded-3 text-center text-muted">
-            <p class="mb-0">No active tours currently listed in this category.</p>
-          </div>
-        <% } %>
       </div>
-    <% }) %>
+    </form>
   </div>
 
-  <!-- SECTION 2: GEOGRAPHIC DESTINATIONS -->
-  <div class="mb-5">
-    <div class="border-bottom pb-3 mb-4">
-      <span class="text-primary fw-bold text-uppercase small">Destinations & Regions</span>
-      <h2 class="fw-extrabold mb-0"><i class="bi bi-geo-alt-fill text-danger me-2"></i> Explore by Destination</h2>
+  <!-- Results Count Bar -->
+  <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+    <div>
+      <span class="fw-bold text-dark"><%= allTours.length %> Curated Tour Package(s)</span>
+      <% if (query.duration || query.format || query.region || searchQuery) { %>
+        <span class="text-muted small ms-2">(filtered by your selections)</span>
+      <% } %>
     </div>
+    <div class="small text-muted">
+      All prices in USD &bull; Guaranteed Departures
+    </div>
+  </div>
 
+  <!-- Tour Grid -->
+  <% if (allTours && allTours.length > 0) { %>
     <div class="row g-4">
-      <% destinationSilos.forEach((dest, index) => { %>
-        <div class="col-md-6 reveal-up delay-<%= (index%2)+1 %>">
-          <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
-            <div class="position-relative" style="height: 220px;">
-              <img src="<%= dest.banner %>" class="w-100 h-100" style="object-fit:cover;">
-              <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-end p-4 text-white" style="background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.75) 100%);">
-                <div>
-                  <span class="badge bg-warning text-dark fw-bold mb-2 px-3 py-1.5 rounded-pill"><i class="bi bi-geo-alt-fill me-1"></i><%= dest.country %></span>
-                  <h4 class="fw-bold mb-0 text-white"><%= dest.name %> Travel Hub</h4>
-                </div>
+      <% allTours.forEach(tour => { %>
+        <div class="col-lg-6">
+          <div class="card h-100 border-0 rounded-4 shadow-sm overflow-hidden tour-card-hover transition-smooth bg-white">
+            <div class="position-relative" style="height: 280px;">
+              <img src="<%= tour.featuredImage %>" alt="<%= tour.name %>" class="w-100 h-100" style="object-fit: cover;">
+              <div class="position-absolute top-0 start-0 m-3 d-flex flex-wrap gap-2">
+                <span class="badge bg-primary text-white rounded-pill px-3 py-2"><%= tour.duration %></span>
+                <span class="badge bg-accent text-white rounded-pill px-3 py-2">Private &amp; Partial-Guided</span>
+              </div>
+              <div class="position-absolute bottom-0 start-0 w-100 p-3" style="background: linear-gradient(transparent, rgba(0,0,0,0.75));">
+                <span class="text-white small fw-semibold">
+                  <i class="bi bi-geo-alt-fill text-accent me-1"></i> <%= tour.departureLocation %>
+                </span>
               </div>
             </div>
-            <div class="card-body p-4 d-flex flex-column bg-white">
-              <p class="text-muted small flex-grow-1 mb-3"><%= truncateText(dest.description, 110) %></p>
-              <div class="pt-3 border-top d-flex justify-content-between align-items-center mt-auto">
-                <span class="fw-bold text-primary small"><i class="bi bi-compass me-1"></i> <%= dest.tours ? dest.tours.length : 0 %> Linked Tours</span>
-                <a href="/destinations/<%= dest.slug %>" class="btn btn-sm btn-primary rounded-pill px-4 fw-bold shadow-sm">
-                  Explore <%= dest.name %> <i class="bi bi-chevron-right ms-1"></i>
-                </a>
+
+            <div class="card-body p-4 d-flex flex-column justify-content-between">
+              <div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span class="badge bg-light text-primary border"><i class="bi bi-speedometer2 me-1"></i> <%= tour.pace %> Pace</span>
+                  <span class="text-warning small fw-bold"><i class="bi bi-star-fill me-1"></i> <%= tour.rating.toFixed(2) %> (<%= tour.totalReviews %> reviews)</span>
+                </div>
+                
+                <h4 class="card-title fw-bold mb-2">
+                  <a href="/tours/<%= tour.slug %>" class="text-dark text-decoration-none hover-primary">
+                    <%= tour.name %>
+                  </a>
+                </h4>
+                
+                <p class="card-text text-secondary small leading-relaxed mb-3">
+                  <%= truncateText(tour.shortDescription, 140) %>
+                </p>
+
+                <!-- Highlights Bullet List -->
+                <% if (tour.highlights) { %>
+                  <% const hls = typeof tour.highlights === 'string' ? JSON.parse(tour.highlights) : tour.highlights; %>
+                  <ul class="list-unstyled mb-3 small text-muted">
+                    <% hls.slice(0, 2).forEach(h => { %>
+                      <li class="d-flex align-items-start gap-2 mb-1">
+                        <i class="bi bi-check-circle-fill text-success mt-1"></i>
+                        <span><%= h %></span>
+                      </li>
+                    <% }) %>
+                  </ul>
+                <% } %>
+              </div>
+
+              <!-- Price and Booking CTA -->
+              <div class="pt-3 border-top d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="text-muted small d-block">From</span>
+                  <span class="fs-4 fw-extrabold text-primary">$<%= Math.round(tour.pricePartialGuided || tour.discountPrice || tour.price) %></span>
+                  <span class="text-muted small">/ guest</span>
+                </div>
+                <div class="d-flex gap-2">
+                  <a href="/tours/<%= tour.slug %>" class="btn btn-primary rounded-pill px-4 fw-bold">
+                    View Itinerary &rarr;
+                  </a>
+                </div>
               </div>
             </div>
           </div>
         </div>
       <% }) %>
     </div>
-  </div>
+  <% } else { %>
+    <div class="p-5 text-center bg-white rounded-4 shadow-sm">
+      <i class="bi bi-compass fs-1 text-muted d-block mb-3"></i>
+      <h4 class="fw-bold mb-2">No Tours Match Your Criteria</h4>
+      <p class="text-secondary mb-4">Try clearing one of your filters or browse all our signature Vietnam packages.</p>
+      <a href="/tours" class="btn btn-primary rounded-pill px-4 fw-bold">Clear All Filters</a>
+    </div>
+  <% } %>
 </div>

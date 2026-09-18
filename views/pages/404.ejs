@@ -1,7 +1,13 @@
-<div class="container py-5 text-center" style="max-width: 600px;">
-  <i class="bi bi-compass-fill display-1 text-primary mb-3"></i>
-  <h1 class="display-3 fw-extrabold mb-2">404</h1>
-  <h3 class="fw-bold mb-3"><%= typeof message !== 'undefined' ? message : 'Destination Not Found' %></h3>
-  <p class="text-muted mb-4">The travel page or tour destination you are searching for might have moved, been renamed, or is temporarily offline.</p>
-  <a href="/" class="btn btn-wanderlust btn-lg rounded-pill px-4"><i class="bi bi-house-fill me-2"></i> Return to Homepage</a>
+<div class="container py-5 my-5 text-center" style="max-width: 680px;">
+  <div class="rounded-circle bg-primary bg-opacity-10 text-primary d-inline-flex align-items-center justify-content-center mx-auto mb-4" style="width: 80px; height: 80px;">
+    <i class="bi bi-compass-fill fs-1"></i>
+  </div>
+  <h1 class="display-3 fw-extrabold text-primary mb-2">404</h1>
+  <h3 class="fw-bold mb-3"><%= typeof message !== 'undefined' ? message : 'Page or Destination Not Found' %></h3>
+  <p class="text-secondary fs-6 mb-4 leading-relaxed">The page you are looking for might have moved or the URL was entered with an extra character. Let us help you get back on course.</p>
+  <div class="d-flex justify-content-center flex-wrap gap-3">
+    <a href="/" class="btn btn-primary rounded-pill px-4 py-2 fw-bold"><i class="bi bi-house-fill me-1"></i> Return to Homepage</a>
+    <a href="/tours" class="btn btn-outline-primary rounded-pill px-4 py-2 fw-bold">Explore Tours</a>
+    <a href="/vietnam" class="btn btn-outline-secondary rounded-pill px-4 py-2 fw-bold">Vietnam Destinations</a>
+  </div>
 </div>

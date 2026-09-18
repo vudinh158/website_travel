@@ -19,6 +19,11 @@ const Contact = require('./Contact');
 const NewsletterSubscriber = require('./NewsletterSubscriber');
 const Wishlist = require('./Wishlist');
 const Setting = require('./Setting');
+const Itinerary = require('./Itinerary');
+const Theme = require('./Theme');
+const Guide = require('./Guide');
+const SignatureExperience = require('./SignatureExperience');
+const CustomerStory = require('./CustomerStory');
 
 // User & Role
 Role.hasMany(User, { foreignKey: 'roleId', as: 'users' });
@@ -108,5 +113,10 @@ module.exports = {
   Contact,
   NewsletterSubscriber,
   Wishlist,
-  Setting
+  Setting,
+  Itinerary,
+  Theme,
+  Guide,
+  SignatureExperience,
+  CustomerStory
 };

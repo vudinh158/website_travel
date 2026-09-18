@@ -1,114 +1,170 @@
-<!-- Tour Header Banner & Breadcrumbs -->
+<!-- Tour Header & Breadcrumbs -->
 <div class="container py-4">
   <nav aria-label="breadcrumb" class="mb-3">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="/">Home</a></li>
-      <li class="breadcrumb-item"><a href="/tours">Tours</a></li>
-      <li class="breadcrumb-item active"><%= tour.name %></li>
+      <li class="breadcrumb-item"><a href="/" class="text-muted text-decoration-none">Home</a></li>
+      <li class="breadcrumb-item"><a href="/tours" class="text-muted text-decoration-none">Vietnam Tours</a></li>
+      <li class="breadcrumb-item active text-primary fw-bold" aria-current="page"><%= tour.name %></li>
     </ol>
   </nav>
 
-  <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-3">
+  <!-- Title & Meta Bar (Commercial Convention: No em dashes per Brand Guidelines) -->
+  <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
     <div>
-      <span class="badge bg-primary text-white mb-2"><%= tour.category ? tour.category.name : 'Tour' %></span>
-      <h1 class="display-5 fw-extrabold mb-2"><%= tour.name %></h1>
+      <div class="d-flex flex-wrap gap-2 mb-2">
+        <span class="badge bg-primary text-white px-3 py-1.5 rounded-pill"><%= tour.duration %></span>
+        <span class="badge bg-accent text-white px-3 py-1.5 rounded-pill fw-bold">Private &amp; Partial-Guided Available</span>
+      </div>
+      <h1 class="display-5 fw-extrabold text-dark mb-2"><%= tour.name %></h1>
       <div class="d-flex flex-wrap align-items-center gap-3 text-muted small">
-        <span><i class="bi bi-geo-alt-fill text-danger me-1"></i> <%= tour.destination ? tour.destination.name : 'Worldwide' %></span>
+        <span><i class="bi bi-geo-alt-fill text-danger me-1"></i> <%= tour.departureLocation %></span>
         <span><i class="bi bi-clock-fill text-primary me-1"></i> <%= tour.duration %></span>
-        <span><i class="bi bi-star-fill text-warning me-1"></i> <strong><%= tour.rating.toFixed(1) %></strong> (<%= tour.totalReviews %> reviews)</span>
+        <span><i class="bi bi-speedometer2 text-success me-1"></i> <%= tour.pace %> Pace</span>
+        <span><i class="bi bi-star-fill text-warning me-1"></i> <strong><%= tour.rating.toFixed(2) %></strong> (<%= tour.totalReviews %> verified reviews)</span>
       </div>
     </div>
+    
     <div class="d-flex gap-2">
-      <button class="btn btn-outline-secondary btn-toggle-wishlist rounded-pill" data-tour-id="<%= tour.id %>">
-        <i class="bi bi-heart me-1"></i> Save to Wishlist
+      <button class="btn btn-outline-secondary rounded-pill px-3 py-2 btn-toggle-wishlist" data-tour-id="<%= tour.id %>">
+        <i class="bi bi-heart me-1 text-danger"></i> Save Tour
+      </button>
+      <button class="btn btn-accent rounded-pill px-4 py-2 fw-bold text-white shadow-sm" data-bs-toggle="modal" data-bs-target="#enquiryModal">
+        <i class="bi bi-envelope-fill me-1"></i> Inquire Now
       </button>
     </div>
   </div>
 
-  <!-- Gallery Grid -->
+  <!-- Gallery Showcase -->
   <div class="row g-2 rounded-4 overflow-hidden mb-5">
     <div class="col-md-8">
-      <img src="<%= tour.featuredImage %>" alt="<%= tour.name %>" class="w-100 h-100" style="min-height: 380px; object-fit: cover;">
+      <img src="<%= tour.featuredImage %>" alt="<%= tour.name %>" class="w-100 h-100" style="min-height: 380px; max-height: 480px; object-fit: cover;">
     </div>
     <div class="col-md-4 d-flex flex-column gap-2">
       <% if (tour.images && tour.images.length > 0) { %>
         <% tour.images.slice(0, 2).forEach(img => { %>
-          <img src="<%= img.imageUrl %>" class="w-100 h-100" style="height: 185px; object-fit: cover;">
+          <img src="<%= img.imageUrl %>" class="w-100 h-100" style="height: 185px; max-height: 235px; object-fit: cover;">
         <% }) %>
       <% } else { %>
-        <img src="<%= tour.featuredImage %>" class="w-100 h-100" style="height: 185px; object-fit: cover;">
+        <img src="https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=800&q=80" class="w-100 h-100" style="height: 185px; max-height: 235px; object-fit: cover;">
+        <img src="https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80" class="w-100 h-100" style="height: 185px; max-height: 235px; object-fit: cover;">
       <% } %>
     </div>
   </div>
 
+  <!-- MODULE 2: AT-A-GLANCE WITH FORMAT TOGGLE (Private ⇄ Partial-guided) -->
+  <div class="card border-0 rounded-4 shadow-sm p-4 mb-5 bg-white border-top border-4 border-primary">
+    <div class="row align-items-center g-4">
+      <div class="col-lg-6">
+        <span class="text-muted small text-uppercase fw-bold d-block mb-1">Select Your Travel Format</span>
+        <!-- Pill Toggle Switch -->
+        <div class="format-toggle-box" id="format-toggle-group">
+          <button type="button" class="format-toggle-btn active" id="toggle-partial" onclick="switchFormat('partial-guided')">
+            <i class="bi bi-compass-fill"></i> Partial-Guided Tour
+          </button>
+          <button type="button" class="format-toggle-btn" id="toggle-private" onclick="switchFormat('private')">
+            <i class="bi bi-person-check-fill"></i> Private Chauffeured
+          </button>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="row text-center g-3">
+          <div class="col-4 border-end">
+            <span class="text-muted small d-block">Duration</span>
+            <span class="fw-bold fs-6 text-dark"><%= tour.duration %></span>
+          </div>
+          <div class="col-4 border-end">
+            <span class="text-muted small d-block">Pace</span>
+            <span class="fw-bold fs-6 text-dark" id="glance-pace">Balanced &bull; <%= tour.pace %></span>
+          </div>
+          <div class="col-4">
+            <span class="text-muted small d-block">Starting Price</span>
+            <span class="fw-extrabold fs-4 text-primary" id="glance-price">$<%= Math.round(tour.pricePartialGuided || tour.discountPrice || tour.price) %></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Dynamic Format Explainer Note -->
+    <div class="mt-3 pt-3 border-top small text-secondary d-flex align-items-center gap-2" id="format-description-note">
+      <i class="bi bi-info-circle text-primary fs-5"></i>
+      <span id="format-note-text">
+        <strong>Partial-Guided Format:</strong> Certified local guides for key cultural landmarks, plus independent leisure windows with 24/7 on-call WhatsApp support. All transfers and stays arranged.
+      </span>
+    </div>
+  </div>
+
   <div class="row g-5">
-    <!-- Left Details Column -->
+    <!-- Left Column: Overview, Day-by-Day, Map, Inclusions, Reviews -->
     <div class="col-lg-8">
+      
       <!-- Tour Highlights -->
-      <% if (tour.highlights) { %>
-        <div class="card border-0 shadow-sm p-4 rounded-4 mb-4 bg-light">
-          <h4 class="fw-bold mb-3"><i class="bi bi-award-fill text-warning me-2"></i> Tour Highlights</h4>
-          <ul class="row g-2 list-unstyled mb-0">
-            <% (typeof tour.highlights === 'string' ? JSON.parse(tour.highlights) : tour.highlights).forEach(h => { %>
+      <% if (highlights && highlights.length > 0) { %>
+        <div class="card border-0 shadow-sm p-4 rounded-4 mb-5 bg-light">
+          <h4 class="fw-bold text-primary mb-3"><i class="bi bi-award-fill text-warning me-2"></i> Tour Highlights</h4>
+          <ul class="row g-3 list-unstyled mb-0">
+            <% highlights.forEach(h => { %>
               <li class="col-md-6 d-flex align-items-start gap-2">
-                <i class="bi bi-check-circle-fill text-success fs-5"></i>
-                <span><%= h %></span>
+                <i class="bi bi-check-circle-fill text-success fs-5 mt-1"></i>
+                <span class="small text-dark fw-medium leading-relaxed"><%= h %></span>
               </li>
             <% }) %>
           </ul>
         </div>
       <% } %>
 
-      <!-- Overview Description -->
+      <!-- Overview -->
       <div class="mb-5">
-        <h4 class="fw-bold mb-3">Overview</h4>
-        <p class="fs-6 leading-relaxed text-secondary"><%= tour.fullDescription || tour.shortDescription %></p>
+        <h3 class="fw-bold text-dark mb-3">Overview</h3>
+        <p class="fs-6 text-secondary leading-relaxed"><%= tour.fullDescription || tour.shortDescription %></p>
       </div>
 
-      <!-- Included & Excluded Services -->
-      <div class="row g-4 mb-5">
-        <div class="col-md-6">
-          <div class="card h-100 border-0 shadow-sm p-4 rounded-4 border-top border-4 border-success">
-            <h5 class="fw-bold text-success mb-3"><i class="bi bi-check-lg me-1"></i> What's Included</h5>
-            <ul class="list-unstyled d-flex flex-column gap-2 mb-0 small">
-              <% if (tour.includedServices) { %>
-                <% (typeof tour.includedServices === 'string' ? JSON.parse(tour.includedServices) : tour.includedServices).forEach(inc => { %>
-                  <li class="d-flex align-items-center gap-2"><i class="bi bi-check2 text-success fw-bold"></i> <%= inc %></li>
-                <% }) %>
-              <% } %>
-            </ul>
+      <!-- MODULE 4: ROUTE MAP VISUALIZER -->
+      <% if (routeMapPoints && routeMapPoints.length > 0) { %>
+        <div class="mb-5">
+          <h3 class="fw-bold text-dark mb-3"><i class="bi bi-geo-alt-fill text-danger me-2"></i> Route Map &amp; Stops</h3>
+          <div class="vietnam-route-map p-4 mb-3">
+            <div class="d-flex flex-column gap-3">
+              <% routeMapPoints.forEach((point, idx) => { %>
+                <div class="route-stop-point">
+                  <div class="route-stop-number"><%= idx + 1 %></div>
+                  <div>
+                    <h6 class="fw-bold text-dark mb-0"><%= point.name %></h6>
+                    <span class="text-secondary small"><%= point.description %></span>
+                  </div>
+                </div>
+              <% }) %>
+            </div>
           </div>
+          <% if (tour.googleMapsEmbed) { %>
+            <div class="rounded-4 overflow-hidden shadow-sm mt-3" style="height: 300px;">
+              <iframe src="<%= tour.googleMapsEmbed %>" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+          <% } %>
         </div>
+      <% } %>
 
-        <div class="col-md-6">
-          <div class="card h-100 border-0 shadow-sm p-4 rounded-4 border-top border-4 border-danger">
-            <h5 class="fw-bold text-danger mb-3"><i class="bi bi-x-lg me-1"></i> What's Excluded</h5>
-            <ul class="list-unstyled d-flex flex-column gap-2 mb-0 small text-muted">
-              <% if (tour.excludedServices) { %>
-                <% (typeof tour.excludedServices === 'string' ? JSON.parse(tour.excludedServices) : tour.excludedServices).forEach(exc => { %>
-                  <li class="d-flex align-items-center gap-2"><i class="bi bi-x text-danger fw-bold fs-5"></i> <%= exc %></li>
-                <% }) %>
-              <% } %>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Day-by-Day Itinerary Accordion -->
+      <!-- MODULE 3: FULL DAY-BY-DAY ITINERARY -->
       <div class="mb-5">
-        <h4 class="fw-bold mb-3"><i class="bi bi-map-fill text-primary me-2"></i> Day-by-Day Itinerary</h4>
+        <h3 class="fw-bold text-dark mb-3"><i class="bi bi-calendar-range text-primary me-2"></i> Full Day-by-Day Itinerary</h3>
         <div class="accordion accordion-wanderlust" id="itineraryAccordion">
-          <% if (tour.itinerary) { %>
-            <% (typeof tour.itinerary === 'string' ? JSON.parse(tour.itinerary) : tour.itinerary).forEach((item, index) => { %>
-              <div class="accordion-item">
+          <% if (itinerary && itinerary.length > 0) { %>
+            <% itinerary.forEach((item, index) => { %>
+              <div class="accordion-item mb-3">
                 <h2 class="accordion-header" id="heading<%= index %>">
-                  <button class="accordion-button <%= index !== 0 ? 'collapsed' : '' %>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= index %>">
-                    <span class="badge bg-primary me-3">Day <%= item.day %></span> <%= item.title %>
+                  <button class="accordion-button <%= index !== 0 ? 'collapsed' : '' %> py-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= index %>">
+                    <span class="badge bg-primary me-3 px-3 py-1">Day <%= item.day %></span>
+                    <span class="fw-bold text-dark"><%= item.title %></span>
                   </button>
                 </h2>
                 <div id="collapse<%= index %>" class="accordion-collapse collapse <%= index === 0 ? 'show' : '' %>" data-bs-parent="#itineraryAccordion">
-                  <div class="accordion-body text-secondary">
-                    <%= item.description %>
+                  <div class="accordion-body text-secondary p-4 bg-white">
+                    <% if (item.image) { %>
+                      <div class="mb-3 rounded-3 overflow-hidden" style="max-height: 240px;">
+                        <img src="<%= item.image %>" alt="<%= item.title %>" class="w-100 h-100" style="object-fit: cover;">
+                      </div>
+                    <% } %>
+                    <p class="leading-relaxed mb-0"><%= item.description %></p>
                   </div>
                 </div>
               </div>
@@ -117,136 +173,358 @@
         </div>
       </div>
 
-      <!-- Meeting Point & Map -->
-      <% if (tour.googleMapsEmbed) { %>
-        <div class="mb-5">
-          <h4 class="fw-bold mb-3"><i class="bi bi-geo-alt-fill text-danger me-2"></i> Meeting Point Location</h4>
-          <p class="text-muted small mb-3"><strong>Meeting Point:</strong> <%= tour.meetingPoint || tour.departureLocation %></p>
-          <div class="rounded-4 overflow-hidden shadow-sm" style="height: 320px;">
-            <iframe src="<%= tour.googleMapsEmbed %>" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+      <!-- MODULE 5: WHAT'S INCLUDED / EXCLUDED (Switches dynamically with format toggle) -->
+      <div class="mb-5">
+        <h3 class="fw-bold text-dark mb-3"><i class="bi bi-shield-check text-success me-2"></i> Inclusions &amp; Exclusions</h3>
+        <div class="row g-4">
+          <!-- Included Column -->
+          <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm p-4 rounded-4 border-top border-4 border-success bg-white">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold text-success mb-0"><i class="bi bi-check-circle-fill me-1"></i> What's Included</h5>
+                <span class="badge bg-light text-success border small" id="included-format-badge">Partial-Guided</span>
+              </div>
+              <ul class="list-unstyled d-flex flex-column gap-2 mb-0 small" id="included-list-container">
+                <!-- Dynamically filled by JS -->
+              </ul>
+            </div>
+          </div>
+
+          <!-- Excluded Column -->
+          <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm p-4 rounded-4 border-top border-4 border-danger bg-white">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold text-danger mb-0"><i class="bi bi-x-circle-fill me-1"></i> What's Excluded</h5>
+                <span class="badge bg-light text-danger border small" id="excluded-format-badge">Partial-Guided</span>
+              </div>
+              <ul class="list-unstyled d-flex flex-column gap-2 mb-0 small text-muted" id="excluded-list-container">
+                <!-- Dynamically filled by JS -->
+              </ul>
+            </div>
           </div>
         </div>
-      <% } %>
+      </div>
 
-      <!-- Customer Reviews -->
+      <!-- MODULE 6: REVIEWS FOR THIS TOUR -->
       <div class="mb-5">
-        <h4 class="fw-bold mb-3"><i class="bi bi-star-fill text-warning me-2"></i> Traveler Reviews</h4>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h3 class="fw-bold text-dark mb-0"><i class="bi bi-star-fill text-warning me-2"></i> Verified Traveler Reviews</h3>
+          <a href="/trip-reviews" class="text-primary fw-bold text-decoration-none small">All Reviews &rarr;</a>
+        </div>
+        
         <% if (tour.reviews && tour.reviews.length > 0) { %>
           <div class="d-flex flex-column gap-3">
             <% tour.reviews.forEach(rev => { %>
-              <div class="card border-0 shadow-sm p-3 rounded-4">
+              <div class="card border-0 shadow-sm p-4 rounded-4 bg-white">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                  <div class="d-flex align-items-center gap-2">
-                    <img src="<%= rev.user ? rev.user.avatar : '/images/default-avatar.png' %>" class="rounded-circle" width="36" height="36" style="object-fit:cover;">
-                    <span class="fw-bold"><%= rev.user ? rev.user.name : 'Verified Guest' %></span>
+                  <div class="d-flex align-items-center gap-3">
+                    <img src="<%= rev.user ? rev.user.avatar : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80' %>" class="rounded-circle" width="42" height="42" style="object-fit:cover;">
+                    <div>
+                      <span class="fw-bold text-dark d-block"><%= rev.user ? rev.user.name : 'Verified Traveler' %></span>
+                      <span class="badge bg-light text-success border" style="font-size: 0.7rem;">Verified Guest</span>
+                    </div>
                   </div>
-                  <div class="text-warning small">
+                  <div class="text-warning">
                     <% for(let i=0; i<rev.rating; i++) { %> <i class="bi bi-star-fill"></i> <% } %>
                   </div>
                 </div>
-                <h6 class="fw-bold mb-1"><%= rev.title %></h6>
-                <p class="text-muted small mb-0"><%= rev.comment %></p>
+                <h6 class="fw-bold text-dark mb-1"><%= rev.title %></h6>
+                <p class="text-secondary small mb-0 leading-relaxed"><%= rev.comment %></p>
               </div>
             <% }) %>
           </div>
         <% } else { %>
-          <p class="text-muted">No reviews yet. Be the first traveler to leave a review after your trip!</p>
+          <div class="p-4 bg-white rounded-4 border text-center text-muted">
+            <p class="mb-0">Be among our next travelers to share feedback on this signature route.</p>
+          </div>
         <% } %>
       </div>
+
+      <!-- MODULE 7: SIMILAR TOURS -->
+      <% if (relatedTours && relatedTours.length > 0) { %>
+        <div class="mb-5">
+          <h3 class="fw-bold text-dark mb-4">Similar Curated Vietnam Tours</h3>
+          <div class="row g-4">
+            <% relatedTours.forEach(rt => { %>
+              <div class="col-md-6">
+                <%- include('../partials/tour_card', { tour: rt }) %>
+              </div>
+            <% }) %>
+          </div>
+        </div>
+      <% } %>
+
     </div>
 
-    <!-- Right Sticky Booking Card Widget -->
+    <!-- Right Sticky Column: Booking & Enquiry Card -->
     <div class="col-lg-4">
-      <div class="sticky-booking-widget">
+      <div class="card border-0 shadow-lg rounded-4 p-4 sticky-top bg-white" style="top: 100px; z-index: 10;">
         <div class="d-flex justify-content-between align-items-center mb-3">
           <div>
-            <span class="text-muted small d-block">Price per guest</span>
-            <% if (tour.discountPrice) { %>
-              <span class="text-decoration-line-through text-muted small me-1">$<%= tour.price %></span>
-              <span class="fs-3 fw-extrabold text-primary" id="unit-price" data-price="<%= tour.discountPrice %>">$<%= tour.discountPrice %></span>
-            <% } else { %>
-              <span class="fs-3 fw-extrabold text-primary" id="unit-price" data-price="<%= tour.price %>">$<%= tour.price %></span>
-            <% } %>
+            <span class="text-muted small d-block">Starting from</span>
+            <span class="fs-2 fw-extrabold text-primary" id="sticky-price">$<%= Math.round(tour.pricePartialGuided || tour.discountPrice || tour.price) %></span>
+            <span class="text-muted small">/ guest</span>
           </div>
-          <span class="badge bg-success px-3 py-2">Available</span>
+          <span class="badge bg-success px-3 py-2 rounded-pill">Guaranteed</span>
+        </div>
+
+        <div class="p-2 rounded-3 bg-light mb-3 text-center">
+          <span class="small fw-bold text-primary" id="sticky-format-name">Partial-Guided Format Selected</span>
         </div>
 
         <hr class="my-3">
 
+        <!-- Booking & Enquiry Form -->
         <form action="/checkout" method="GET" id="booking-form">
           <input type="hidden" name="tourId" value="<%= tour.id %>">
+          <input type="hidden" name="selectedFormat" id="input-selected-format" value="partial-guided">
 
-          <!-- Departure Date Picker -->
+          <!-- Departure Date Selector -->
           <div class="mb-3">
-            <label class="form-label small fw-bold text-muted">Select Departure Date</label>
-            <select name="departureDate" class="form-select form-select-lg" required>
-              <% if (tour.schedules && tour.schedules.length > 0) { %>
-                <% tour.schedules.forEach(sch => { %>
-                  <option value="<%= sch.departureDate %>"><%= formatDate(sch.departureDate) %> (<%= sch.availableSlots %> slots left)</option>
-                <% }) %>
-              <% } else { %>
-                <option value="2026-09-01">Sep 01, 2026 (Guaranteed)</option>
-                <option value="2026-09-15">Sep 15, 2026 (Guaranteed)</option>
-                <option value="2026-10-01">Oct 01, 2026 (Guaranteed)</option>
-              <% } %>
+            <label class="form-label small fw-bold text-muted">Departure Date</label>
+            <select name="departureDate" class="form-select" required>
+              <option value="2026-10-01">October 01, 2026 (Autumn Season)</option>
+              <option value="2026-10-15">October 15, 2026</option>
+              <option value="2026-11-01">November 01, 2026 (Peak Dry)</option>
+              <option value="2026-11-15">November 15, 2026</option>
+              <option value="2026-12-01">December 01, 2026</option>
+              <option value="2027-01-10">January 10, 2027</option>
             </select>
           </div>
 
-          <!-- Guests Picker -->
+          <!-- Guests Selector -->
           <div class="mb-4">
             <label class="form-label small fw-bold text-muted">Number of Guests</label>
-            <div class="input-group input-group-lg">
+            <div class="input-group">
               <button class="btn btn-outline-secondary" type="button" id="btn-minus-guest">-</button>
-              <input type="number" name="guests" id="guest-count-input" class="form-control text-center fw-bold" value="1" min="1" max="10" readonly>
+              <input type="number" name="guests" id="guest-count-input" class="form-control text-center fw-bold" value="2" min="1" max="10" readonly>
               <button class="btn btn-outline-secondary" type="button" id="btn-plus-guest">+</button>
             </div>
           </div>
 
           <div class="d-flex justify-content-between align-items-center mb-4 p-3 bg-light rounded-3">
-            <span class="fw-bold">Estimated Total</span>
-            <span class="fs-4 fw-extrabold text-primary" id="calculated-total">$<%= tour.discountPrice || tour.price %></span>
+            <span class="fw-bold text-dark">Estimated Total</span>
+            <span class="fs-4 fw-extrabold text-primary" id="calculated-total">$<%= (Math.round(tour.pricePartialGuided || tour.discountPrice || tour.price) * 2) %></span>
           </div>
 
-          <button type="submit" class="btn btn-accent btn-lg w-100 py-3 rounded-pill fw-bold shadow-lg">
-            Book This Tour Now <i class="bi bi-arrow-right ms-1"></i>
+          <!-- Primary Action: Inquire / Tailor This Tour -->
+          <button type="button" class="btn btn-accent btn-lg w-100 py-3 rounded-pill fw-bold text-white shadow mb-2" data-bs-toggle="modal" data-bs-target="#enquiryModal">
+            <i class="bi bi-chat-dots-fill me-1"></i> Inquire About This Tour
+          </button>
+
+          <!-- Secondary Action: Instant Direct Checkout -->
+          <button type="submit" class="btn btn-outline-primary w-100 py-2 rounded-pill fw-semibold">
+            Book Online &amp; Checkout &rarr;
           </button>
         </form>
 
         <div class="mt-4 pt-3 border-top text-center text-muted small">
-          <p class="mb-1"><i class="bi bi-shield-check text-success me-1"></i> Free Cancellation up to 14 Days</p>
-          <p class="mb-0"><i class="bi bi-lock-fill text-primary me-1"></i> Instant Instant Confirmation</p>
+          <p class="mb-1"><i class="bi bi-shield-check text-success me-1"></i> Flexible cancellation up to 14 days</p>
+          <p class="mb-0"><i class="bi bi-chat-heart text-primary me-1"></i> 24/7 dedicated WhatsApp support</p>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const guestInput = document.getElementById('guest-count-input');
-    const unitPrice = parseFloat(document.getElementById('unit-price').getAttribute('data-price'));
-    const totalEl = document.getElementById('calculated-total');
+<!-- MODULE 8: ENQUIRY MODAL (Pre-filled with tour context) -->
+<div class="modal fade" id="enquiryModal" tabindex="-1" aria-labelledby="enquiryModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content rounded-4 border-0 shadow-lg">
+      <div class="modal-header bg-primary text-white p-4 rounded-top-4">
+        <div>
+          <h4 class="modal-title fw-bold" id="enquiryModalLabel">Tailor Your Vietnam Trip</h4>
+          <span class="text-white-50 small">Inquire about <%= tour.name %></span>
+        </div>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
 
-    function updateTotal() {
-      const count = parseInt(guestInput.value || 1, 10);
-      const total = unitPrice * count;
-      totalEl.innerText = '$' + total.toFixed(2);
+      <div class="modal-body p-4 p-lg-5">
+        <form action="/enquiry" method="POST" id="modal-enquiry-form">
+          <input type="hidden" name="tourName" value="<%= tour.name %>">
+          <input type="hidden" name="tourSlug" value="<%= tour.slug %>">
+          <input type="hidden" name="format" id="modal-format-input" value="partial-guided">
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">Full Name *</label>
+              <input type="text" name="name" class="form-control form-control-lg" placeholder="e.g. David Morrison" required>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">Email Address *</label>
+              <input type="email" name="email" class="form-control form-control-lg" placeholder="e.g. david@example.com" required>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">Phone / WhatsApp</label>
+              <input type="tel" name="phone" class="form-control form-control-lg" placeholder="e.g. +1 415 555 0144">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">Estimated Departure</label>
+              <input type="month" name="departureDate" class="form-control form-control-lg" value="2026-10">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">Number of Guests</label>
+              <select name="guests" class="form-select form-select-lg">
+                <option value="1">1 Solo Traveler</option>
+                <option value="2" selected>2 Guests (Couple / Friends)</option>
+                <option value="3">3 - 4 Guests</option>
+                <option value="5+">5+ Guests (Family / Group)</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">Preferred Format</label>
+              <select class="form-select form-select-lg" id="modal-format-select" onchange="document.getElementById('modal-format-input').value = this.value">
+                <option value="partial-guided" selected>Partial-Guided (Curated Freedom)</option>
+                <option value="private">Private (Dedicated Guide &amp; Car)</option>
+              </select>
+            </div>
+
+            <div class="col-12">
+              <label class="form-label small fw-bold text-muted">Special Requests, Dietary Needs, or Custom Adjustments</label>
+              <textarea name="notes" class="form-control" rows="3" placeholder="Tell us if you wish to add an extra day in Hoi An, celebrate a special occasion, or adjust the pace..."></textarea>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-top d-flex flex-column flex-sm-row justify-content-between align-items-center gap-3">
+            <span class="text-muted small">
+              <i class="bi bi-clock-history text-primary me-1"></i> We respond with a tailored proposal within 24 hours.
+            </span>
+            <button type="submit" class="btn btn-accent btn-lg px-5 rounded-pill fw-bold text-white shadow">
+              Submit Enquiry &rarr;
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CLIENT-SIDE FORMAT TOGGLE SCRIPT -->
+<script>
+  // Tour JSON Data passed from controller
+  const tourData = {
+    pricePrivate: <%= Number(tour.pricePrivate || tour.price) %>,
+    pricePartialGuided: <%= Number(tour.pricePartialGuided || tour.discountPrice || tour.price) %>,
+    includedPrivate: <%- JSON.stringify(includedPrivate || []) %>,
+    includedPartialGuided: <%- JSON.stringify(includedPartialGuided || []) %>,
+    excludedPrivate: <%- JSON.stringify(excludedPrivate || []) %>,
+    excludedPartialGuided: <%- JSON.stringify(excludedPartialGuided || []) %>
+  };
+
+  let currentFormat = 'partial-guided';
+  let unitPrice = tourData.pricePartialGuided;
+
+  function switchFormat(format) {
+    currentFormat = format;
+    const btnPartial = document.getElementById('toggle-partial');
+    const btnPrivate = document.getElementById('toggle-private');
+    const glancePrice = document.getElementById('glance-price');
+    const stickyPrice = document.getElementById('sticky-price');
+    const stickyFormatName = document.getElementById('sticky-format-name');
+    const formatNoteText = document.getElementById('format-note-text');
+    const inputSelectedFormat = document.getElementById('input-selected-format');
+    const modalFormatInput = document.getElementById('modal-format-input');
+    const modalFormatSelect = document.getElementById('modal-format-select');
+    const includedBadge = document.getElementById('included-format-badge');
+    const excludedBadge = document.getElementById('excluded-format-badge');
+
+    if (format === 'private') {
+      btnPrivate.classList.add('active');
+      btnPartial.classList.remove('active');
+      unitPrice = tourData.pricePrivate;
+      glancePrice.innerText = '$' + Math.round(tourData.pricePrivate);
+      stickyPrice.innerText = '$' + Math.round(tourData.pricePrivate);
+      stickyFormatName.innerText = 'Private Chauffeured Format Selected';
+      formatNoteText.innerHTML = '<strong>Private Tour Format:</strong> Dedicated private vehicle, driver, and personal guide for your party throughout all travel days. Total flexibility with start times and routing.';
+      includedBadge.innerText = 'Private Tour';
+      excludedBadge.innerText = 'Private Tour';
+      if (inputSelectedFormat) inputSelectedFormat.value = 'private';
+      if (modalFormatInput) modalFormatInput.value = 'private';
+      if (modalFormatSelect) modalFormatSelect.value = 'private';
+      renderInclusions(tourData.includedPrivate, tourData.excludedPrivate);
+    } else {
+      btnPartial.classList.add('active');
+      btnPrivate.classList.remove('active');
+      unitPrice = tourData.pricePartialGuided;
+      glancePrice.innerText = '$' + Math.round(tourData.pricePartialGuided);
+      stickyPrice.innerText = '$' + Math.round(tourData.pricePartialGuided);
+      stickyFormatName.innerText = 'Partial-Guided Format Selected';
+      formatNoteText.innerHTML = '<strong>Partial-Guided Format:</strong> Certified local guides for key cultural landmarks, plus independent leisure windows with 24/7 on-call WhatsApp support. All transfers and stays arranged.';
+      includedBadge.innerText = 'Partial-Guided';
+      excludedBadge.innerText = 'Partial-Guided';
+      if (inputSelectedFormat) inputSelectedFormat.value = 'partial-guided';
+      if (modalFormatInput) modalFormatInput.value = 'partial-guided';
+      if (modalFormatSelect) modalFormatSelect.value = 'partial-guided';
+      renderInclusions(tourData.includedPartialGuided, tourData.excludedPartialGuided);
     }
 
-    document.getElementById('btn-minus-guest').addEventListener('click', () => {
-      let val = parseInt(guestInput.value || 1, 10);
-      if (val > 1) {
-        guestInput.value = val - 1;
-        updateTotal();
-      }
-    });
+    updateCalculatedTotal();
+  }
 
-    document.getElementById('btn-plus-guest').addEventListener('click', () => {
-      let val = parseInt(guestInput.value || 1, 10);
-      if (val < 10) {
-        guestInput.value = val + 1;
-        updateTotal();
-      }
-    });
+  function renderInclusions(includedList, excludedList) {
+    const incContainer = document.getElementById('included-list-container');
+    const excContainer = document.getElementById('excluded-list-container');
+
+    if (incContainer) {
+      incContainer.innerHTML = includedList.map(item => `
+        <li class="d-flex align-items-start gap-2">
+          <i class="bi bi-check2 text-success fw-bold fs-5"></i>
+          <span>${item}</span>
+        </li>
+      `).join('');
+    }
+
+    if (excContainer) {
+      excContainer.innerHTML = excludedList.map(item => `
+        <li class="d-flex align-items-start gap-2">
+          <i class="bi bi-x text-danger fw-bold fs-5"></i>
+          <span>${item}</span>
+        </li>
+      `).join('');
+    }
+  }
+
+  function updateCalculatedTotal() {
+    const guestInput = document.getElementById('guest-count-input');
+    const totalEl = document.getElementById('calculated-total');
+    if (guestInput && totalEl) {
+      const count = parseInt(guestInput.value || 1, 10);
+      const total = unitPrice * count;
+      totalEl.innerText = '$' + Math.round(total);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Initial Render
+    switchFormat('partial-guided');
+
+    const btnMinus = document.getElementById('btn-minus-guest');
+    const btnPlus = document.getElementById('btn-plus-guest');
+    const guestInput = document.getElementById('guest-count-input');
+
+    if (btnMinus && guestInput) {
+      btnMinus.addEventListener('click', () => {
+        let val = parseInt(guestInput.value || 1, 10);
+        if (val > 1) {
+          guestInput.value = val - 1;
+          updateCalculatedTotal();
+        }
+      });
+    }
+
+    if (btnPlus && guestInput) {
+      btnPlus.addEventListener('click', () => {
+        let val = parseInt(guestInput.value || 1, 10);
+        if (val < 12) {
+          guestInput.value = val + 1;
+          updateCalculatedTotal();
+        }
+      });
+    }
   });
 </script>

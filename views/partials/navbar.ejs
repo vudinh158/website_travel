@@ -1,70 +1,129 @@
-<nav class="navbar navbar-expand-lg sticky-top navbar-wanderlust py-3">
+<nav class="navbar navbar-expand-lg sticky-top navbar-tranoi py-3 bg-white shadow-sm border-bottom">
   <div class="container">
+    <!-- Brand Logo -->
     <a class="navbar-brand d-flex align-items-center py-0" href="/">
-      <img src="/images/logo/logo-full.png" alt="Tranoi Travel - Travel more, plan less" class="navbar-brand-logo">
+      <img src="/images/logo/logo-full.png" alt="Tranoi Travel - Travel more, plan less" class="navbar-brand-logo" style="height: 48px; object-fit: contain;">
     </a>
     
-    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+    <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarContent">
-      <!-- Search Input with Autocomplete -->
-      <div class="mx-auto my-2 my-lg-0 position-relative style-search-box" style="width: 100%; max-width: 380px;">
-        <div class="input-group">
-          <span class="input-group-text bg-white border-end-0 rounded-start-pill"><i class="bi bi-search text-muted"></i></span>
-          <input type="text" id="global-search-input" class="form-control border-start-0 rounded-end-pill ps-0" placeholder="Search tours, destinations..." autocomplete="off">
-        </div>
-        <div id="search-results-dropdown" class="dropdown-menu w-100 shadow-lg border-0 mt-1 d-none" style="position: absolute; z-index: 1050;"></div>
-      </div>
-
-      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
-        <li class="nav-item">
-          <a class="nav-link fw-semibold <%= currentPath === '/' ? 'active text-primary' : '' %>" href="/">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link fw-semibold <%= currentPath.startsWith('/tours') ? 'active text-primary' : '' %>" href="/tours">Tours</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link fw-semibold <%= currentPath.startsWith('/destinations') ? 'active text-primary' : '' %>" href="/destinations">Destinations</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link fw-semibold <%= currentPath.startsWith('/blog') ? 'active text-primary' : '' %>" href="/blog">Blog</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link fw-semibold <%= currentPath === '/about' ? 'active text-primary' : '' %>" href="/about">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link fw-semibold <%= currentPath === '/contact' ? 'active text-primary' : '' %>" href="/contact">Contact</a>
+      <!-- Main Nav Links -->
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+        
+        <!-- 1. Destinations Dropdown (P0 cities only per Sitemap Section 1) -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle fw-semibold <%= currentPath.startsWith('/vietnam') || currentPath.startsWith('/destinations') ? 'active text-primary' : 'text-dark' %>" href="/vietnam" data-bs-toggle="dropdown" aria-expanded="false">
+            Destinations
+          </a>
+          <ul class="dropdown-menu shadow-lg border-0 rounded-4 py-2 mt-2">
+            <li class="px-3 py-1 text-muted text-uppercase small fw-bold" style="font-size: 0.75rem; letter-spacing: 0.5px;">Vietnam Cities (P0)</li>
+            <li><a class="dropdown-item py-2" href="/vietnam/hanoi"><i class="bi bi-geo-alt-fill text-primary me-2"></i>Hanoi (Capital)</a></li>
+            <li><a class="dropdown-item py-2" href="/vietnam/ho-chi-minh-city"><i class="bi bi-building text-primary me-2"></i>Ho Chi Minh City</a></li>
+            <li><a class="dropdown-item py-2" href="/vietnam/ha-long-bay"><i class="bi bi-water text-primary me-2"></i>Ha Long Bay</a></li>
+            <li><a class="dropdown-item py-2" href="/vietnam/hoi-an"><i class="bi bi-brightness-high text-primary me-2"></i>Hoi An Ancient Town</a></li>
+            <li><a class="dropdown-item py-2" href="/vietnam/hue"><i class="bi bi-bank text-primary me-2"></i>Imperial Hue</a></li>
+            <li><a class="dropdown-item py-2" href="/vietnam/da-nang"><i class="bi bi-sun text-primary me-2"></i>Da Nang Coastal</a></li>
+            <li><hr class="dropdown-divider my-1"></li>
+            <li><a class="dropdown-item py-2 text-primary fw-bold" href="/vietnam"><i class="bi bi-compass me-2"></i>Explore All 17 Destinations</a></li>
+          </ul>
         </li>
 
-        <% if (isAuthenticated) { %>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" data-bs-toggle="dropdown">
-              <img src="<%= user.avatar %>" class="rounded-circle" width="32" height="32" style="object-fit: cover;">
-              <span class="fw-bold"><%= user.name.split(' ')[0] %></span>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
-              <% if (isAdmin) { %>
-                <li><a class="dropdown-item fw-bold text-primary" href="/admin"><i class="bi bi-speedometer2 me-2"></i> Admin Dashboard</a></li>
-                <li><hr class="dropdown-divider"></li>
-              <% } %>
-              <li><a class="dropdown-item" href="/dashboard"><i class="bi bi-grid-fill me-2"></i> User Dashboard</a></li>
-              <li><a class="dropdown-item" href="/dashboard/bookings"><i class="bi bi-ticket-perforated-fill me-2"></i> My Bookings</a></li>
-              <li><a class="dropdown-item" href="/dashboard/wishlist"><i class="bi bi-heart-fill me-2 text-danger"></i> Wishlist</a></li>
-              <li><a class="dropdown-item" href="/dashboard/profile"><i class="bi bi-person-fill me-2"></i> Profile Settings</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item text-danger" href="/logout"><i class="bi bi-box-arrow-right me-2"></i> Logout</a></li>
-            </ul>
-          </li>
-        <% } else { %>
-          <li class="nav-item">
-            <a href="/login" class="btn btn-outline-primary fw-semibold px-3 me-2">Login</a>
-          </li>
-          <li class="nav-item">
-            <a href="/register" class="btn btn-wanderlust px-3">Register</a>
-          </li>
-        <% } %>
+        <!-- 2. Tours (Hub + bookable pages) -->
+        <li class="nav-item">
+          <a class="nav-link fw-semibold <%= currentPath.startsWith('/tours') ? 'active text-primary' : 'text-dark' %>" href="/tours">
+            Tours
+          </a>
+        </li>
+
+        <!-- 3. Themes (Own top-level item with flat links) -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle fw-semibold <%= ['/honeymoon', '/family', '/adventure', '/culinary', '/eco-tours', '/veterans-tours', '/educational-tours', '/themes'].some(p => currentPath.startsWith(p)) ? 'active text-primary' : 'text-dark' %>" href="/themes" data-bs-toggle="dropdown" aria-expanded="false">
+            Themes
+          </a>
+          <div class="dropdown-menu shadow-lg border-0 rounded-4 p-3 mt-2" style="min-width: 320px;">
+            <div class="small fw-bold text-muted text-uppercase mb-2" style="font-size: 0.75rem; letter-spacing: 0.5px;">Traveler Styles</div>
+            <div class="row g-2 mb-2">
+              <div class="col-6"><a class="dropdown-item rounded-3 py-1" href="/honeymoon"><i class="bi bi-heart-fill text-danger me-1"></i> Honeymoon</a></div>
+              <div class="col-6"><a class="dropdown-item rounded-3 py-1" href="/family"><i class="bi bi-people-fill text-primary me-1"></i> Family</a></div>
+              <div class="col-6"><a class="dropdown-item rounded-3 py-1" href="/adventure"><i class="bi bi-compass-fill text-success me-1"></i> Adventure</a></div>
+              <div class="col-6"><a class="dropdown-item rounded-3 py-1" href="/culinary"><i class="bi bi-cup-hot-fill text-warning me-1"></i> Culinary</a></div>
+              <div class="col-6"><a class="dropdown-item rounded-3 py-1" href="/eco-tours"><i class="bi bi-tree-fill text-success me-1"></i> Eco-Tours</a></div>
+              <div class="col-6"><a class="dropdown-item rounded-3 py-1" href="/veterans-tours"><i class="bi bi-award-fill text-secondary me-1"></i> Veterans</a></div>
+            </div>
+            <div class="dropdown-divider my-2"></div>
+            <div class="small fw-bold text-muted text-uppercase mb-2" style="font-size: 0.75rem; letter-spacing: 0.5px;">Tours by Origin</div>
+            <a class="dropdown-item py-1" href="/vietnam-tours-from-usa"><i class="bi bi-airplane-engines me-2 text-primary"></i>Tours from USA</a>
+            <a class="dropdown-item py-1" href="/vietnam-tours-from-australia"><i class="bi bi-airplane-engines me-2 text-primary"></i>Tours from Australia</a>
+            <a class="dropdown-item py-1" href="/vietnam-tours-from-uae"><i class="bi bi-airplane-engines me-2 text-primary"></i>Tours from UAE</a>
+          </div>
+        </li>
+
+        <!-- 4. Inspiration (Mega-menu per Sitemap Section 1) -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle fw-semibold <%= currentPath.startsWith('/trips') || currentPath.startsWith('/guides') || currentPath.startsWith('/experiences') || currentPath.startsWith('/customer-stories') ? 'active text-primary' : 'text-dark' %>" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+            Inspiration
+          </a>
+          <ul class="dropdown-menu shadow-lg border-0 rounded-4 py-2 mt-2">
+            <li>
+              <a class="dropdown-item py-2" href="/trips">
+                <div class="fw-bold text-dark"><i class="bi bi-map text-primary me-2"></i>Itineraries (by Duration)</div>
+                <div class="text-muted small ps-4">7, 10, 14, and 21-day route ideas</div>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item py-2" href="/guides">
+                <div class="fw-bold text-dark"><i class="bi bi-book text-primary me-2"></i>Travel Guides</div>
+                <div class="text-muted small ps-4">Visas, seasons, private vs partial-guided</div>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item py-2" href="/experiences">
+                <div class="fw-bold text-dark"><i class="bi bi-stars text-primary me-2"></i>Signature Experiences</div>
+                <div class="text-muted small ps-4">The Tranoi difference and on-trip care</div>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item py-2" href="/customer-stories">
+                <div class="fw-bold text-dark"><i class="bi bi-chat-heart text-primary me-2"></i>Customer Stories</div>
+                <div class="text-muted small ps-4">Real accounts from recent travelers</div>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- 5. Trip Reviews -->
+        <li class="nav-item">
+          <a class="nav-link fw-semibold <%= currentPath.startsWith('/trip-reviews') ? 'active text-primary' : 'text-dark' %>" href="/trip-reviews">
+            Trip Reviews
+          </a>
+        </li>
+
+        <!-- 6. About Us (Mega-menu / Dropdown per Sitemap Section 1) -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle fw-semibold <%= ['/about-us', '/how-it-works', '/meet-the-team', '/responsible-travel', '/loyalty-program'].some(p => currentPath === p) ? 'active text-primary' : 'text-dark' %>" href="/about-us" data-bs-toggle="dropdown" aria-expanded="false">
+            About Us
+          </a>
+          <ul class="dropdown-menu shadow-lg border-0 rounded-4 py-2 mt-2">
+            <li><a class="dropdown-item py-2" href="/about-us"><i class="bi bi-info-circle text-primary me-2"></i>Who We Are</a></li>
+            <li><a class="dropdown-item py-2" href="/how-it-works"><i class="bi bi-gear-wide-connected text-primary me-2"></i>How It Works</a></li>
+            <li><a class="dropdown-item py-2" href="/meet-the-team"><i class="bi bi-person-badge text-primary me-2"></i>Meet the Team</a></li>
+            <li><a class="dropdown-item py-2" href="/responsible-travel"><i class="bi bi-flower1 text-success me-2"></i>Responsible Travel</a></li>
+            <li><a class="dropdown-item py-2" href="/loyalty-program"><i class="bi bi-gem text-warning me-2"></i>Loyalty Program</a></li>
+            <li><hr class="dropdown-divider my-1"></li>
+            <li><a class="dropdown-item py-2 text-primary fw-bold" href="/contact"><i class="bi bi-envelope me-2"></i>Get in Touch</a></li>
+          </ul>
+        </li>
+
+        <!-- 7. Contact Button -->
+        <li class="nav-item ms-lg-2">
+          <a href="/contact" class="btn btn-accent px-3 py-2 rounded-pill fw-bold text-white shadow-sm">
+            Contact Us
+          </a>
+        </li>
+
       </ul>
     </div>
   </div>

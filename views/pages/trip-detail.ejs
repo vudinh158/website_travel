@@ -1,0 +1,96 @@
+<!-- Editorial Itinerary Detail Hero -->
+<div class="position-relative text-white mb-5" style="min-height: 380px; background: linear-gradient(rgba(0, 45, 107, 0.75), rgba(0, 45, 107, 0.9)), url('<%= itinerary.heroImage %>') center/cover no-repeat; display: flex; align-items: flex-end;">
+  <div class="container py-5">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-3">
+        <li class="breadcrumb-item"><a href="/" class="text-white-50 text-decoration-none">Home</a></li>
+        <li class="breadcrumb-item"><a href="/trips" class="text-white-50 text-decoration-none">Vietnam Itineraries</a></li>
+        <li class="breadcrumb-item active text-white" aria-current="page"><%= itinerary.duration %>-Day Route</li>
+      </ol>
+    </nav>
+    <span class="badge bg-accent text-white px-3 py-1.5 rounded-pill fw-bold text-uppercase mb-2"><%= itinerary.duration %> Days Editorial</span>
+    <h1 class="display-4 fw-extrabold text-white mb-2"><%= itinerary.title %></h1>
+    <p class="fs-5 text-white-50 max-w-2xl mb-0" style="max-width: 780px;"><%= itinerary.summary %></p>
+  </div>
+</div>
+
+<div class="container mb-5">
+  <div class="row g-5">
+    <!-- Main Narrative Column -->
+    <div class="col-lg-8">
+      <!-- Editorial Article Body -->
+      <div class="mb-5 fs-6 text-secondary leading-relaxed bg-white p-4 p-lg-5 rounded-4 shadow-sm">
+        <%- itinerary.body.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>') %>
+      </div>
+
+      <!-- Route Ideas Section with soft links to matching tours -->
+      <% if (routeIdeas && routeIdeas.length > 0) { %>
+        <div class="mb-5">
+          <h3 class="fw-bold text-primary mb-4">Curated Route Ideas for This Duration</h3>
+          <div class="d-flex flex-column gap-4">
+            <% routeIdeas.forEach((idea, idx) => { %>
+              <div class="card border-0 rounded-4 shadow-sm p-4 bg-white border-start border-4 border-primary">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span class="badge bg-primary text-white rounded-pill px-3 py-1">Route Option <%= idx + 1 %></span>
+                  <span class="text-muted small"><%= itinerary.duration %> Days</span>
+                </div>
+                <h4 class="fw-bold text-dark mb-2"><%= idea.title %></h4>
+                <p class="text-secondary small leading-relaxed mb-3"><%= idea.summary %></p>
+                <% if (idea.relatedTourSlug) { %>
+                  <div class="pt-2 border-top d-flex justify-content-between align-items-center">
+                    <span class="text-muted small">Ready to experience this route?</span>
+                    <a href="/tours/<%= idea.relatedTourSlug %>" class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold">
+                      View matching tour itinerary &rarr;
+                    </a>
+                  </div>
+                <% } %>
+              </div>
+            <% }) %>
+          </div>
+        </div>
+      <% } %>
+
+      <!-- See more tours of this duration -->
+      <div class="p-4 rounded-4 bg-light border text-center mb-4">
+        <h5 class="fw-bold mb-2">Want to see all bookable packages for this duration?</h5>
+        <p class="text-muted small mb-3">Filter our complete tour portfolio with pricing, day-by-day maps, and private options.</p>
+        <a href="/tours?duration=<%= itinerary.duration %>" class="btn btn-primary rounded-pill px-4 fw-bold">
+          See More <%= itinerary.duration %>-Day Tours &rarr;
+        </a>
+      </div>
+    </div>
+
+    <!-- Sidebar Column: Matching Tours & Related Destinations -->
+    <div class="col-lg-4">
+      <!-- Matching Tours Sidebar Card -->
+      <% if (matchingTours && matchingTours.length > 0) { %>
+        <div class="card border-0 rounded-4 shadow-sm p-4 bg-white mb-4">
+          <h5 class="fw-bold text-primary mb-3">Matching Bookable Tour</h5>
+          <% matchingTours.forEach(tour => { %>
+            <div class="mb-3 pb-3 border-bottom">
+              <div class="rounded-3 overflow-hidden mb-2" style="height: 140px;">
+                <img src="<%= tour.featuredImage %>" alt="<%= tour.name %>" class="w-100 h-100" style="object-fit: cover;">
+              </div>
+              <h6 class="fw-bold mb-1">
+                <a href="/tours/<%= tour.slug %>" class="text-dark text-decoration-none hover-primary"><%= tour.name %></a>
+              </h6>
+              <div class="d-flex justify-content-between align-items-center mt-2">
+                <span class="text-primary fw-bold">$<%= Math.round(tour.pricePartialGuided || tour.price) %></span>
+                <a href="/tours/<%= tour.slug %>" class="btn btn-sm btn-accent rounded-pill px-3 fw-bold text-white">View Tour</a>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      <% } %>
+
+      <!-- Planning Consultation -->
+      <div class="card border-0 rounded-4 p-4 text-white" style="background: linear-gradient(135deg, #004AAD 0%, #002d6b 100%);">
+        <h5 class="fw-bold text-white mb-2">Need Guidance?</h5>
+        <p class="small text-white-50 mb-3">Not sure whether <%= itinerary.duration %> days is enough for your goals? Speak with our Hanoi team.</p>
+        <a href="/contact" class="btn btn-accent w-100 rounded-pill fw-bold text-white">
+          Contact Our Specialists
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

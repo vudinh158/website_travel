@@ -1,0 +1,49 @@
+<!-- Experiences Hub Header -->
+<div class="bg-primary text-white py-5 mb-5" style="background: linear-gradient(135deg, #004AAD 0%, #002d6b 100%);">
+  <div class="container py-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-3">
+        <li class="breadcrumb-item"><a href="/" class="text-white-50 text-decoration-none">Home</a></li>
+        <li class="breadcrumb-item active text-white" aria-current="page">Signature Experiences</li>
+      </ol>
+    </nav>
+    <span class="badge bg-accent text-white px-3 py-2 rounded-pill fw-bold text-uppercase mb-2">The Tranoi Difference</span>
+    <h1 class="display-4 fw-extrabold text-white mb-2">Signature Experiences</h1>
+    <p class="fs-5 text-white-50 mb-0" style="max-width: 720px;">
+      What makes a Tranoi trip different. From how our partial-guided days work to how local insiders are chosen and our on-trip care promise.
+    </p>
+  </div>
+</div>
+
+<div class="container mb-5">
+  <div class="row g-4">
+    <% experiences.forEach(exp => { %>
+      <div class="col-lg-4 col-md-6">
+        <div class="card h-100 border-0 rounded-4 shadow-sm overflow-hidden bg-white hover-lift transition-smooth">
+          <div style="height: 240px;" class="position-relative">
+            <img src="<%= exp.heroImage %>" alt="<%= exp.title %>" class="w-100 h-100" style="object-fit: cover;">
+            <span class="position-absolute top-0 start-0 m-3 badge bg-accent text-white rounded-pill px-3 py-1">Brand Differentiator</span>
+          </div>
+          <div class="card-body p-4 d-flex flex-column justify-content-between">
+            <div>
+              <h4 class="fw-bold mb-2">
+                <a href="/experiences/<%= exp.slug %>" class="text-dark text-decoration-none hover-primary">
+                  <%= exp.title %>
+                </a>
+              </h4>
+              <p class="text-secondary small leading-relaxed mb-3">
+                <%= truncateText(exp.subtitle || exp.excerpt || exp.body, 140) %>
+              </p>
+            </div>
+            <div class="pt-3 border-top d-flex justify-content-between align-items-center">
+              <span class="text-muted small">Our Standard</span>
+              <a href="/experiences/<%= exp.slug %>" class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold">
+                Read Story &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</div>

@@ -1,0 +1,77 @@
+<!-- Itineraries Hub Banner -->
+<div class="bg-primary text-white py-5 mb-5" style="background: linear-gradient(135deg, #004AAD 0%, #002d6b 100%);">
+  <div class="container py-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-3">
+        <li class="breadcrumb-item"><a href="/" class="text-white-50 text-decoration-none">Home</a></li>
+        <li class="breadcrumb-item active text-white" aria-current="page">Vietnam Itineraries</li>
+      </ol>
+    </nav>
+    <span class="badge bg-accent text-white px-3 py-2 rounded-pill fw-bold text-uppercase mb-2">Editorial Routes</span>
+    <h1 class="display-4 fw-extrabold text-white mb-2">Vietnam Itineraries by Duration</h1>
+    <p class="fs-5 text-white-50 mb-0" style="max-width: 720px;">
+      Explore our editorial travel ideas grouped by 7, 10, 14, and 21 days. Pure route inspiration designed to help you decide how much time you need.
+    </p>
+  </div>
+</div>
+
+<div class="container mb-5">
+  <!-- Duration Quick Jump Navigation -->
+  <div class="d-flex flex-wrap justify-content-center gap-3 mb-5">
+    <a href="#duration-7" class="btn btn-outline-primary rounded-pill px-4 py-2 fw-bold">7-Day Routes</a>
+    <a href="#duration-10" class="btn btn-outline-primary rounded-pill px-4 py-2 fw-bold">10-Day Routes</a>
+    <a href="#duration-14" class="btn btn-outline-primary rounded-pill px-4 py-2 fw-bold">14-Day Routes</a>
+    <a href="#duration-21" class="btn btn-outline-primary rounded-pill px-4 py-2 fw-bold">21-Day Routes</a>
+  </div>
+
+  <!-- Duration Sections -->
+  <% [7, 10, 14, 21].forEach(dur => { %>
+    <% const tripsInDur = groupedItineraries[dur] || []; %>
+    <div id="duration-<%= dur %>" class="mb-5 pb-4 border-bottom">
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+        <div>
+          <span class="badge bg-primary text-white px-3 py-1 rounded-pill mb-1"><%= dur %> Days</span>
+          <h2 class="fw-extrabold text-dark mb-0"><%= dur %>-Day Vietnam Route Ideas</h2>
+        </div>
+        <a href="/tours?duration=<%= dur %>" class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold mt-2 mt-sm-0">
+          See all <%= dur %>-day bookable tours &rarr;
+        </a>
+      </div>
+
+      <% if (tripsInDur.length > 0) { %>
+        <div class="row g-4">
+          <% tripsInDur.forEach(itinerary => { %>
+            <div class="col-lg-6">
+              <div class="card h-100 border-0 rounded-4 shadow-sm overflow-hidden bg-white hover-lift transition-smooth">
+                <div style="height: 240px;" class="position-relative">
+                  <img src="<%= itinerary.heroImage %>" alt="<%= itinerary.title %>" class="w-100 h-100" style="object-fit: cover;">
+                  <span class="position-absolute top-0 start-0 m-3 badge bg-primary text-white px-3 py-2 rounded-pill"><%= itinerary.duration %> Days</span>
+                </div>
+                <div class="card-body p-4 d-flex flex-column justify-content-between">
+                  <div>
+                    <h4 class="fw-bold mb-2">
+                      <a href="/trips/<%= itinerary.slug %>" class="text-dark text-decoration-none hover-primary">
+                        <%= itinerary.title %>
+                      </a>
+                    </h4>
+                    <p class="text-secondary small leading-relaxed mb-3">
+                      <%= truncateText(itinerary.summary, 160) %>
+                    </p>
+                  </div>
+                  <div class="pt-3 border-top d-flex justify-content-between align-items-center">
+                    <span class="text-muted small"><i class="bi bi-book me-1"></i> Editorial Guide</span>
+                    <a href="/trips/<%= itinerary.slug %>" class="btn btn-sm btn-primary rounded-pill px-3 fw-bold">
+                      Read Route Narrative &rarr;
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <p class="text-muted small">New route ideas for <%= dur %> days are currently being curated by our editorial team.</p>
+      <% } %>
+    </div>
+  <% }) %>
+</div>

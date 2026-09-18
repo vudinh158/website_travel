@@ -490,3 +490,110 @@ body {
   from { transform: translateX(100%); opacity: 0; }
   to { transform: translateX(0); opacity: 1; }
 }
+
+/* ==========================================================================
+   Tranoi Travel - Format Toggle & Route Map Styling
+   ========================================================================== */
+
+.text-accent {
+  color: var(--secondary-color) !important;
+}
+
+.bg-accent {
+  background-color: var(--secondary-color) !important;
+}
+
+/* Format Toggle Pill (Private ⇄ Partial-Guided) */
+.format-toggle-box {
+  background-color: #e9ecef;
+  padding: 6px;
+  border-radius: 50px;
+  display: inline-flex;
+  gap: 4px;
+  border: 1px solid rgba(0, 74, 173, 0.15);
+}
+
+.format-toggle-btn {
+  border: none;
+  background: transparent;
+  padding: 10px 24px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #495057;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.format-toggle-btn.active {
+  background: var(--primary-color);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(0, 74, 173, 0.35);
+}
+
+.badge-format {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge-private {
+  background-color: rgba(0, 74, 173, 0.12);
+  color: var(--primary-color);
+  border: 1px solid rgba(0, 74, 173, 0.25);
+}
+
+.badge-partial-guided {
+  background-color: rgba(255, 143, 76, 0.15);
+  color: #d96924;
+  border: 1px solid rgba(255, 143, 76, 0.35);
+}
+
+/* Interactive Vietnam Route Map Box */
+.vietnam-route-map {
+  background: linear-gradient(180deg, #f0f4f8 0%, #e6eff8 100%);
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #d0e0f2;
+}
+
+.route-stop-point {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid #e2e8f0;
+  transition: var(--transition-smooth);
+}
+
+.route-stop-point:hover {
+  transform: translateX(4px);
+  border-color: var(--primary-color);
+  box-shadow: var(--shadow-md);
+}
+
+.route-stop-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+

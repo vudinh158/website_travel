@@ -45,8 +45,30 @@ const Tour = sequelize.define('Tour', {
   highlights: {
     type: DataTypes.TEXT // JSON string array
   },
+  formats: {
+    type: DataTypes.TEXT, // JSON string array e.g. ["private", "partial-guided"]
+    defaultValue: JSON.stringify(["private", "partial-guided"])
+  },
+  region: {
+    type: DataTypes.STRING, // north, central, south, multi-region
+    defaultValue: 'multi-region'
+  },
+  theme: {
+    type: DataTypes.TEXT // JSON string array of theme slugs e.g. ["family", "culinary"]
+  },
+  sourceMarket: {
+    type: DataTypes.TEXT // JSON string array of market slugs e.g. ["vietnam-tours-from-usa"]
+  },
+  pace: {
+    type: DataTypes.STRING, // Relaxed, Moderate, Active
+    defaultValue: 'Moderate'
+  },
+  groupSize: {
+    type: DataTypes.STRING, // e.g. "Private: 2-8 guests | Partial-guided: max 12"
+    defaultValue: 'Private (2-8 guests) or Small Group (max 12)'
+  },
   duration: {
-    type: DataTypes.STRING // e.g. "5 Days / 4 Nights"
+    type: DataTypes.STRING // e.g. "10 Days / 9 Nights"
   },
   durationDays: {
     type: DataTypes.INTEGER,
@@ -56,23 +78,44 @@ const Tour = sequelize.define('Tour', {
     type: DataTypes.STRING
   },
   transportation: {
-    type: DataTypes.STRING // e.g. "Flight & Speedboat"
+    type: DataTypes.STRING // e.g. "Private chauffeured AC vehicle & domestic flights"
   },
   schedule: {
-    type: DataTypes.TEXT // e.g. "Daily / Every Monday"
+    type: DataTypes.TEXT // e.g. "Daily Departures Guaranteed"
   },
   itinerary: {
-    type: DataTypes.TEXT // JSON string array of day-by-day objects [{ day: 1, title: '...', description: '...' }]
+    type: DataTypes.TEXT // JSON string array of day-by-day objects [{ day: 1, title: '...', description: '...', image: '...' }]
+  },
+  routeMapPoints: {
+    type: DataTypes.TEXT // JSON string array of stops for Vietnam map [{ name: 'Hanoi', lat: 21.0285, lng: 105.8542 }]
   },
   includedServices: {
-    type: DataTypes.TEXT // JSON string array
+    type: DataTypes.TEXT // Generic fallback JSON string array
   },
   excludedServices: {
+    type: DataTypes.TEXT // Generic fallback JSON string array
+  },
+  includedPrivate: {
+    type: DataTypes.TEXT // JSON string array of inclusions specific to Private format
+  },
+  includedPartialGuided: {
+    type: DataTypes.TEXT // JSON string array of inclusions specific to Partial-guided format
+  },
+  excludedPrivate: {
+    type: DataTypes.TEXT // JSON string array
+  },
+  excludedPartialGuided: {
     type: DataTypes.TEXT // JSON string array
   },
   price: {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false
+  },
+  pricePrivate: {
+    type: DataTypes.DECIMAL(10, 2)
+  },
+  pricePartialGuided: {
+    type: DataTypes.DECIMAL(10, 2)
   },
   discountPrice: {
     type: DataTypes.DECIMAL(10, 2),

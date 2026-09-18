@@ -1,70 +1,112 @@
-<div class="bg-primary text-white py-5 mb-5">
-  <div class="container text-center">
-    <h1 class="display-4 fw-extrabold mb-2">Get In Touch</h1>
-    <p class="fs-5 opacity-90 mb-0">Our 24/7 travel specialists are here to help you plan your next tour.</p>
+<!-- Contact Page Header -->
+<div class="bg-primary text-white py-5 mb-5" style="background: linear-gradient(135deg, #004AAD 0%, #002d6b 100%);">
+  <div class="container py-3 text-center">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb justify-content-center mb-3">
+        <li class="breadcrumb-item"><a href="/" class="text-white-50 text-decoration-none">Home</a></li>
+        <li class="breadcrumb-item active text-white" aria-current="page">Contact Us</li>
+      </ol>
+    </nav>
+    <span class="badge bg-accent text-white px-3 py-2 rounded-pill fw-bold text-uppercase mb-2">Direct Inquiries</span>
+    <h1 class="display-4 fw-extrabold text-white mb-2">Speak with Our Vietnam Curators</h1>
+    <p class="fs-5 text-white-50 mb-0 max-w-xl mx-auto">
+      Whether you are considering a 7-day northern trip or a 3-week slow journey, we are here to help you plan.
+    </p>
   </div>
 </div>
 
 <div class="container mb-5">
   <% if (success) { %>
-    <div class="alert alert-success rounded-4 mb-4"><%= success %></div>
+    <div class="alert alert-success rounded-4 mb-4 p-3 d-flex align-items-center gap-2">
+      <i class="bi bi-check-circle-fill fs-5"></i>
+      <span><%= success %></span>
+    </div>
   <% } %>
 
   <div class="row g-5">
+    <!-- Contact Info Card -->
     <div class="col-lg-5">
-      <div class="card border-0 shadow-sm p-4 rounded-4 h-100">
-        <h4 class="fw-bold mb-4">Contact Information</h4>
-        <div class="d-flex align-items-center gap-3 mb-4">
-          <i class="bi bi-geo-alt-fill text-danger fs-3"></i>
+      <div class="card border-0 shadow-sm p-4 p-lg-5 rounded-4 h-100 bg-white">
+        <h4 class="fw-bold text-primary mb-4">Direct Contact Details</h4>
+        
+        <div class="d-flex align-items-start gap-3 mb-4">
+          <div class="rounded-circle bg-primary bg-opacity-10 text-primary p-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 48px; height: 48px;">
+            <i class="bi bi-geo-alt-fill fs-5"></i>
+          </div>
           <div>
-            <div class="fw-bold">Headquarters Address</div>
-            <div class="text-muted small">100 Ocean Drive, Suite 500, Miami, FL 33139</div>
+            <div class="fw-bold text-dark">Hanoi Headquarters</div>
+            <div class="text-muted small">Ba Dinh District, Hanoi, Vietnam</div>
           </div>
         </div>
-        <div class="d-flex align-items-center gap-3 mb-4">
-          <i class="bi bi-telephone-fill text-primary fs-3"></i>
+
+        <div class="d-flex align-items-start gap-3 mb-4">
+          <div class="rounded-circle bg-primary bg-opacity-10 text-primary p-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 48px; height: 48px;">
+            <i class="bi bi-telephone-fill fs-5"></i>
+          </div>
           <div>
-            <div class="fw-bold">Phone Hotline</div>
-            <div class="text-muted small">+1 (800) 555-TRANOI</div>
+            <div class="fw-bold text-dark">Phone &amp; WhatsApp Hotline</div>
+            <div class="text-muted small">+84 24 3999 8888</div>
           </div>
         </div>
-        <div class="d-flex align-items-center gap-3 mb-4">
-          <i class="bi bi-envelope-fill text-success fs-3"></i>
-          <div>
-            <div class="fw-bold">Email Support</div>
-            <div class="text-muted small">support@tranoitravel.com</div>
+
+        <div class="d-flex align-items-start gap-3 mb-4">
+          <div class="rounded-circle bg-primary bg-opacity-10 text-primary p-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 48px; height: 48px;">
+            <i class="bi bi-envelope-fill fs-5"></i>
           </div>
+          <div>
+            <div class="fw-bold text-dark">Email Support</div>
+            <div class="text-muted small">hello@tranoitravel.com</div>
+          </div>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="p-3 rounded-3 bg-light border">
+          <span class="fw-bold text-dark d-block small mb-1">Our Reply Commitment</span>
+          <span class="text-muted small">Every message is answered by a human specialist within 24 hours. No automated spam.</span>
         </div>
       </div>
     </div>
 
+    <!-- Contact Form -->
     <div class="col-lg-7">
-      <div class="card border-0 shadow-sm p-4 rounded-4">
-        <h4 class="fw-bold mb-4">Send Us a Message</h4>
+      <div class="card border-0 shadow-sm p-4 p-lg-5 rounded-4 bg-white">
+        <h4 class="fw-bold text-primary mb-2">Send an Inquiry</h4>
+        <p class="text-muted small mb-4">Tell us about your tentative dates, traveling companions, and preferred pace.</p>
+        
         <form action="/contact" method="POST">
           <div class="row g-3">
             <div class="col-md-6">
-              <label class="form-label small fw-bold">Your Full Name</label>
-              <input type="text" name="name" class="form-control" required>
+              <label class="form-label small fw-bold text-muted">Full Name *</label>
+              <input type="text" name="name" class="form-control form-control-lg" placeholder="e.g. Sarah Jenkins" required>
             </div>
             <div class="col-md-6">
-              <label class="form-label small fw-bold">Email Address</label>
-              <input type="email" name="email" class="form-control" required>
+              <label class="form-label small fw-bold text-muted">Email Address *</label>
+              <input type="email" name="email" class="form-control form-control-lg" placeholder="e.g. sarah@example.com" required>
             </div>
             <div class="col-md-6">
-              <label class="form-label small fw-bold">Phone Number</label>
-              <input type="text" name="phone" class="form-control">
+              <label class="form-label small fw-bold text-muted">Phone / WhatsApp</label>
+              <input type="tel" name="phone" class="form-control form-control-lg" placeholder="e.g. +1 415 555 0144">
             </div>
             <div class="col-md-6">
-              <label class="form-label small fw-bold">Subject</label>
-              <input type="text" name="subject" class="form-control">
+              <label class="form-label small fw-bold text-muted">Trip Duration or Interest</label>
+              <select name="subject" class="form-select form-select-lg">
+                <option value="General Vietnam Inquiry">General Vietnam Inquiry</option>
+                <option value="7-Day North Vietnam Highlights">7-Day North Vietnam Tour</option>
+                <option value="10-Day Vietnam Highlights">10-Day Vietnam Highlights</option>
+                <option value="14-Day Grand North to South">14-Day Grand Explorer</option>
+                <option value="21-Day Complete Expedition">21-Day In-Depth Expedition</option>
+                <option value="Partial-Guided Custom Request">Partial-Guided Custom Request</option>
+              </select>
             </div>
             <div class="col-12">
-              <label class="form-label small fw-bold">Your Message</label>
-              <textarea name="message" class="form-control" rows="5" required></textarea>
+              <label class="form-label small fw-bold text-muted">Your Travel Goals or Questions *</label>
+              <textarea name="message" class="form-control" rows="5" placeholder="Share your estimated travel month, number of guests, and whether you prefer private chauffeured or partial-guided freedom..." required></textarea>
             </div>
-            <div class="col-12">
-              <button type="submit" class="btn btn-wanderlust btn-lg w-100 rounded-pill fw-bold">Send Message</button>
+            <div class="col-12 mt-4">
+              <button type="submit" class="btn btn-accent btn-lg w-100 rounded-pill fw-bold text-white shadow">
+                Submit Inquiry &rarr;
+              </button>
             </div>
           </div>
         </form>

@@ -1,8 +1,21 @@
-<div class="position-relative text-white mb-5" style="min-height: 400px; background: linear-gradient(rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.8)), url('<%= destination.banner %>') center/cover no-repeat; display: flex; align-items: flex-end;">
+<!-- Destination Banner -->
+<div class="position-relative text-white mb-5" style="min-height: 420px; background: linear-gradient(rgba(0, 45, 107, 0.7), rgba(0, 45, 107, 0.85)), url('<%= destination.banner %>') center/cover no-repeat; display: flex; align-items: flex-end;">
   <div class="container py-5">
-    <span class="badge bg-primary mb-2 fs-6"><%= destination.country %></span>
-    <h1 class="display-3 fw-extrabold text-white mb-2"><%= destination.name %></h1>
-    <p class="fs-5 opacity-90 max-w-2xl mb-0"><%= destination.description %></p>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-3">
+        <li class="breadcrumb-item"><a href="/" class="text-white-50 text-decoration-none">Home</a></li>
+        <li class="breadcrumb-item"><a href="/vietnam" class="text-white-50 text-decoration-none">Vietnam Destinations</a></li>
+        <li class="breadcrumb-item active text-white" aria-current="page"><%= destination.name %></li>
+      </ol>
+    </nav>
+    <div class="d-flex gap-2 mb-2">
+      <span class="badge bg-accent text-white px-3 py-1 rounded-pill text-uppercase"><%= destination.region %> Vietnam</span>
+      <% if (destination.priority === 'P0') { %>
+        <span class="badge bg-white text-primary px-3 py-1 rounded-pill fw-bold">P0 Primary City</span>
+      <% } %>
+    </div>
+    <h1 class="display-4 fw-extrabold text-white mb-2"><%= destination.name %></h1>
+    <p class="fs-5 text-white-50 max-w-2xl mb-0" style="max-width: 800px;"><%= destination.description %></p>
   </div>
 </div>
 
@@ -10,16 +23,23 @@
   <div class="row g-5">
     <!-- Main Content Column -->
     <div class="col-lg-8">
-      <!-- Popular Attractions -->
-      <% if (destination.attractions) { %>
-        <div class="card border-0 shadow-sm p-4 rounded-4 mb-5">
-          <h4 class="fw-bold mb-3"><i class="bi bi-star-fill text-warning me-2"></i> Key Attractions in <%= destination.name %></h4>
+      <!-- 1. Destination Overview -->
+      <div class="mb-5">
+        <h3 class="fw-bold text-primary mb-3">Overview &amp; Culture</h3>
+        <p class="fs-6 text-secondary leading-relaxed"><%= destination.travelGuide || destination.description %></p>
+      </div>
+
+      <!-- 2. Key Attractions & Local Experiences -->
+      <% if (attractions && attractions.length > 0) { %>
+        <div class="card border-0 shadow-sm p-4 rounded-4 mb-5 bg-white">
+          <h4 class="fw-bold mb-3"><i class="bi bi-star-fill text-warning me-2"></i> Key Attractions &amp; Experiences</h4>
+          <p class="text-muted small mb-3">Signature activities and cultural landmarks in <%= destination.name %>.</p>
           <div class="row g-3">
-            <% (typeof destination.attractions === 'string' ? JSON.parse(destination.attractions) : destination.attractions).forEach(att => { %>
+            <% attractions.forEach(att => { %>
               <div class="col-md-6">
                 <div class="p-3 bg-light rounded-3 d-flex align-items-center gap-3">
-                  <i class="bi bi-pin-map-fill text-primary fs-4"></i>
-                  <span class="fw-bold"><%= att %></span>
+                  <i class="bi bi-geo-alt-fill text-primary fs-4"></i>
+                  <span class="fw-bold text-dark"><%= att %></span>
                 </div>
               </div>
             <% }) %>
@@ -27,46 +47,86 @@
         </div>
       <% } %>
 
-      <!-- Travel Guide & Weather -->
+      <!-- 3. Available Tours in this Destination -->
       <div class="mb-5">
-        <h4 class="fw-bold mb-3">Traveler's Guide</h4>
-        <p class="text-secondary leading-relaxed fs-6"><%= destination.travelGuide %></p>
-      </div>
-
-      <!-- Tours in this Destination -->
-      <div class="mb-5">
-        <h3 class="fw-extrabold mb-4">Available Tours in <%= destination.name %></h3>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h3 class="fw-bold text-primary mb-0">Tours Featuring <%= destination.name %></h3>
+          <a href="/tours" class="text-primary fw-bold text-decoration-none small">All Tours &rarr;</a>
+        </div>
+        
         <% if (destination.tours && destination.tours.length > 0) { %>
           <div class="row g-4">
             <% destination.tours.forEach(tour => { %>
               <div class="col-md-6">
-                <%- include('../../partials/tour_card', { tour: tour }) %>
+                <%- include('../partials/tour_card', { tour: tour }) %>
               </div>
             <% }) %>
           </div>
         <% } else { %>
-          <div class="p-4 bg-light rounded-4 text-center text-muted">
-            <p class="mb-0">No active tour packages currently available for this destination.</p>
+          <div class="p-4 bg-light rounded-4 text-center">
+            <p class="text-muted mb-2">Our multi-day Vietnam itineraries frequently include <%= destination.name %>.</p>
+            <a href="/tours" class="btn btn-sm btn-outline-primary rounded-pill px-3">Browse Multi-Region Tours</a>
           </div>
         <% } %>
       </div>
+
+      <!-- 4. Related Destinations (Sitemap Section 3) -->
+      <% if (relatedDestList && relatedDestList.length > 0) { %>
+        <div class="mb-5">
+          <h4 class="fw-bold mb-3">Related Destinations in Vietnam</h4>
+          <div class="row g-3">
+            <% relatedDestList.forEach(rel => { %>
+              <div class="col-md-4">
+                <a href="/vietnam/<%= rel.slug %>" class="text-decoration-none">
+                  <div class="p-3 bg-white rounded-3 border shadow-sm h-100 hover-lift transition-smooth">
+                    <span class="badge bg-light text-primary text-uppercase small mb-1"><%= rel.region %></span>
+                    <h6 class="fw-bold text-dark mb-1"><%= rel.name %></h6>
+                    <span class="text-muted small">Explore Guide &rarr;</span>
+                  </div>
+                </a>
+              </div>
+            <% }) %>
+          </div>
+        </div>
+      <% } %>
     </div>
 
-    <!-- Weather & Fast Facts Sidebar -->
+    <!-- Sidebar Column: Best Time, Getting There & Weather -->
     <div class="col-lg-4">
-      <div class="card border-0 shadow-sm p-4 rounded-4 mb-4">
-        <h5 class="fw-bold mb-3"><i class="bi bi-cloud-sun-fill text-warning me-2"></i> Weather & Climate</h5>
-        <% if (destination.weatherInfo) { %>
-          <% const weather = typeof destination.weatherInfo === 'string' ? JSON.parse(destination.weatherInfo) : destination.weatherInfo; %>
-          <div class="d-flex justify-content-between py-2 border-bottom">
-            <span class="text-muted">Average Temperature:</span>
-            <span class="fw-bold"><%= weather.avgTemp || '25°C' %></span>
-          </div>
-          <div class="d-flex justify-content-between py-2 border-bottom">
-            <span class="text-muted">Best Season:</span>
-            <span class="fw-bold"><%= weather.drySeason || weather.spring || 'Year Round' %></span>
-          </div>
-        <% } %>
+      <div class="card border-0 shadow-sm p-4 rounded-4 mb-4 bg-white">
+        <h5 class="fw-bold text-primary mb-3"><i class="bi bi-clock-history me-2"></i> Best Time to Visit</h5>
+        <p class="text-secondary small leading-relaxed mb-0">
+          <%= destination.bestTimeNote || 'October to April offers pleasant temperatures and sunny skies.' %>
+        </p>
+      </div>
+
+      <div class="card border-0 shadow-sm p-4 rounded-4 mb-4 bg-white">
+        <h5 class="fw-bold text-primary mb-3"><i class="bi bi-airplane me-2"></i> Getting There</h5>
+        <p class="text-secondary small leading-relaxed mb-0">
+          <%= destination.gettingThere || 'Accessible via domestic flights or private chauffeured transfers.' %>
+        </p>
+      </div>
+
+      <% if (destination.weatherInfo) { %>
+        <% const weather = typeof destination.weatherInfo === 'string' ? JSON.parse(destination.weatherInfo) : destination.weatherInfo; %>
+        <div class="card border-0 shadow-sm p-4 rounded-4 mb-4 bg-white">
+          <h5 class="fw-bold text-primary mb-3"><i class="bi bi-thermometer-sun me-2"></i> Climate Snapshot</h5>
+          <% Object.keys(weather).forEach(k => { %>
+            <div class="d-flex justify-content-between py-2 border-bottom small">
+              <span class="text-muted text-capitalize"><%= k.replace(/([A-Z])/g, ' $1') %>:</span>
+              <span class="fw-bold text-dark"><%= weather[k] %></span>
+            </div>
+          <% }) %>
+        </div>
+      <% } %>
+
+      <!-- Need Help Planning Box -->
+      <div class="card border-0 rounded-4 p-4 text-white" style="background: linear-gradient(135deg, #004AAD 0%, #002d6b 100%);">
+        <h5 class="fw-bold text-white mb-2">Want to visit <%= destination.name %>?</h5>
+        <p class="small text-white-50 mb-3">Speak directly with our Vietnam destination specialists for a tailored itinerary.</p>
+        <a href="/contact" class="btn btn-accent w-100 rounded-pill fw-bold text-white">
+          Plan With An Expert
+        </a>
       </div>
     </div>
   </div>

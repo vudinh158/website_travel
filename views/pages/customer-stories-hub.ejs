@@ -1,0 +1,55 @@
+<!-- Customer Stories Hub Header -->
+<div class="bg-primary text-white py-5 mb-5" style="background: linear-gradient(135deg, #004AAD 0%, #002d6b 100%);">
+  <div class="container py-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-3">
+        <li class="breadcrumb-item"><a href="/" class="text-white-50 text-decoration-none">Home</a></li>
+        <li class="breadcrumb-item active text-white" aria-current="page">Customer Stories</li>
+      </ol>
+    </nav>
+    <span class="badge bg-accent text-white px-3 py-2 rounded-pill fw-bold text-uppercase mb-2">Real Traveler Experiences</span>
+    <h1 class="display-4 fw-extrabold text-white mb-2">Customer Stories</h1>
+    <p class="fs-5 text-white-50 mb-0" style="max-width: 720px;">
+      Long-form narratives of real trips taken across Vietnam. Read firsthand accounts of our partial-guided freedom and private concierge service.
+    </p>
+  </div>
+</div>
+
+<div class="container mb-5">
+  <div class="row g-4">
+    <% stories.forEach(story => { %>
+      <div class="col-lg-6">
+        <div class="card h-100 border-0 rounded-4 shadow-sm overflow-hidden bg-white hover-lift transition-smooth">
+          <div style="height: 280px;" class="position-relative">
+            <img src="<%= story.heroImage %>" alt="<%= story.title %>" class="w-100 h-100" style="object-fit: cover;">
+            <div class="position-absolute top-0 start-0 m-3 d-flex gap-2">
+              <span class="badge bg-accent text-white rounded-pill px-3 py-1 fw-bold"><%= story.formatTaken === 'private' ? 'Private Tour' : 'Partial-Guided' %></span>
+              <span class="badge bg-primary text-white rounded-pill px-3 py-1"><%= story.tripDate %></span>
+            </div>
+          </div>
+          <div class="card-body p-4 d-flex flex-column justify-content-between">
+            <div>
+              <div class="d-flex align-items-center gap-2 mb-2 text-muted small">
+                <i class="bi bi-person-fill text-primary"></i> <strong><%= story.travelerName %></strong> &bull; <%= story.travelerLocation %>
+              </div>
+              <h4 class="fw-bold mb-2">
+                <a href="/customer-stories/<%= story.slug %>" class="text-dark text-decoration-none hover-primary">
+                  <%= story.title %>
+                </a>
+              </h4>
+              <p class="text-secondary small fst-italic mb-3">
+                &ldquo;<%= story.travelerQuote %>&rdquo;
+              </p>
+            </div>
+            <div class="pt-3 border-top d-flex justify-content-between align-items-center">
+              <span class="text-muted small"><%= story.tourTitle %></span>
+              <a href="/customer-stories/<%= story.slug %>" class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold">
+                Read Full Story &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</div>

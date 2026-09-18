@@ -1,43 +1,42 @@
-<div class="tour-card card-3d-tilt">
-  <div class="tour-card-img-wrapper">
-    <img src="<%= tour.featuredImage %>" alt="<%= tour.name %>" class="tour-card-img" loading="lazy">
-    <% if (tour.isFeatured) { %>
-      <span class="tour-badge-featured">Featured</span>
-    <% } %>
-    <button class="wishlist-btn btn-toggle-wishlist" data-tour-id="<%= tour.id %>" title="Save to Wishlist">
-      <i class="bi bi-heart"></i>
+<div class="card h-100 border-0 rounded-4 shadow-sm overflow-hidden bg-white hover-lift transition-smooth">
+  <div class="position-relative" style="height: 220px;">
+    <img src="<%= tour.featuredImage %>" alt="<%= tour.name %>" class="w-100 h-100" style="object-fit: cover;" loading="lazy">
+    <div class="position-absolute top-0 start-0 m-3 d-flex gap-2">
+      <span class="badge bg-primary text-white rounded-pill px-3 py-1"><%= tour.duration %></span>
+      <span class="badge bg-accent text-white rounded-pill px-2 py-1 small">Private &bull; Partial-Guided</span>
+    </div>
+    <button class="position-absolute top-0 end-0 m-3 btn btn-light btn-sm rounded-circle shadow-sm btn-toggle-wishlist" data-tour-id="<%= tour.id %>" title="Save Tour" style="width: 34px; height: 34px; padding: 0;">
+      <i class="bi bi-heart text-danger"></i>
     </button>
   </div>
-  <div class="p-3 d-flex flex-column flex-grow-1">
-    <div class="d-flex justify-content-between align-items-center mb-2">
-      <span class="badge bg-light text-primary border"><i class="bi bi-clock me-1"></i> <%= tour.duration %></span>
-      <div class="small fw-bold text-warning">
-        <i class="bi bi-star-fill"></i> <%= tour.rating.toFixed(1) %> (<%= tour.totalReviews %>)
+  <div class="card-body p-4 d-flex flex-column justify-content-between">
+    <div>
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <span class="badge bg-light text-primary border"><i class="bi bi-speedometer2 me-1"></i> <%= tour.pace || 'Moderate' %></span>
+        <div class="small fw-bold text-warning">
+          <i class="bi bi-star-fill"></i> <%= (tour.rating || 4.9).toFixed(1) %> (<%= tour.totalReviews || 12 %>)
+        </div>
       </div>
+
+      <h5 class="fw-bold mb-2">
+        <a href="/tours/<%= tour.slug %>" class="text-decoration-none text-dark hover-primary">
+          <%= tour.name %>
+        </a>
+      </h5>
+
+      <p class="text-muted small mb-3 flex-grow-1">
+        <i class="bi bi-geo-alt me-1 text-danger"></i> <%= tour.destination ? tour.destination.name : 'Vietnam' %>
+      </p>
     </div>
-
-    <h5 class="fw-bold mb-2">
-      <a href="/tours/<%= tour.slug %>" class="text-decoration-none text-dark hover-primary">
-        <%= tour.name %>
-      </a>
-    </h5>
-
-    <p class="text-muted small mb-3 flex-grow-1">
-      <i class="bi bi-geo-alt me-1 text-danger"></i> <%= tour.destination ? tour.destination.name : 'Worldwide' %>
-    </p>
 
     <div class="pt-3 border-top d-flex justify-content-between align-items-center mt-auto">
       <div>
         <span class="small text-muted d-block">Starting from</span>
-        <% if (tour.discountPrice) { %>
-          <span class="text-decoration-line-through text-muted small me-1">$<%= tour.price %></span>
-          <span class="fw-extrabold fs-5 text-primary">$<%= tour.discountPrice %></span>
-        <% } else { %>
-          <span class="fw-extrabold fs-5 text-primary">$<%= tour.price %></span>
-        <% } %>
+        <span class="fw-extrabold fs-5 text-primary">$<%= Math.round(tour.pricePartialGuided || tour.discountPrice || tour.price) %></span>
+        <span class="small text-muted">/ guest</span>
       </div>
-      <a href="/tours/<%= tour.slug %>" class="btn btn-sm btn-wanderlust">
-        Details <i class="bi bi-arrow-right ms-1"></i>
+      <a href="/tours/<%= tour.slug %>" class="btn btn-sm btn-primary rounded-pill px-3 fw-bold">
+        View Itinerary &rarr;
       </a>
     </div>
   </div>

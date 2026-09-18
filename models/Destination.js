@@ -35,7 +35,30 @@ const Destination = sequelize.define('Destination', {
     type: DataTypes.TEXT // JSON string weather info
   },
   country: {
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    defaultValue: 'Vietnam'
+  },
+  region: {
+    type: DataTypes.STRING, // north, central, south
+    allowNull: false,
+    defaultValue: 'north'
+  },
+  navFeatured: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
+  priority: {
+    type: DataTypes.STRING, // P0, P1, P2
+    defaultValue: 'P1'
+  },
+  bestTimeNote: {
+    type: DataTypes.TEXT
+  },
+  gettingThere: {
+    type: DataTypes.TEXT
+  },
+  relatedDestinations: {
+    type: DataTypes.TEXT // JSON array of slugs
   },
   isPopular: {
     type: DataTypes.BOOLEAN,

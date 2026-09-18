@@ -1,0 +1,60 @@
+<!-- Experience Detail Header Banner -->
+<div class="position-relative text-white mb-5" style="min-height: 400px; background: linear-gradient(rgba(0, 45, 107, 0.75), rgba(0, 45, 107, 0.9)), url('<%= experience.heroImage %>') center/cover no-repeat; display: flex; align-items: flex-end;">
+  <div class="container py-5">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-3">
+        <li class="breadcrumb-item"><a href="/" class="text-white-50 text-decoration-none">Home</a></li>
+        <li class="breadcrumb-item"><a href="/experiences" class="text-white-50 text-decoration-none">Signature Experiences</a></li>
+        <li class="breadcrumb-item active text-white" aria-current="page"><%= experience.title %></li>
+      </ol>
+    </nav>
+    <span class="badge bg-accent text-white px-3 py-1.5 rounded-pill fw-bold text-uppercase mb-2">Signature Experience</span>
+    <h1 class="display-4 fw-extrabold text-white mb-2"><%= experience.title %></h1>
+    <p class="fs-5 text-white-50 max-w-2xl mb-0" style="max-width: 780px;"><%= experience.subtitle %></p>
+  </div>
+</div>
+
+<div class="container mb-5">
+  <div class="row g-5">
+    <!-- Main Article Column -->
+    <div class="col-lg-8">
+      <div class="bg-white p-4 p-lg-5 rounded-4 shadow-sm mb-5">
+        <div class="fs-6 text-secondary leading-relaxed mb-4">
+          <%- experience.body.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>') %>
+        </div>
+
+        <div class="p-4 bg-light rounded-3 border-start border-4 border-primary">
+          <h6 class="fw-bold text-dark mb-1">Experience It In Person</h6>
+          <p class="small text-muted mb-0">Our partial-guided and private tour packages incorporate these signature standards on every day of your itinerary.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar Column -->
+    <div class="col-lg-4">
+      <% if (otherExperiences && otherExperiences.length > 0) { %>
+        <div class="card border-0 rounded-4 shadow-sm p-4 bg-white mb-4">
+          <h5 class="fw-bold text-primary mb-3">Other Signature Pillars</h5>
+          <div class="d-flex flex-column gap-3">
+            <% otherExperiences.forEach(oe => { %>
+              <a href="/experiences/<%= oe.slug %>" class="text-decoration-none">
+                <div class="p-3 rounded-3 bg-light hover-lift transition-smooth border">
+                  <h6 class="fw-bold text-dark mb-1"><%= oe.title %></h6>
+                  <span class="text-muted small">Explore feature &rarr;</span>
+                </div>
+              </a>
+            <% }) %>
+          </div>
+        </div>
+      <% } %>
+
+      <div class="card border-0 rounded-4 p-4 text-white" style="background: linear-gradient(135deg, #004AAD 0%, #002d6b 100%);">
+        <h5 class="fw-bold text-white mb-2">Experience the Difference</h5>
+        <p class="small text-white-50 mb-3">Browse our bookable tours to see our signature philosophy in action across Vietnam.</p>
+        <a href="/tours" class="btn btn-accent w-100 rounded-pill fw-bold text-white">
+          Explore Tours
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

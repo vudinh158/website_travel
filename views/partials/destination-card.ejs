@@ -1,0 +1,42 @@
+<div class="card border-0 rounded-4 shadow-sm overflow-hidden h-100 transition-smooth destination-card bg-white">
+  <div class="position-relative" style="height: 220px;">
+    <img src="<%= dest.banner %>" alt="<%= dest.name %>" class="w-100 h-100" style="object-fit: cover;">
+    <div class="position-absolute top-0 start-0 m-3 d-flex gap-2">
+      <% if (dest.priority === 'P0') { %>
+        <span class="badge bg-primary text-white rounded-pill px-3 py-1 fw-bold">Primary City</span>
+      <% } else if (dest.priority === 'P1') { %>
+        <span class="badge bg-secondary text-white rounded-pill px-2 py-1">Featured</span>
+      <% } else { %>
+        <span class="badge bg-light text-dark rounded-pill px-2 py-1">Explorer</span>
+      <% } %>
+      <span class="badge bg-white text-dark rounded-pill px-2 py-1 text-uppercase small"><%= dest.region %></span>
+    </div>
+  </div>
+  <div class="card-body p-4 d-flex flex-column justify-content-between">
+    <div>
+      <h4 class="fw-bold mb-2">
+        <a href="/vietnam/<%= dest.slug %>" class="text-dark text-decoration-none hover-primary">
+          <%= dest.name %>
+        </a>
+      </h4>
+      <p class="text-secondary small leading-relaxed mb-3">
+        <%= truncateText(dest.description, 110) %>
+      </p>
+      
+      <% if (dest.bestTimeNote) { %>
+        <div class="p-2 rounded-3 bg-light mb-3 small text-muted">
+          <i class="bi bi-sun-fill text-warning me-1"></i> <strong>Best Time:</strong> <%= truncateText(dest.bestTimeNote, 70) %>
+        </div>
+      <% } %>
+    </div>
+    
+    <div class="pt-3 border-top d-flex justify-content-between align-items-center">
+      <span class="text-muted small">
+        <i class="bi bi-compass text-primary me-1"></i> <%= dest.tours ? dest.tours.length : 0 %> Tours
+      </span>
+      <a href="/vietnam/<%= dest.slug %>" class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold">
+        Explore Guide &rarr;
+      </a>
+    </div>
+  </div>
+</div>

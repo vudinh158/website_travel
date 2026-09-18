@@ -1,0 +1,103 @@
+<!-- Customer Story Detail Header Banner -->
+<div class="position-relative text-white mb-5" style="min-height: 400px; background: linear-gradient(rgba(0, 45, 107, 0.75), rgba(0, 45, 107, 0.9)), url('<%= story.heroImage %>') center/cover no-repeat; display: flex; align-items: flex-end;">
+  <div class="container py-5">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-3">
+        <li class="breadcrumb-item"><a href="/" class="text-white-50 text-decoration-none">Home</a></li>
+        <li class="breadcrumb-item"><a href="/customer-stories" class="text-white-50 text-decoration-none">Customer Stories</a></li>
+        <li class="breadcrumb-item active text-white" aria-current="page"><%= story.travelerName %></li>
+      </ol>
+    </nav>
+    <div class="d-flex gap-2 mb-2">
+      <span class="badge bg-accent text-white px-3 py-1.5 rounded-pill fw-bold text-uppercase"><%= story.formatTaken === 'private' ? 'Private Tour' : 'Partial-Guided' %></span>
+      <span class="badge bg-white text-dark px-3 py-1.5 rounded-pill"><%= story.tripDate %></span>
+    </div>
+    <h1 class="display-4 fw-extrabold text-white mb-2"><%= story.title %></h1>
+    <p class="fs-5 text-white-50 mb-0">By <%= story.travelerName %> (<%= story.travelerLocation %>)</p>
+  </div>
+</div>
+
+<div class="container mb-5">
+  <div class="row g-5">
+    <!-- Main Narrative Column -->
+    <div class="col-lg-8">
+      <!-- Traveler Quote Callout -->
+      <div class="p-4 p-lg-5 rounded-4 mb-5 border-start border-4 border-accent shadow-sm" style="background: #fff8f3;">
+        <i class="bi bi-quote fs-1 text-accent d-block mb-1"></i>
+        <p class="fs-5 fst-italic text-dark mb-2 leading-relaxed">
+          &ldquo;<%= story.travelerQuote %>&rdquo;
+        </p>
+        <span class="fw-bold text-muted small">&mdash; <%= story.travelerName %>, <%= story.travelerLocation %></span>
+      </div>
+
+      <!-- Story Narrative Body -->
+      <div class="bg-white p-4 p-lg-5 rounded-4 shadow-sm mb-5">
+        <div class="fs-6 text-secondary leading-relaxed mb-4">
+          <%- story.body.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>') %>
+        </div>
+
+        <!-- Gallery from this trip -->
+        <% if (gallery && gallery.length > 0) { %>
+          <div class="mt-4 pt-3 border-top">
+            <h5 class="fw-bold text-dark mb-3">Snapshots from this Journey</h5>
+            <div class="row g-3">
+              <% gallery.forEach(img => { %>
+                <div class="col-md-6">
+                  <div class="rounded-3 overflow-hidden shadow-sm" style="height: 220px;">
+                    <img src="<%= img %>" alt="Trip Snapshot" class="w-100 h-100" style="object-fit: cover;">
+                  </div>
+                </div>
+              <% }) %>
+            </div>
+          </div>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- Sidebar Column: Matching Tour & Other Stories -->
+    <div class="col-lg-4">
+      <% if (linkedTour) { %>
+        <div class="card border-0 rounded-4 shadow-sm p-4 bg-white mb-4 border-top border-4 border-primary">
+          <span class="text-muted small text-uppercase fw-bold d-block mb-1">The Exact Tour Taken</span>
+          <h5 class="fw-bold mb-2">
+            <a href="/tours/<%= linkedTour.slug %>" class="text-dark text-decoration-none hover-primary"><%= linkedTour.name %></a>
+          </h5>
+          <div class="rounded-3 overflow-hidden mb-3" style="height: 160px;">
+            <img src="<%= linkedTour.featuredImage %>" alt="<%= linkedTour.name %>" class="w-100 h-100" style="object-fit: cover;">
+          </div>
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="badge bg-light text-primary border"><%= linkedTour.duration %></span>
+            <span class="fw-extrabold text-primary fs-5">From $<%= Math.round(linkedTour.pricePartialGuided || linkedTour.price) %></span>
+          </div>
+          <a href="/tours/<%= linkedTour.slug %>" class="btn btn-primary w-100 rounded-pill fw-bold">
+            View This Tour Itinerary &rarr;
+          </a>
+        </div>
+      <% } %>
+
+      <% if (otherStories && otherStories.length > 0) { %>
+        <div class="card border-0 rounded-4 shadow-sm p-4 bg-white mb-4">
+          <h5 class="fw-bold text-primary mb-3">More Traveler Stories</h5>
+          <div class="d-flex flex-column gap-3">
+            <% otherStories.forEach(os => { %>
+              <a href="/customer-stories/<%= os.slug %>" class="text-decoration-none">
+                <div class="p-3 rounded-3 bg-light hover-lift transition-smooth border">
+                  <h6 class="fw-bold text-dark mb-1"><%= os.title %></h6>
+                  <span class="text-muted small"><%= os.travelerName %> &bull; Read story &rarr;</span>
+                </div>
+              </a>
+            <% }) %>
+          </div>
+        </div>
+      <% } %>
+
+      <div class="card border-0 rounded-4 p-4 text-white" style="background: linear-gradient(135deg, #004AAD 0%, #002d6b 100%);">
+        <h5 class="fw-bold text-white mb-2">Create Your Own Story</h5>
+        <p class="small text-white-50 mb-3">Speak with our Vietnam destination specialists to start shaping your itinerary.</p>
+        <a href="/contact" class="btn btn-accent w-100 rounded-pill fw-bold text-white">
+          Plan Your Trip
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,125 @@
+<div class="bg-primary text-white py-5 mb-5" style="background: linear-gradient(135deg, #004AAD 0%, #002d6b 100%);">
+  <div class="container py-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-3">
+        <li class="breadcrumb-item"><a href="/" class="text-white-50 text-decoration-none">Home</a></li>
+        <li class="breadcrumb-item active text-white" aria-current="page">Vietnam Destinations</li>
+      </ol>
+    </nav>
+    <span class="badge bg-accent text-white px-3 py-2 rounded-pill fw-bold text-uppercase mb-2">Destination Hub</span>
+    <h1 class="display-4 fw-extrabold text-white mb-2">Explore Vietnam: North to South</h1>
+    <p class="fs-5 text-white-50 mb-0" style="max-width: 720px;">
+      Discover all 17 specialty destinations across Vietnam. Each destination serves as an anchor connecting our tailored tours, scenic routes, and travel guides.
+    </p>
+  </div>
+</div>
+
+<div class="container mb-5">
+  <!-- Region Filter Tabs -->
+  <ul class="nav nav-pills justify-content-center mb-5 gap-2" id="regionTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active rounded-pill px-4 py-2 fw-bold" id="all-tab" data-bs-toggle="pill" data-bs-target="#all-regions" type="button" role="tab">
+        All 17 Destinations
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link rounded-pill px-4 py-2 fw-bold" id="north-tab" data-bs-toggle="pill" data-bs-target="#north-region" type="button" role="tab">
+        North Vietnam (6)
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link rounded-pill px-4 py-2 fw-bold" id="central-tab" data-bs-toggle="pill" data-bs-target="#central-region" type="button" role="tab">
+        Central Vietnam (7)
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link rounded-pill px-4 py-2 fw-bold" id="south-tab" data-bs-toggle="pill" data-bs-target="#south-region" type="button" role="tab">
+        South Vietnam (4)
+      </button>
+    </li>
+  </ul>
+
+  <!-- Tab Content -->
+  <div class="tab-content" id="regionTabContent">
+    <!-- All Destinations Tab -->
+    <div class="tab-pane fade show active" id="all-regions" role="tabpanel">
+      <!-- Section 1: North Vietnam -->
+      <div class="mb-5">
+        <div class="d-flex align-items-center gap-3 mb-4 pb-2 border-bottom">
+          <h3 class="fw-bold mb-0 text-primary"><i class="bi bi-compass me-2"></i>North Vietnam</h3>
+          <span class="text-muted small">Mountains, Karst Bays &amp; Thousand-Year Heritage</span>
+        </div>
+        <div class="row g-4">
+          <% northDestinations.forEach(dest => { %>
+            <div class="col-lg-4 col-md-6">
+              <%- include('../partials/destination-card', { dest: dest }) %>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+
+      <!-- Section 2: Central Vietnam -->
+      <div class="mb-5">
+        <div class="d-flex align-items-center gap-3 mb-4 pb-2 border-bottom">
+          <h3 class="fw-bold mb-0 text-primary"><i class="bi bi-brightness-high me-2"></i>Central Vietnam</h3>
+          <span class="text-muted small">Imperial Dynasties, Lantern Towns &amp; Karst Caves</span>
+        </div>
+        <div class="row g-4">
+          <% centralDestinations.forEach(dest => { %>
+            <div class="col-lg-4 col-md-6">
+              <%- include('../partials/destination-card', { dest: dest }) %>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+
+      <!-- Section 3: South Vietnam -->
+      <div class="mb-5">
+        <div class="d-flex align-items-center gap-3 mb-4 pb-2 border-bottom">
+          <h3 class="fw-bold mb-0 text-primary"><i class="bi bi-water me-2"></i>South Vietnam</h3>
+          <span class="text-muted small">Dynamic Metropolises, Mekong Waterways &amp; Tropical Isles</span>
+        </div>
+        <div class="row g-4">
+          <% southDestinations.forEach(dest => { %>
+            <div class="col-lg-4 col-md-6">
+              <%- include('../partials/destination-card', { dest: dest }) %>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+
+    <!-- North Only Tab -->
+    <div class="tab-pane fade" id="north-region" role="tabpanel">
+      <div class="row g-4">
+        <% northDestinations.forEach(dest => { %>
+          <div class="col-lg-4 col-md-6">
+            <%- include('../partials/destination-card', { dest: dest }) %>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+
+    <!-- Central Only Tab -->
+    <div class="tab-pane fade" id="central-region" role="tabpanel">
+      <div class="row g-4">
+        <% centralDestinations.forEach(dest => { %>
+          <div class="col-lg-4 col-md-6">
+            <%- include('../partials/destination-card', { dest: dest }) %>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+
+    <!-- South Only Tab -->
+    <div class="tab-pane fade" id="south-region" role="tabpanel">
+      <div class="row g-4">
+        <% southDestinations.forEach(dest => { %>
+          <div class="col-lg-4 col-md-6">
+            <%- include('../partials/destination-card', { dest: dest }) %>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</div>

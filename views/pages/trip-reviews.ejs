@@ -1,0 +1,122 @@
+<!-- Trip Reviews Hub Header -->
+<div class="bg-primary text-white py-5 mb-5" style="background: linear-gradient(135deg, #004AAD 0%, #002d6b 100%);">
+  <div class="container py-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-3">
+        <li class="breadcrumb-item"><a href="/" class="text-white-50 text-decoration-none">Home</a></li>
+        <li class="breadcrumb-item active text-white" aria-current="page">Trip Reviews</li>
+      </ol>
+    </nav>
+    <span class="badge bg-accent text-white px-3 py-2 rounded-pill fw-bold text-uppercase mb-2">Verified Feedback</span>
+    <h1 class="display-4 fw-extrabold text-white mb-2">Traveler Trip Reviews &amp; Ratings</h1>
+    <p class="fs-5 text-white-50 mb-0" style="max-width: 720px;">
+      Read verified reviews from guests who traveled across Vietnam on our private and partial-guided itineraries.
+    </p>
+  </div>
+</div>
+
+<div class="container mb-5">
+  <!-- Filter by Tour & Destination -->
+  <div class="card border-0 rounded-4 shadow-sm p-4 mb-4 bg-white">
+    <form action="/trip-reviews" method="GET" class="row g-3 align-items-end">
+      <div class="col-md-5">
+        <label class="form-label small fw-bold text-muted">Filter by Tour</label>
+        <select name="tourId" class="form-select bg-light" onchange="this.form.submit()">
+          <option value="">All Tours</option>
+          <% tours.forEach(t => { %>
+            <option value="<%= t.id %>" <%= query.tourId == t.id ? 'selected' : '' %>><%= t.name %></option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div class="col-md-5">
+        <label class="form-label small fw-bold text-muted">Filter by Destination</label>
+        <select name="destinationId" class="form-select bg-light" onchange="this.form.submit()">
+          <option value="">All Destinations</option>
+          <% destinations.forEach(d => { %>
+            <option value="<%= d.id %>" <%= query.destinationId == d.id ? 'selected' : '' %>><%= d.name %></option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div class="col-md-2">
+        <a href="/trip-reviews" class="btn btn-outline-secondary w-100 rounded-pill">Reset</a>
+      </div>
+    </form>
+  </div>
+
+  <!-- Reviews List & Stories -->
+  <div class="row g-5">
+    <div class="col-lg-8">
+      <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+        <h4 class="fw-bold text-dark mb-0"><%= reviews.length %> Verified Guest Reviews</h4>
+        <span class="text-warning fw-bold"><i class="bi bi-star-fill me-1"></i> 4.97 Average Rating</span>
+      </div>
+
+      <% if (reviews && reviews.length > 0) { %>
+        <div class="d-flex flex-column gap-4">
+          <% reviews.forEach(rev => { %>
+            <div class="card border-0 rounded-4 shadow-sm p-4 bg-white">
+              <div class="d-flex justify-content-between align-items-start mb-3">
+                <div class="d-flex align-items-center gap-3">
+                  <img src="<%= rev.user ? rev.user.avatar : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80' %>" class="rounded-circle" width="48" height="48" style="object-fit:cover;">
+                  <div>
+                    <h6 class="fw-bold text-dark mb-0"><%= rev.user ? rev.user.name : 'Verified Guest' %></h6>
+                    <span class="badge bg-light text-success border" style="font-size: 0.7rem;"><i class="bi bi-check-circle me-1"></i> Verified Traveler</span>
+                  </div>
+                </div>
+                <div class="text-warning">
+                  <% for(let i=0; i<rev.rating; i++) { %> <i class="bi bi-star-fill"></i> <% } %>
+                </div>
+              </div>
+
+              <h5 class="fw-bold text-dark mb-2"><%= rev.title %></h5>
+              <p class="text-secondary small leading-relaxed mb-3"><%= rev.comment %></p>
+
+              <% if (rev.tour) { %>
+                <div class="pt-3 border-top d-flex justify-content-between align-items-center">
+                  <span class="text-muted small">Reviewed Tour: <strong><%= rev.tour.name %></strong></span>
+                  <a href="/tours/<%= rev.tour.slug %>" class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold">
+                    View Tour &rarr;
+                  </a>
+                </div>
+              <% } %>
+            </div>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <div class="p-5 text-center bg-white rounded-4 shadow-sm text-muted">
+          <p class="mb-0">No reviews match the selected filter criteria.</p>
+        </div>
+      <% } %>
+    </div>
+
+    <!-- Right Column: Customer Stories & Social Proof -->
+    <div class="col-lg-4">
+      <div class="card border-0 rounded-4 shadow-sm p-4 bg-white mb-4">
+        <h5 class="fw-bold text-primary mb-3">Detailed Customer Stories</h5>
+        <p class="text-muted small mb-3">Looking for full narrative reviews with traveler photos? Check our long-form customer stories.</p>
+        <% customerStories.forEach(cs => { %>
+          <div class="mb-3 pb-3 border-bottom">
+            <div class="rounded-3 overflow-hidden mb-2" style="height: 120px;">
+              <img src="<%= cs.heroImage %>" alt="<%= cs.title %>" class="w-100 h-100" style="object-fit: cover;">
+            </div>
+            <h6 class="fw-bold mb-1">
+              <a href="/customer-stories/<%= cs.slug %>" class="text-dark text-decoration-none hover-primary"><%= cs.title %></a>
+            </h6>
+            <span class="text-muted small"><%= cs.travelerName %></span>
+          </div>
+        <% }) %>
+        <a href="/customer-stories" class="btn btn-outline-primary rounded-pill w-100 fw-bold btn-sm">All Customer Stories</a>
+      </div>
+
+      <div class="card border-0 rounded-4 p-4 text-white" style="background: linear-gradient(135deg, #004AAD 0%, #002d6b 100%);">
+        <h5 class="fw-bold text-white mb-2">Book With Confidence</h5>
+        <p class="small text-white-50 mb-3">Zero guesswork. Direct local coordination from our Hanoi headquarters.</p>
+        <a href="/contact" class="btn btn-accent w-100 rounded-pill fw-bold text-white">
+          Contact Our Concierge
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

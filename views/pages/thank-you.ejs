@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!-- Meta noindex per Sitemap Section 13 -->
+<meta name="robots" content="noindex, nofollow">
+
+<div class="container py-5 my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 text-center">
+      <div class="card border-0 rounded-4 shadow-lg p-5 bg-white">
+        <div class="rounded-circle bg-success bg-opacity-10 text-success d-inline-flex align-items-center justify-content-center mx-auto mb-4" style="width: 84px; height: 84px;">
+          <i class="bi bi-check-circle-fill display-4"></i>
+        </div>
+
+        <h1 class="display-5 fw-extrabold text-dark mb-2">Thank You, <%= travelerName %>!</h1>
+        <p class="fs-5 text-secondary mb-4 leading-relaxed">
+          Your travel inquiry has been received by our Vietnam destination specialists.
+        </p>
+
+        <div class="p-4 rounded-4 bg-light border mb-4 text-start">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <i class="bi bi-clock-history text-primary fs-3"></i>
+            <div>
+              <h6 class="fw-bold text-dark mb-0">Our 24-Hour Reply Promise</h6>
+              <span class="text-muted small">One of our Hanoi curators is reviewing your dates and preferences. You will receive a personalized itinerary proposal within 24 hours.</span>
+            </div>
+          </div>
+          <% if (tourName) { %>
+            <div class="pt-3 border-top small text-muted">
+              Inquiry Reference Tour: <strong class="text-primary"><%= tourName %></strong>
+            </div>
+          <% } %>
+        </div>
+
+        <!-- Optional 15-Minute Consultation Booking Link (Sitemap Section 13) -->
+        <div class="p-4 rounded-4 border-dashed mb-4 bg-white border border-2 border-primary border-opacity-25">
+          <h5 class="fw-bold text-primary mb-2"><i class="bi bi-telephone-outbound me-2"></i>Prefer to Talk Live?</h5>
+          <p class="text-secondary small mb-3">
+            Schedule an optional 15-minute consultation call with a Senior Vietnam Curator to ask questions about seasons, routing, and our partial-guided model.
+          </p>
+          <a href="https://calendly.com/tranoitravel" target="_blank" rel="noopener noreferrer" class="btn btn-accent rounded-pill px-4 py-2 fw-bold text-white shadow-sm">
+            Book a 15-Minute Call &rarr;
+          </a>
+        </div>
+
+        <div class="d-flex justify-content-center gap-3">
+          <a href="/tours" class="btn btn-outline-primary rounded-pill px-4 fw-bold">
+            Explore More Tours
+          </a>
+          <a href="/" class="btn btn-primary rounded-pill px-4 fw-bold">
+            Return to Home
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

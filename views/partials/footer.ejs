@@ -1,58 +1,77 @@
 <footer class="bg-dark text-white pt-5 pb-4 mt-auto">
   <div class="container">
     <div class="row g-4 mb-4">
+      <!-- Column 1: Brand & Tagline -->
       <div class="col-lg-4 col-md-6">
         <div class="d-flex align-items-center gap-2 mb-3">
-          <img src="/images/logo/logo-full.png" alt="Tranoi Travel" style="height: 52px; object-fit: contain;">
+          <img src="/images/logo/logo-full.png" alt="Tranoi Travel" style="height: 50px; object-fit: contain; filter: brightness(0) invert(1);">
         </div>
-        <p class="text-secondary mb-3">Travel more, plan less. Tailored, curated trips within our specialty destinations and packages.</p>
-        <div class="d-flex gap-3">
-          <a href="#" class="btn btn-sm btn-outline-light rounded-circle"><i class="bi bi-facebook"></i></a>
-          <a href="#" class="btn btn-sm btn-outline-light rounded-circle"><i class="bi bi-instagram"></i></a>
-          <a href="#" class="btn btn-sm btn-outline-light rounded-circle"><i class="bi bi-twitter-x"></i></a>
-          <a href="#" class="btn btn-sm btn-outline-light rounded-circle"><i class="bi bi-youtube"></i></a>
+        <p class="text-white-50 mb-3" style="max-width: 340px;">
+          <strong>Travel more, plan less.</strong> A travel agency offering tailored, curated Vietnam journeys within our specialty destinations and packages.
+        </p>
+        <div class="d-flex gap-2">
+          <a href="#" class="btn btn-sm btn-outline-light rounded-circle" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="btn btn-sm btn-outline-light rounded-circle" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="btn btn-sm btn-outline-light rounded-circle" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
         </div>
       </div>
 
+      <!-- Column 2: Destinations (P0 Cities) -->
       <div class="col-lg-2 col-md-6">
-        <h5 class="fw-bold mb-3">Quick Links</h5>
-        <ul class="list-unstyled d-flex flex-column gap-2 text-secondary">
-          <li><a href="/" class="text-secondary text-decoration-none">Home</a></li>
-          <li><a href="/tours" class="text-secondary text-decoration-none">Explore Tours</a></li>
-          <li><a href="/destinations" class="text-secondary text-decoration-none">Destinations</a></li>
-          <li><a href="/blog" class="text-secondary text-decoration-none">Travel Blog</a></li>
-          <li><a href="/about" class="text-secondary text-decoration-none">About Us</a></li>
+        <h6 class="fw-bold text-white text-uppercase tracking-wider mb-3" style="font-size: 0.85rem;">Vietnam Cities</h6>
+        <ul class="list-unstyled d-flex flex-column gap-2 text-white-50 small">
+          <li><a href="/vietnam/hanoi" class="text-white-50 text-decoration-none hover-white">Hanoi</a></li>
+          <li><a href="/vietnam/ha-long-bay" class="text-white-50 text-decoration-none hover-white">Ha Long Bay</a></li>
+          <li><a href="/vietnam/hoi-an" class="text-white-50 text-decoration-none hover-white">Hoi An</a></li>
+          <li><a href="/vietnam/hue" class="text-white-50 text-decoration-none hover-white">Hue</a></li>
+          <li><a href="/vietnam/da-nang" class="text-white-50 text-decoration-none hover-white">Da Nang</a></li>
+          <li><a href="/vietnam/ho-chi-minh-city" class="text-white-50 text-decoration-none hover-white">Ho Chi Minh City</a></li>
+          <li><a href="/vietnam" class="text-accent text-decoration-none fw-bold">All 17 Destinations &rarr;</a></li>
         </ul>
       </div>
 
+      <!-- Column 3: Tours & Inspiration -->
       <div class="col-lg-3 col-md-6">
-        <h5 class="fw-bold mb-3">Support & Policies</h5>
-        <ul class="list-unstyled d-flex flex-column gap-2 text-secondary">
-          <li><a href="/contact" class="text-secondary text-decoration-none">Contact Us</a></li>
-          <li><a href="/faq" class="text-secondary text-decoration-none">FAQ & Help</a></li>
-          <li><a href="/privacy" class="text-secondary text-decoration-none">Privacy Policy</a></li>
-          <li><a href="/terms" class="text-secondary text-decoration-none">Terms & Conditions</a></li>
+        <h6 class="fw-bold text-white text-uppercase tracking-wider mb-3" style="font-size: 0.85rem;">Tours & Inspiration</h6>
+        <ul class="list-unstyled d-flex flex-column gap-2 text-white-50 small">
+          <li><a href="/tours" class="text-white-50 text-decoration-none hover-white">All Vietnam Tours</a></li>
+          <li><a href="/tours?format=partial-guided" class="text-white-50 text-decoration-none hover-white">Partial-Guided Tours</a></li>
+          <li><a href="/tours?format=private" class="text-white-50 text-decoration-none hover-white">Private Chauffeured Tours</a></li>
+          <li><a href="/trips" class="text-white-50 text-decoration-none hover-white">Route Itineraries (by Duration)</a></li>
+          <li><a href="/guides" class="text-white-50 text-decoration-none hover-white">Vietnam Travel Guides</a></li>
+          <li><a href="/experiences" class="text-white-50 text-decoration-none hover-white">Signature Experiences</a></li>
+          <li><a href="/customer-stories" class="text-white-50 text-decoration-none hover-white">Customer Stories</a></li>
         </ul>
       </div>
 
+      <!-- Column 4: Newsletter & Contact -->
       <div class="col-lg-3 col-md-6">
-        <h5 class="fw-bold mb-3">Newsletter</h5>
-        <p class="text-secondary small">Subscribe to receive exclusive travel discounts and destination updates.</p>
-        <form id="newsletter-form" class="mt-2">
-          <div class="input-group">
-            <input type="email" name="email" class="form-control" placeholder="Your email address" required>
-            <button class="btn btn-primary" type="submit"><i class="bi bi-send-fill"></i></button>
-          </div>
-        </form>
+        <h6 class="fw-bold text-white text-uppercase tracking-wider mb-3" style="font-size: 0.85rem;">Direct Support</h6>
+        <p class="text-white-50 small mb-2"><i class="bi bi-geo-alt-fill text-accent me-2"></i>Ba Dinh District, Hanoi, Vietnam</p>
+        <p class="text-white-50 small mb-2"><i class="bi bi-envelope-fill text-accent me-2"></i>hello@tranoitravel.com</p>
+        <p class="text-white-50 small mb-3"><i class="bi bi-telephone-fill text-accent me-2"></i>+84 24 3999 8888</p>
+        <div class="p-3 rounded-3" style="background: rgba(255,255,255,0.06);">
+          <span class="text-white fw-bold d-block small mb-1">On-Trip Promise</span>
+          <span class="text-white-50" style="font-size: 0.8rem;">24/7 dedicated WhatsApp concierge support throughout your Vietnam trip.</span>
+        </div>
       </div>
     </div>
 
-    <hr class="border-secondary opacity-25">
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center text-secondary small pt-2">
-      <p class="mb-0">&copy; 2026 Tranoi Travel. All rights reserved.</p>
-      <div class="d-flex gap-3">
-        <span><i class="bi bi-shield-check text-success me-1"></i> SSL 256-Bit Encrypted</span>
-        <span><i class="bi bi-credit-card-2-front text-info me-1"></i> Stripe Secured</span>
+    <!-- Footer Utility Row (Sitemap Line 30): FAQ · Terms & Conditions · Privacy Policy -->
+    <hr class="border-secondary opacity-25 my-3">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center text-white-50 small gap-2">
+      <div class="d-flex flex-wrap gap-3 align-items-center">
+        <span>&copy; 2026 Tranoi Travel. All rights reserved.</span>
+        <span class="d-none d-md-inline text-secondary">&bull;</span>
+        <a href="/faq" class="text-white-50 text-decoration-none hover-white">FAQ</a>
+        <span class="text-secondary">&bull;</span>
+        <a href="/terms-conditions" class="text-white-50 text-decoration-none hover-white">Terms &amp; Conditions</a>
+        <span class="text-secondary">&bull;</span>
+        <a href="/privacy-policy" class="text-white-50 text-decoration-none hover-white">Privacy Policy</a>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <span class="text-white-50" style="font-size: 0.8rem;"><i class="bi bi-shield-check text-success me-1"></i> Verified Local Operator</span>
+        <span class="text-white-50" style="font-size: 0.8rem;"><i class="bi bi-lock-fill text-info me-1"></i> 256-Bit SSL Encrypted</span>
       </div>
     </div>
   </div>
