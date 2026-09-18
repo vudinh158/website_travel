@@ -1,49 +1,163 @@
-<nav class="navbar navbar-expand-lg sticky-top navbar-tranoi py-3 bg-white shadow-sm border-bottom">
-  <div class="container">
-    <!-- Brand Logo -->
-    <a class="navbar-brand d-flex align-items-center py-0" href="/">
-      <img src="/images/logo/logo-full.png" alt="Tranoi Travel - Travel more, plan less" class="navbar-brand-logo" style="height: 48px; object-fit: contain;">
+<nav class="navbar navbar-expand-lg sticky-top navbar-tranoi-dark">
+  <div class="container position-relative">
+    <!-- Brand Logo (White / Inverted for Navy Background) -->
+    <a class="navbar-brand d-flex align-items-center py-0 me-lg-4" href="/" title="Tranoi Travel">
+      <img src="/images/logo/logo-full.png" alt="Tranoi Travel - Travel more, plan less" class="navbar-brand-logo">
     </a>
-    
-    <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+
+    <!-- Mobile Burger Toggle Button -->
+    <button class="navbar-toggler border-0 text-white shadow-none p-1" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="bi bi-list fs-2 text-white"></i>
     </button>
 
+    <!-- Main Navigation Links & Actions -->
     <div class="collapse navbar-collapse" id="navbarContent">
-      <!-- Main Nav Links -->
-      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+      <ul class="navbar-nav mx-auto align-items-lg-center gap-lg-1">
         
-        <!-- 1. Destinations Dropdown (P0 cities only per Sitemap Section 1) -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle fw-semibold <%= currentPath.startsWith('/vietnam') || currentPath.startsWith('/destinations') ? 'active text-primary' : 'text-dark' %>" href="/vietnam" data-bs-toggle="dropdown" aria-expanded="false">
-            Destinations
+        <!-- 1. Destinations Mega-Menu (Exact Layout from On The Go Tours Reference) -->
+        <li class="nav-item dropdown position-static">
+          <a class="nav-link <%= (typeof currentPath !== 'undefined' && (currentPath.startsWith('/vietnam') || currentPath.startsWith('/destinations'))) ? 'active' : '' %>" href="/vietnam" data-bs-toggle="dropdown" aria-expanded="false">
+            <span>Destinations</span>
+            <i class="bi bi-chevron-down nav-chevron"></i>
           </a>
-          <ul class="dropdown-menu shadow-lg border-0 rounded-4 py-2 mt-2">
-            <li class="px-3 py-1 text-muted text-uppercase small fw-bold" style="font-size: 0.75rem; letter-spacing: 0.5px;">Vietnam Cities (P0)</li>
-            <li><a class="dropdown-item py-2" href="/vietnam/hanoi"><i class="bi bi-geo-alt-fill text-primary me-2"></i>Hanoi (Capital)</a></li>
-            <li><a class="dropdown-item py-2" href="/vietnam/ho-chi-minh-city"><i class="bi bi-building text-primary me-2"></i>Ho Chi Minh City</a></li>
-            <li><a class="dropdown-item py-2" href="/vietnam/ha-long-bay"><i class="bi bi-water text-primary me-2"></i>Ha Long Bay</a></li>
-            <li><a class="dropdown-item py-2" href="/vietnam/hoi-an"><i class="bi bi-brightness-high text-primary me-2"></i>Hoi An Ancient Town</a></li>
-            <li><a class="dropdown-item py-2" href="/vietnam/hue"><i class="bi bi-bank text-primary me-2"></i>Imperial Hue</a></li>
-            <li><a class="dropdown-item py-2" href="/vietnam/da-nang"><i class="bi bi-sun text-primary me-2"></i>Da Nang Coastal</a></li>
-            <li><hr class="dropdown-divider my-1"></li>
-            <li><a class="dropdown-item py-2 text-primary fw-bold" href="/vietnam"><i class="bi bi-compass me-2"></i>Explore All 17 Destinations</a></li>
-          </ul>
+          <div class="dropdown-menu mega-menu-destinations shadow-lg">
+            <div class="row g-4">
+              <!-- Column 1: Popular Destinations (2 Sub-columns + Show All Orange Button) -->
+              <div class="col-lg-6 border-end-lg pe-lg-4">
+                <h6 class="fw-bold text-dark mb-3" style="font-size: 0.95rem; letter-spacing: -0.2px;">Popular Destinations</h6>
+                <div class="row g-2">
+                  <div class="col-6">
+                    <ul class="mega-link-list d-flex flex-column gap-2">
+                      <li><a href="/vietnam/hanoi">Hanoi</a></li>
+                      <li><a href="/vietnam/ha-long-bay">Ha Long Bay</a></li>
+                      <li><a href="/vietnam/hoi-an">Hoi An</a></li>
+                      <li><a href="/vietnam/hue">Hue</a></li>
+                      <li><a href="/vietnam/da-nang">Da Nang</a></li>
+                      <li><a href="/vietnam/sapa">Sapa</a></li>
+                      <li><a href="/vietnam/ninh-binh">Ninh Binh</a></li>
+                      <li><a href="/vietnam/phong-nha">Phong Nha</a></li>
+                    </ul>
+                  </div>
+                  <div class="col-6">
+                    <ul class="mega-link-list d-flex flex-column gap-2">
+                      <li><a href="/vietnam/ho-chi-minh-city">Ho Chi Minh City</a></li>
+                      <li><a href="/vietnam/mekong-delta">Mekong Delta</a></li>
+                      <li><a href="/vietnam/phu-quoc">Phu Quoc</a></li>
+                      <li><a href="/vietnam/nha-trang">Nha Trang</a></li>
+                      <li><a href="/vietnam/quy-nhon">Quy Nhon</a></li>
+                      <li><a href="/vietnam/mai-chau">Mai Chau</a></li>
+                      <li><a href="/vietnam/ha-giang">Ha Giang</a></li>
+                      <li><a href="/vietnam/can-tho">Can Tho</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="mt-4 pt-1">
+                  <a href="/vietnam" class="btn-show-all-orange">
+                    Show All <i class="bi bi-chevron-right small"></i>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Column 2: Regions -->
+              <div class="col-lg-3 border-end-lg pe-lg-3">
+                <h6 class="fw-bold text-dark mb-3" style="font-size: 0.95rem; letter-spacing: -0.2px;">Regions</h6>
+                <ul class="mega-link-list d-flex flex-column gap-2">
+                  <li><a href="/vietnam?region=north">North Vietnam</a></li>
+                  <li><a href="/vietnam?region=central">Central Vietnam</a></li>
+                  <li><a href="/vietnam?region=south">South Vietnam</a></li>
+                  <li><a href="/vietnam/sapa">Highlands &amp; Mountains</a></li>
+                  <li><a href="/vietnam/mekong-delta">Mekong &amp; Delta</a></li>
+                  <li><a href="/experiences/what-partial-guided-feels-like">Partial-Guided Tours</a></li>
+                  <li><a href="/tours?format=private">Private Chauffeured</a></li>
+                  <li><a href="/vietnam">All 17 Destinations</a></li>
+                </ul>
+              </div>
+
+              <!-- Column 3: Why choose a tour? Callout Box -->
+              <div class="col-lg-3">
+                <div class="mega-feature-card">
+                  <div>
+                    <h6 class="fw-bold text-dark mb-2" style="font-size: 1rem;">Why choose a tour?</h6>
+                    <p class="text-secondary small mb-3" style="line-height: 1.6; font-size: 0.85rem;">
+                      Tours are expertly planned journeys that bring together the highlights of a destination in one easy itinerary. With routes, accommodation and key experiences arranged for you, they're a simple way to see more while travelling with confidence.
+                    </p>
+                  </div>
+                  <div class="pt-2 border-top border-light-subtle">
+                    <a href="/experiences/what-partial-guided-feels-like" class="text-primary fw-bold small text-decoration-none d-inline-flex align-items-center gap-1">
+                      Why partial-guided? <i class="bi bi-arrow-right"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </li>
 
-        <!-- 2. Tours (Hub + bookable pages) -->
-        <li class="nav-item">
-          <a class="nav-link fw-semibold <%= currentPath.startsWith('/tours') ? 'active text-primary' : 'text-dark' %>" href="/tours">
-            Tours
+        <!-- 2. Tours Mega-Menu -->
+        <li class="nav-item dropdown position-static">
+          <a class="nav-link <%= (typeof currentPath !== 'undefined' && currentPath.startsWith('/tours')) ? 'active' : '' %>" href="/tours" data-bs-toggle="dropdown" aria-expanded="false">
+            <span>Tours</span>
+            <i class="bi bi-chevron-down nav-chevron"></i>
           </a>
+          <div class="dropdown-menu mega-menu-tours shadow-lg">
+            <div class="row g-4">
+              <!-- Featured Tours -->
+              <div class="col-lg-5 border-end-lg pe-lg-3">
+                <h6 class="fw-bold text-dark mb-3" style="font-size: 0.95rem;">Curated Itineraries</h6>
+                <ul class="mega-link-list d-flex flex-column gap-2">
+                  <li><a href="/tours/essential-north-vietnam-7-days"><span class="badge bg-primary-subtle text-primary me-2">7 Days</span> Essential North Highlights</a></li>
+                  <li><a href="/tours/classic-vietnam-explorer-10-days"><span class="badge bg-primary-subtle text-primary me-2">10 Days</span> Classic Vietnam Explorer</a></li>
+                  <li><a href="/tours/grand-vietnam-discovery-14-days"><span class="badge bg-primary-subtle text-primary me-2">14 Days</span> Grand Vietnam Discovery</a></li>
+                  <li><a href="/tours/complete-vietnam-expedition-21-days"><span class="badge bg-primary-subtle text-primary me-2">21 Days</span> Complete Vietnam Expedition</a></li>
+                </ul>
+                <div class="mt-3 pt-1">
+                  <a href="/tours" class="btn-show-all-orange">
+                    All Tours <i class="bi bi-chevron-right small"></i>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Styles & Durations -->
+              <div class="col-lg-3 border-end-lg pe-lg-3">
+                <h6 class="fw-bold text-dark mb-3" style="font-size: 0.95rem;">Travel Formats</h6>
+                <ul class="mega-link-list d-flex flex-column gap-2">
+                  <li><a href="/tours?format=partial-guided">Partial-Guided Format</a></li>
+                  <li><a href="/tours?format=private">Private Chauffeured</a></li>
+                  <li><a href="/trips">Routes by Duration</a></li>
+                  <li><a href="/tours?duration=7">7-Day Journeys</a></li>
+                  <li><a href="/tours?duration=10">10-Day Journeys</a></li>
+                  <li><a href="/tours?duration=14">14-Day Journeys</a></li>
+                  <li><a href="/tours?duration=21">21-Day Journeys</a></li>
+                </ul>
+              </div>
+
+              <!-- Callout Card -->
+              <div class="col-lg-4">
+                <div class="mega-feature-card">
+                  <div>
+                    <h6 class="fw-bold text-dark mb-2" style="font-size: 1rem;">Tailor-Made Custom Trips</h6>
+                    <p class="text-secondary small mb-3" style="line-height: 1.6; font-size: 0.85rem;">
+                      Need a custom itinerary or specific travel dates? Our local destination team designs private custom itineraries matching your exact schedule within 24 hours.
+                    </p>
+                  </div>
+                  <div class="pt-2 border-top border-light-subtle">
+                    <a href="/contact" class="text-primary fw-bold small text-decoration-none d-inline-flex align-items-center gap-1">
+                      Request Tailored Route <i class="bi bi-arrow-right"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </li>
 
-        <!-- 3. Themes (Own top-level item with flat links) -->
+        <!-- 3. Themes Dropdown -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle fw-semibold <%= ['/honeymoon', '/family', '/adventure', '/culinary', '/eco-tours', '/veterans-tours', '/educational-tours', '/themes'].some(p => currentPath.startsWith(p)) ? 'active text-primary' : 'text-dark' %>" href="/themes" data-bs-toggle="dropdown" aria-expanded="false">
-            Themes
+          <a class="nav-link <%= (typeof currentPath !== 'undefined' && ['/honeymoon', '/family', '/adventure', '/culinary', '/eco-tours', '/veterans-tours', '/educational-tours', '/themes'].some(p => currentPath.startsWith(p))) ? 'active' : '' %>" href="/themes" data-bs-toggle="dropdown" aria-expanded="false">
+            <span>Themes</span>
+            <i class="bi bi-chevron-down nav-chevron"></i>
           </a>
-          <div class="dropdown-menu shadow-lg border-0 rounded-4 p-3 mt-2" style="min-width: 320px;">
+          <div class="dropdown-menu shadow-lg p-3" style="min-width: 320px;">
             <div class="small fw-bold text-muted text-uppercase mb-2" style="font-size: 0.75rem; letter-spacing: 0.5px;">Traveler Styles</div>
             <div class="row g-2 mb-2">
               <div class="col-6"><a class="dropdown-item rounded-3 py-1" href="/honeymoon"><i class="bi bi-heart-fill text-danger me-1"></i> Honeymoon</a></div>
@@ -58,31 +172,34 @@
             <a class="dropdown-item py-1" href="/vietnam-tours-from-usa"><i class="bi bi-airplane-engines me-2 text-primary"></i>Tours from USA</a>
             <a class="dropdown-item py-1" href="/vietnam-tours-from-australia"><i class="bi bi-airplane-engines me-2 text-primary"></i>Tours from Australia</a>
             <a class="dropdown-item py-1" href="/vietnam-tours-from-uae"><i class="bi bi-airplane-engines me-2 text-primary"></i>Tours from UAE</a>
+            <div class="dropdown-divider my-2"></div>
+            <a class="dropdown-item py-1 fw-bold text-primary" href="/themes"><i class="bi bi-grid me-2"></i>Explore All Themes</a>
           </div>
         </li>
 
-        <!-- 4. Inspiration (Mega-menu per Sitemap Section 1) -->
+        <!-- 4. Inspiration Dropdown -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle fw-semibold <%= currentPath.startsWith('/trips') || currentPath.startsWith('/guides') || currentPath.startsWith('/experiences') || currentPath.startsWith('/customer-stories') ? 'active text-primary' : 'text-dark' %>" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-            Inspiration
+          <a class="nav-link <%= (typeof currentPath !== 'undefined' && (currentPath.startsWith('/trips') || currentPath.startsWith('/guides') || currentPath.startsWith('/experiences') || currentPath.startsWith('/customer-stories'))) ? 'active' : '' %>" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+            <span>Inspiration</span>
+            <i class="bi bi-chevron-down nav-chevron"></i>
           </a>
-          <ul class="dropdown-menu shadow-lg border-0 rounded-4 py-2 mt-2">
+          <ul class="dropdown-menu shadow-lg py-2" style="min-width: 280px;">
             <li>
               <a class="dropdown-item py-2" href="/trips">
                 <div class="fw-bold text-dark"><i class="bi bi-map text-primary me-2"></i>Itineraries (by Duration)</div>
-                <div class="text-muted small ps-4">7, 10, 14, and 21-day route ideas</div>
+                <div class="text-muted small ps-4">7, 10, 14, and 21-day routes</div>
               </a>
             </li>
             <li>
               <a class="dropdown-item py-2" href="/guides">
                 <div class="fw-bold text-dark"><i class="bi bi-book text-primary me-2"></i>Travel Guides</div>
-                <div class="text-muted small ps-4">Visas, seasons, private vs partial-guided</div>
+                <div class="text-muted small ps-4">Visas, seasons, packing tips</div>
               </a>
             </li>
             <li>
               <a class="dropdown-item py-2" href="/experiences">
                 <div class="fw-bold text-dark"><i class="bi bi-stars text-primary me-2"></i>Signature Experiences</div>
-                <div class="text-muted small ps-4">The Tranoi difference and on-trip care</div>
+                <div class="text-muted small ps-4">The Tranoi difference &amp; on-trip care</div>
               </a>
             </li>
             <li>
@@ -96,17 +213,18 @@
 
         <!-- 5. Trip Reviews -->
         <li class="nav-item">
-          <a class="nav-link fw-semibold <%= currentPath.startsWith('/trip-reviews') ? 'active text-primary' : 'text-dark' %>" href="/trip-reviews">
-            Trip Reviews
+          <a class="nav-link <%= (typeof currentPath !== 'undefined' && currentPath.startsWith('/trip-reviews')) ? 'active' : '' %>" href="/trip-reviews">
+            <span>Trip Reviews</span>
           </a>
         </li>
 
-        <!-- 6. About Us (Mega-menu / Dropdown per Sitemap Section 1) -->
+        <!-- 6. About Us Dropdown -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle fw-semibold <%= ['/about-us', '/how-it-works', '/meet-the-team', '/responsible-travel', '/loyalty-program'].some(p => currentPath === p) ? 'active text-primary' : 'text-dark' %>" href="/about-us" data-bs-toggle="dropdown" aria-expanded="false">
-            About Us
+          <a class="nav-link <%= (typeof currentPath !== 'undefined' && ['/about-us', '/how-it-works', '/meet-the-team', '/responsible-travel', '/loyalty-program'].some(p => currentPath === p)) ? 'active' : '' %>" href="/about-us" data-bs-toggle="dropdown" aria-expanded="false">
+            <span>About Us</span>
+            <i class="bi bi-chevron-down nav-chevron"></i>
           </a>
-          <ul class="dropdown-menu shadow-lg border-0 rounded-4 py-2 mt-2">
+          <ul class="dropdown-menu shadow-lg py-2" style="min-width: 240px;">
             <li><a class="dropdown-item py-2" href="/about-us"><i class="bi bi-info-circle text-primary me-2"></i>Who We Are</a></li>
             <li><a class="dropdown-item py-2" href="/how-it-works"><i class="bi bi-gear-wide-connected text-primary me-2"></i>How It Works</a></li>
             <li><a class="dropdown-item py-2" href="/meet-the-team"><i class="bi bi-person-badge text-primary me-2"></i>Meet the Team</a></li>
@@ -117,14 +235,32 @@
           </ul>
         </li>
 
-        <!-- 7. Contact Button -->
-        <li class="nav-item ms-lg-2">
-          <a href="/contact" class="btn btn-accent px-3 py-2 rounded-pill fw-bold text-white shadow-sm">
-            Contact Us
-          </a>
-        </li>
-
       </ul>
+
+      <!-- Right Action Items (Contact Us Pill + Account Icon) -->
+      <div class="d-flex align-items-center gap-3 mt-3 mt-lg-0">
+        <!-- Contact Us Pill Outline Button (Matches screenshot) -->
+        <a href="/contact" class="btn-nav-contact">
+          Contact Us
+        </a>
+
+        <!-- User Profile Dropdown (Matches screenshot profile icon circle) -->
+        <div class="nav-item dropdown">
+          <a href="#" class="nav-user-btn dropdown-toggle dropdown-toggle-split-none" data-bs-toggle="dropdown" aria-expanded="false" title="Account &amp; Assistance">
+            <i class="bi bi-person-circle fs-5"></i>
+            <i class="bi bi-chevron-down nav-chevron" style="font-size: 0.65rem;"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end nav-user-dropdown-menu">
+            <li><h6 class="dropdown-header text-muted small text-uppercase fw-bold">Traveler Services</h6></li>
+            <li><a class="dropdown-item" href="/trips"><i class="bi bi-bookmark-heart text-primary me-2"></i>Saved Itineraries</a></li>
+            <li><a class="dropdown-item" href="/contact"><i class="bi bi-chat-dots text-primary me-2"></i>Trip Enquiry Status</a></li>
+            <li><a class="dropdown-item" href="/loyalty-program"><i class="bi bi-gem text-warning me-2"></i>Loyalty Rewards</a></li>
+            <li><hr class="dropdown-divider my-1"></li>
+            <li><a class="dropdown-item fw-bold text-primary" href="/admin"><i class="bi bi-speedometer2 me-2"></i>Admin Dashboard</a></li>
+          </ul>
+        </div>
+      </div>
+
     </div>
   </div>
 </nav>

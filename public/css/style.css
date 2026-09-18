@@ -597,3 +597,346 @@ body {
   flex-shrink: 0;
 }
 
+/* ==========================================================================
+   Navy Dark Header & Mega-Menu Navigation (Inspired by On The Go Tours)
+   ========================================================================== */
+
+.navbar-tranoi-dark {
+  background-color: #002b54; /* Deep, luxurious navy blue matching reference */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.65rem 0;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  z-index: 1050;
+}
+
+.navbar-tranoi-dark.navbar-scrolled {
+  background-color: rgba(0, 38, 77, 0.98);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 20, 50, 0.25);
+}
+
+.navbar-tranoi-dark .navbar-brand-logo {
+  height: 44px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  transition: transform 0.25s ease;
+}
+
+.navbar-tranoi-dark .navbar-brand:hover .navbar-brand-logo {
+  transform: scale(1.03);
+}
+
+/* Nav Links Styling */
+.navbar-tranoi-dark .nav-link {
+  color: #ffffff !important;
+  font-weight: 600;
+  font-size: 0.93rem;
+  padding: 0.55rem 0.85rem !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.navbar-tranoi-dark .nav-link:hover,
+.navbar-tranoi-dark .nav-link.active {
+  color: #ffffff !important;
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.navbar-tranoi-dark .nav-link .nav-chevron {
+  font-size: 0.72rem;
+  transition: transform 0.25s ease;
+  opacity: 0.85;
+}
+
+.navbar-tranoi-dark .nav-item.dropdown:hover .nav-chevron {
+  transform: rotate(180deg);
+}
+
+/* Mega Menu Dropdown Setup */
+.mega-menu-wrapper {
+  position: static !important;
+}
+
+@media (min-width: 992px) {
+  .navbar-tranoi-dark .nav-item.dropdown:hover > .dropdown-menu {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .navbar-tranoi-dark .dropdown-menu {
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s ease;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 25px 60px -10px rgba(0, 25, 60, 0.22), 0 8px 20px -5px rgba(0, 0, 0, 0.08);
+    margin-top: 0.5rem;
+    background-color: #ffffff;
+  }
+
+  /* Specific Mega-Menu for Destinations */
+  .mega-menu-destinations {
+    width: 960px;
+    max-width: calc(100vw - 60px);
+    left: 50% !important;
+    transform: translateX(-50%) translateY(8px) !important;
+    padding: 28px 30px !important;
+  }
+
+  .navbar-tranoi-dark .nav-item.dropdown:hover > .mega-menu-destinations {
+    transform: translateX(-50%) translateY(0) !important;
+  }
+
+  /* Specific Mega-Menu for Tours */
+  .mega-menu-tours {
+    width: 880px;
+    max-width: calc(100vw - 60px);
+    left: 50% !important;
+    transform: translateX(-50%) translateY(8px) !important;
+    padding: 26px 28px !important;
+  }
+
+  .navbar-tranoi-dark .nav-item.dropdown:hover > .mega-menu-tours {
+    transform: translateX(-50%) translateY(0) !important;
+  }
+}
+
+/* Link Lists inside Mega Menu */
+.mega-link-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.mega-link-list li a {
+  color: #1e293b;
+  font-size: 0.92rem;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 4.5px 0;
+  display: block;
+  transition: all 0.18s ease;
+}
+
+.mega-link-list li a:hover {
+  color: var(--primary-color);
+  transform: translateX(3px);
+  font-weight: 600;
+}
+
+/* Orange "Show All >" Button matching screenshot */
+.btn-show-all-orange {
+  background-color: #FF8F4C;
+  color: #ffffff !important;
+  font-weight: 700;
+  font-size: 0.88rem;
+  padding: 7px 22px;
+  border-radius: 50rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 14px rgba(255, 143, 76, 0.35);
+  transition: all 0.22s ease;
+  border: none;
+}
+
+.btn-show-all-orange:hover {
+  background-color: #e66f28;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(255, 143, 76, 0.45);
+}
+
+/* Feature Callout Box inside Mega Menu */
+.mega-feature-card {
+  background-color: #eaf3fb;
+  border-radius: 16px;
+  padding: 24px 22px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid rgba(0, 74, 173, 0.08);
+}
+
+/* Nav Right Contact Us Outline Button */
+.btn-nav-contact {
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  color: #ffffff !important;
+  background: transparent;
+  border-radius: 50rem;
+  padding: 6px 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.22s ease;
+}
+
+.btn-nav-contact:hover {
+  background-color: #ffffff;
+  color: #002b54 !important;
+  border-color: #ffffff;
+  box-shadow: 0 4px 14px rgba(255, 255, 255, 0.2);
+}
+
+/* Account Icon & Dropdown */
+.nav-user-btn {
+  color: #ffffff !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  border-radius: 50rem;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.nav-user-btn:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.nav-user-dropdown-menu {
+  min-width: 230px;
+  border-radius: 14px;
+  padding: 10px;
+  margin-top: 8px;
+  box-shadow: 0 15px 35px rgba(0, 20, 50, 0.18);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.nav-user-dropdown-menu .dropdown-item {
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Floating Hero Search Bar (Inspired by Screenshot) */
+.hero-floating-search-bar {
+  background: #ffffff;
+  border-radius: 50rem;
+  padding: 8px 10px 8px 24px;
+  box-shadow: 0 18px 45px rgba(0, 20, 50, 0.18);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.hero-search-segment {
+  flex: 1;
+  padding: 4px 16px;
+  border-right: 1px solid #e2e8f0;
+}
+
+.hero-search-segment:last-of-type {
+  border-right: none;
+}
+
+.hero-search-segment .segment-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #FF8F4C;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.hero-search-segment .segment-control {
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-weight: 700;
+  color: #1e293b;
+  font-size: 0.95rem;
+  width: 100%;
+  outline: none;
+  cursor: pointer;
+}
+
+.hero-search-btn {
+  background-color: #FF8F4C;
+  color: #ffffff;
+  border: none;
+  border-radius: 50rem;
+  padding: 12px 28px;
+  font-weight: 700;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 6px 18px rgba(255, 143, 76, 0.4);
+  transition: all 0.22s ease;
+  white-space: nowrap;
+}
+
+.hero-search-btn:hover {
+  background-color: #e66f28;
+  color: #ffffff;
+  transform: scale(1.02);
+}
+
+@media (max-width: 991.98px) {
+  .navbar-tranoi-dark .navbar-collapse {
+    background-color: #002244;
+    border-radius: 16px;
+    padding: 18px;
+    margin-top: 12px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  .navbar-tranoi-dark .dropdown-menu {
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 12px;
+    margin: 8px 0;
+  }
+  .navbar-tranoi-dark .mega-link-list li a,
+  .navbar-tranoi-dark .dropdown-menu a,
+  .navbar-tranoi-dark .dropdown-menu h6,
+  .navbar-tranoi-dark .dropdown-menu div {
+    color: #f1f5f9 !important;
+  }
+  .navbar-tranoi-dark .dropdown-menu a:hover {
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  .navbar-tranoi-dark .mega-feature-card {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .navbar-tranoi-dark .mega-feature-card h6,
+  .navbar-tranoi-dark .mega-feature-card p {
+    color: #f1f5f9 !important;
+  }
+  .hero-floating-search-bar {
+    border-radius: 20px;
+    flex-direction: column;
+    padding: 16px;
+    gap: 12px;
+  }
+  .hero-search-segment {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 8px 0;
+  }
+  .hero-search-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
