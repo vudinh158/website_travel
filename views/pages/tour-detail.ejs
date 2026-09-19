@@ -404,17 +404,22 @@
   </div>
 </div>
 
+<!-- TOUR JSON DATA PASSED FROM CONTROLLER -->
+<script id="tour-data" type="application/json">
+  <%- JSON.stringify({
+    pricePrivate: Number(tour.pricePrivate || tour.price || 0),
+    pricePartialGuided: Number(tour.pricePartialGuided || tour.discountPrice || tour.price || 0),
+    includedPrivate: includedPrivate || [],
+    includedPartialGuided: includedPartialGuided || [],
+    excludedPrivate: excludedPrivate || [],
+    excludedPartialGuided: excludedPartialGuided || []
+  }) %>
+</script>
+
 <!-- CLIENT-SIDE FORMAT TOGGLE SCRIPT -->
 <script>
-  // Tour JSON Data passed from controller
-  const tourData = {
-    pricePrivate: <%= Number(tour.pricePrivate || tour.price) %>,
-    pricePartialGuided: <%= Number(tour.pricePartialGuided || tour.discountPrice || tour.price) %>,
-    includedPrivate: <%- JSON.stringify(includedPrivate || []) %>,
-    includedPartialGuided: <%- JSON.stringify(includedPartialGuided || []) %>,
-    excludedPrivate: <%- JSON.stringify(excludedPrivate || []) %>,
-    excludedPartialGuided: <%- JSON.stringify(excludedPartialGuided || []) %>
-  };
+  // Parse tour data safely from json script tag
+  const tourData = JSON.parse(document.getElementById('tour-data').textContent);
 
   let currentFormat = 'partial-guided';
   let unitPrice = tourData.pricePartialGuided;

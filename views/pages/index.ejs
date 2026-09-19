@@ -28,35 +28,194 @@
     <div class="row">
       <div class="col-12">
         <form action="/tours" method="GET" class="hero-floating-search-bar shadow-lg">
-          <div class="hero-search-segment">
-            <div class="segment-label"><i class="bi bi-geo-alt-fill me-1"></i> Where To?</div>
-            <select name="region" class="segment-control" aria-label="Where to">
-              <option value="all">All Vietnam Destinations</option>
-              <option value="north">North Vietnam (Hanoi, Ha Long, Sapa)</option>
-              <option value="central">Central Vietnam (Hue, Hoi An, Da Nang)</option>
-              <option value="south">South Vietnam (Saigon, Mekong Delta)</option>
-              <option value="multi-region">Multi-Region Grand Route</option>
-            </select>
+          <!-- Segment 1: Where To? -->
+          <div class="hero-search-segment dropdown" id="segment-region">
+            <input type="hidden" name="region" id="input-search-region" value="all">
+            <button type="button" class="segment-btn dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+              <span class="segment-label"><i class="bi bi-geo-alt-fill me-1"></i> Where To?</span>
+              <span class="segment-display-row">
+                <span class="segment-current-text" id="display-search-region">All Vietnam Destinations</span>
+                <i class="bi bi-chevron-down segment-chevron"></i>
+              </span>
+            </button>
+            <div class="dropdown-menu hero-custom-dropdown shadow-lg border-0">
+              <div class="dropdown-header-custom">
+                <span>Select Destination</span>
+                <span class="badge bg-light text-muted fw-normal">Vietnam</span>
+              </div>
+              <div class="dropdown-options-list">
+                <button type="button" class="hero-dropdown-item active" data-input="input-search-region" data-display="display-search-region" data-val="all" data-text="All Vietnam Destinations">
+                  <div class="opt-icon bg-accent-soft text-accent">
+                    <i class="bi bi-globe-asia-australia"></i>
+                  </div>
+                  <div class="opt-info">
+                    <div class="opt-title">All Vietnam Destinations</div>
+                    <div class="opt-desc">Nationwide journeys spanning North to South</div>
+                  </div>
+                  <i class="bi bi-check2-circle opt-check"></i>
+                </button>
+                <button type="button" class="hero-dropdown-item" data-input="input-search-region" data-display="display-search-region" data-val="north" data-text="North Vietnam">
+                  <div class="opt-icon bg-info-soft text-info">
+                    <i class="bi bi-clouds-fill"></i>
+                  </div>
+                  <div class="opt-info">
+                    <div class="opt-title">North Vietnam <span class="badge opt-badge bg-info-soft text-info">Mountain &amp; Bay</span></div>
+                    <div class="opt-desc">Hanoi, Ha Long Bay, Sapa &amp; Ninh Binh</div>
+                  </div>
+                  <i class="bi bi-check2-circle opt-check"></i>
+                </button>
+                <button type="button" class="hero-dropdown-item" data-input="input-search-region" data-display="display-search-region" data-val="central" data-text="Central Vietnam">
+                  <div class="opt-icon bg-warning-soft text-warning">
+                    <i class="bi bi-brightness-high-fill"></i>
+                  </div>
+                  <div class="opt-info">
+                    <div class="opt-title">Central Vietnam <span class="badge opt-badge bg-warning-soft text-warning">Heritage Coast</span></div>
+                    <div class="opt-desc">Hue Imperial Citadel, Hoi An Ancient Town &amp; Da Nang</div>
+                  </div>
+                  <i class="bi bi-check2-circle opt-check"></i>
+                </button>
+                <button type="button" class="hero-dropdown-item" data-input="input-search-region" data-display="display-search-region" data-val="south" data-text="South Vietnam">
+                  <div class="opt-icon bg-success-soft text-success">
+                    <i class="bi bi-water"></i>
+                  </div>
+                  <div class="opt-info">
+                    <div class="opt-title">South Vietnam <span class="badge opt-badge bg-success-soft text-success">Delta &amp; City</span></div>
+                    <div class="opt-desc">Ho Chi Minh City, Mekong Delta &amp; Phu Quoc</div>
+                  </div>
+                  <i class="bi bi-check2-circle opt-check"></i>
+                </button>
+                <button type="button" class="hero-dropdown-item" data-input="input-search-region" data-display="display-search-region" data-val="multi-region" data-text="Multi-Region Grand Route">
+                  <div class="opt-icon bg-primary-soft text-primary">
+                    <i class="bi bi-signpost-2-fill"></i>
+                  </div>
+                  <div class="opt-info">
+                    <div class="opt-title">Multi-Region Grand Route <span class="badge opt-badge bg-primary-soft text-primary">Cross-Country</span></div>
+                    <div class="opt-desc">Seamless multi-destination expeditions</div>
+                  </div>
+                  <i class="bi bi-check2-circle opt-check"></i>
+                </button>
+              </div>
+            </div>
           </div>
 
-          <div class="hero-search-segment">
-            <div class="segment-label"><i class="bi bi-calendar-event me-1"></i> How Long For?</div>
-            <select name="duration" class="segment-control" aria-label="How long for">
-              <option value="">Any Duration</option>
-              <option value="7">7 Days (Essential North)</option>
-              <option value="10">10 Days (Classic Highlights)</option>
-              <option value="14">14 Days (Grand Explorer)</option>
-              <option value="21">21 Days (Complete Expedition)</option>
-            </select>
+          <!-- Segment 2: How Long For? -->
+          <div class="hero-search-segment dropdown" id="segment-duration">
+            <input type="hidden" name="duration" id="input-search-duration" value="">
+            <button type="button" class="segment-btn dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+              <span class="segment-label"><i class="bi bi-calendar-event me-1"></i> How Long For?</span>
+              <span class="segment-display-row">
+                <span class="segment-current-text" id="display-search-duration">Any Duration</span>
+                <i class="bi bi-chevron-down segment-chevron"></i>
+              </span>
+            </button>
+            <div class="dropdown-menu hero-custom-dropdown shadow-lg border-0">
+              <div class="dropdown-header-custom">
+                <span>Trip Duration</span>
+                <span class="badge bg-light text-muted fw-normal">7 - 21 Days</span>
+              </div>
+              <div class="dropdown-options-list">
+                <button type="button" class="hero-dropdown-item active" data-input="input-search-duration" data-display="display-search-duration" data-val="" data-text="Any Duration">
+                  <div class="opt-icon bg-secondary-soft text-secondary">
+                    <i class="bi bi-infinity"></i>
+                  </div>
+                  <div class="opt-info">
+                    <div class="opt-title">Any Duration</div>
+                    <div class="opt-desc">Show all available itineraries (7 – 21 days)</div>
+                  </div>
+                  <i class="bi bi-check2-circle opt-check"></i>
+                </button>
+                <button type="button" class="hero-dropdown-item" data-input="input-search-duration" data-display="display-search-duration" data-val="7" data-text="7 Days (Essential North)">
+                  <div class="opt-icon bg-info-soft text-info">
+                    <i class="bi bi-calendar3"></i>
+                  </div>
+                  <div class="opt-info">
+                    <div class="opt-title">7 Days <span class="badge opt-badge bg-info-soft text-info">Essential North</span></div>
+                    <div class="opt-desc">Hanoi, Ha Long Bay cruise &amp; Ninh Binh karst peaks</div>
+                  </div>
+                  <i class="bi bi-check2-circle opt-check"></i>
+                </button>
+                <button type="button" class="hero-dropdown-item" data-input="input-search-duration" data-display="display-search-duration" data-val="10" data-text="10 Days (Classic Highlights)">
+                  <div class="opt-icon bg-success-soft text-success">
+                    <i class="bi bi-calendar-check"></i>
+                  </div>
+                  <div class="opt-info">
+                    <div class="opt-title">10 Days <span class="badge opt-badge bg-success-soft text-success">Classic Highlights</span></div>
+                    <div class="opt-desc">The essential North &amp; Central UNESCO heritage route</div>
+                  </div>
+                  <i class="bi bi-check2-circle opt-check"></i>
+                </button>
+                <button type="button" class="hero-dropdown-item" data-input="input-search-duration" data-display="display-search-duration" data-val="14" data-text="14 Days (Grand Explorer)">
+                  <div class="opt-icon bg-warning-soft text-warning">
+                    <i class="bi bi-calendar-range"></i>
+                  </div>
+                  <div class="opt-info">
+                    <div class="opt-title">14 Days <span class="badge opt-badge bg-warning-soft text-warning">Grand Explorer</span></div>
+                    <div class="opt-desc">Comprehensive North-to-South cross-country expedition</div>
+                  </div>
+                  <i class="bi bi-check2-circle opt-check"></i>
+                </button>
+                <button type="button" class="hero-dropdown-item" data-input="input-search-duration" data-display="display-search-duration" data-val="21" data-text="21 Days (Complete Expedition)">
+                  <div class="opt-icon bg-danger-soft text-danger">
+                    <i class="bi bi-award-fill"></i>
+                  </div>
+                  <div class="opt-info">
+                    <div class="opt-title">21 Days <span class="badge opt-badge bg-danger-soft text-danger">Complete Expedition</span></div>
+                    <div class="opt-desc">All regions, hidden gems &amp; slow luxury immersion</div>
+                  </div>
+                  <i class="bi bi-check2-circle opt-check"></i>
+                </button>
+              </div>
+            </div>
           </div>
 
-          <div class="hero-search-segment">
-            <div class="segment-label"><i class="bi bi-compass me-1"></i> Tour Format</div>
-            <select name="format" class="segment-control" aria-label="Tour format">
-              <option value="">Partial-Guided &amp; Private</option>
-              <option value="partial-guided">Partial-Guided (Curated Balance)</option>
-              <option value="private">Private (Dedicated Guide &amp; Car)</option>
-            </select>
+          <!-- Segment 3: Tour Format -->
+          <div class="hero-search-segment dropdown" id="segment-format">
+            <input type="hidden" name="format" id="input-search-format" value="">
+            <button type="button" class="segment-btn dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+              <span class="segment-label"><i class="bi bi-compass me-1"></i> Tour Format</span>
+              <span class="segment-display-row">
+                <span class="segment-current-text" id="display-search-format">Partial-Guided &amp; Private</span>
+                <i class="bi bi-chevron-down segment-chevron"></i>
+              </span>
+            </button>
+            <div class="dropdown-menu hero-custom-dropdown shadow-lg border-0">
+              <div class="dropdown-header-custom">
+                <span>Travel Style</span>
+                <span class="badge bg-light text-muted fw-normal">Format</span>
+              </div>
+              <div class="dropdown-options-list">
+                <button type="button" class="hero-dropdown-item active" data-input="input-search-format" data-display="display-search-format" data-val="" data-text="Partial-Guided &amp; Private">
+                  <div class="opt-icon bg-secondary-soft text-secondary">
+                    <i class="bi bi-stars"></i>
+                  </div>
+                  <div class="opt-info">
+                    <div class="opt-title">All Formats</div>
+                    <div class="opt-desc">Compare Partial-Guided and Private chauffeured options</div>
+                  </div>
+                  <i class="bi bi-check2-circle opt-check"></i>
+                </button>
+                <button type="button" class="hero-dropdown-item" data-input="input-search-format" data-display="display-search-format" data-val="partial-guided" data-text="Partial-Guided (Curated Balance)">
+                  <div class="opt-icon bg-primary-soft text-primary">
+                    <i class="bi bi-compass-fill"></i>
+                  </div>
+                  <div class="opt-info">
+                    <div class="opt-title">Partial-Guided <span class="badge opt-badge bg-primary-soft text-primary">Curated Freedom</span></div>
+                    <div class="opt-desc">Licensed local guide for highlights + free leisure time</div>
+                  </div>
+                  <i class="bi bi-check2-circle opt-check"></i>
+                </button>
+                <button type="button" class="hero-dropdown-item" data-input="input-search-format" data-display="display-search-format" data-val="private" data-text="Private (Dedicated Guide &amp; Car)">
+                  <div class="opt-icon bg-accent-soft text-accent">
+                    <i class="bi bi-person-check-fill"></i>
+                  </div>
+                  <div class="opt-info">
+                    <div class="opt-title">Private Tour <span class="badge opt-badge bg-accent-soft text-accent">Dedicated Car</span></div>
+                    <div class="opt-desc">100% private vehicle, private guide &amp; fully tailored pace</div>
+                  </div>
+                  <i class="bi bi-check2-circle opt-check"></i>
+                </button>
+              </div>
+            </div>
           </div>
 
           <button type="submit" class="hero-search-btn">
@@ -264,3 +423,42 @@
     </div>
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.hero-dropdown-item').forEach(item => {
+      item.addEventListener('click', function(e) {
+        e.preventDefault();
+        const inputId = this.getAttribute('data-input');
+        const displayId = this.getAttribute('data-display');
+        const val = this.getAttribute('data-val');
+        const text = this.getAttribute('data-text');
+
+        // Update hidden form input
+        const inputEl = document.getElementById(inputId);
+        if (inputEl) inputEl.value = val;
+
+        // Update display text
+        const displayEl = document.getElementById(displayId);
+        if (displayEl) displayEl.innerText = text;
+
+        // Toggle active status in this dropdown list
+        const parentList = this.closest('.dropdown-options-list');
+        if (parentList) {
+          parentList.querySelectorAll('.hero-dropdown-item').forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+        }
+
+        // Close dropdown via Bootstrap Dropdown API
+        const dropdownEl = this.closest('.dropdown');
+        const toggleBtn = dropdownEl ? dropdownEl.querySelector('.dropdown-toggle') : null;
+        if (toggleBtn && window.bootstrap && bootstrap.Dropdown) {
+          const instance = bootstrap.Dropdown.getInstance(toggleBtn);
+          if (instance) {
+            instance.hide();
+          }
+        }
+      });
+    });
+  });
+</script>
