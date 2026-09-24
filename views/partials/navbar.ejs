@@ -1,13 +1,13 @@
-<nav class="navbar navbar-expand-lg sticky-top navbar-tranoi-dark">
+<nav class="navbar navbar-expand-lg sticky-top navbar-tranoi-light">
   <div class="container position-relative">
-    <!-- Brand Logo (White / Inverted for Navy Background) -->
+    <!-- Brand Logo (Original Brand Colors on White Background) -->
     <a class="navbar-brand d-flex align-items-center py-0 me-lg-4" href="/" title="Tranoi Travel">
       <img src="/images/logo/logo-full.png" alt="Tranoi Travel - Travel more, plan less" class="navbar-brand-logo">
     </a>
 
     <!-- Mobile Burger Toggle Button -->
-    <button class="navbar-toggler border-0 text-white shadow-none p-1" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-      <i class="bi bi-list fs-2 text-white"></i>
+    <button class="navbar-toggler border-0 text-dark shadow-none p-1" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="bi bi-list fs-2 text-dark"></i>
     </button>
 
     <!-- Main Navigation Links & Actions -->
@@ -237,26 +237,59 @@
 
       </ul>
 
-      <!-- Right Action Items (Contact Us Pill + Account Icon) -->
+      <!-- Right Action Items (Plan your trip Pill + Account/Sign In) -->
       <div class="d-flex align-items-center gap-3 mt-3 mt-lg-0">
-        <!-- Contact Us Pill Outline Button (Matches screenshot) -->
-        <a href="/contact" class="btn-nav-contact">
-          Contact Us
+        <!-- Plan your trip Pill Button (Matches Kimkim reference) -->
+        <a href="/contact" class="btn-nav-plan">
+          Plan your trip
         </a>
 
-        <!-- User Profile Dropdown (Matches screenshot profile icon circle) -->
-        <div class="nav-item dropdown">
-          <a href="#" class="nav-user-btn dropdown-toggle dropdown-toggle-split-none" data-bs-toggle="dropdown" aria-expanded="false" title="Account &amp; Assistance">
-            <i class="bi bi-person-circle fs-5"></i>
-            <i class="bi bi-chevron-down nav-chevron" style="font-size: 0.65rem;"></i>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end nav-user-dropdown-menu">
-            <li><h6 class="dropdown-header text-muted small text-uppercase fw-bold">Traveler Services</h6></li>
-            <li><a class="dropdown-item" href="/trips"><i class="bi bi-bookmark-heart text-primary me-2"></i>Saved Itineraries</a></li>
-            <li><a class="dropdown-item" href="/contact"><i class="bi bi-chat-dots text-primary me-2"></i>Trip Enquiry Status</a></li>
-            <li><a class="dropdown-item" href="/loyalty-program"><i class="bi bi-gem text-warning me-2"></i>Loyalty Rewards</a></li>
-          </ul>
-        </div>
+        <!-- Account / Sign In Dropdown -->
+        <% if (typeof isAuthenticated !== 'undefined' && isAuthenticated && typeof user !== 'undefined' && user) { %>
+          <!-- Logged In User Dropdown -->
+          <div class="nav-item dropdown">
+            <a href="#" class="nav-user-btn dropdown-toggle dropdown-toggle-split-none" data-bs-toggle="dropdown" aria-expanded="false" title="My Account">
+              <i class="bi bi-person-circle fs-5 text-primary"></i>
+              <span class="user-display-name text-dark fw-semibold small d-none d-sm-inline ms-1"><%= user.name ? user.name.split(' ')[0] : 'Account' %></span>
+              <i class="bi bi-chevron-down nav-chevron text-muted" style="font-size: 0.65rem;"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end nav-user-dropdown-menu shadow-lg">
+              <li class="px-3 py-2 border-bottom mb-1">
+                <div class="fw-bold text-dark"><%= user.name %></div>
+                <div class="text-muted small text-truncate" style="max-width: 180px;"><%= user.email %></div>
+              </li>
+              <% if (typeof isAdmin !== 'undefined' && isAdmin) { %>
+                <li><a class="dropdown-item text-danger fw-semibold" href="/admin"><i class="bi bi-shield-lock-fill me-2"></i>Admin Dashboard</a></li>
+                <li><hr class="dropdown-divider my-1"></li>
+              <% } %>
+              <li><a class="dropdown-item" href="/trips"><i class="bi bi-bookmark-heart text-primary me-2"></i>Saved Itineraries</a></li>
+              <li><a class="dropdown-item" href="/contact"><i class="bi bi-chat-dots text-primary me-2"></i>Trip Enquiry Status</a></li>
+              <li><a class="dropdown-item" href="/loyalty-program"><i class="bi bi-gem text-warning me-2"></i>Loyalty Rewards</a></li>
+              <li><hr class="dropdown-divider my-1"></li>
+              <li><a class="dropdown-item text-danger" href="/logout"><i class="bi bi-box-arrow-right me-2"></i>Sign Out</a></li>
+            </ul>
+          </div>
+        <% } else { %>
+          <!-- Guest / Sign In (Matches Kimkim "Sign In" header) -->
+          <div class="nav-item dropdown">
+            <a href="/login" class="nav-user-btn dropdown-toggle dropdown-toggle-split-none" data-bs-toggle="dropdown" aria-expanded="false" title="Sign In or Register">
+              <i class="bi bi-person-circle fs-5 text-primary"></i>
+              <span class="nav-signin-text ms-1">Sign In</span>
+              <i class="bi bi-chevron-down nav-chevron text-muted ms-1" style="font-size: 0.65rem;"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end nav-user-dropdown-menu shadow-lg">
+              <li class="p-2">
+                <a href="/login" class="btn btn-primary w-100 fw-bold rounded-pill mb-2">Sign In</a>
+                <div class="text-center small text-muted">
+                  New traveler? <a href="/register" class="fw-semibold text-primary text-decoration-none">Create account</a>
+                </div>
+              </li>
+              <li><hr class="dropdown-divider my-1"></li>
+              <li><a class="dropdown-item" href="/trips"><i class="bi bi-bookmark-heart text-primary me-2"></i>Saved Itineraries</a></li>
+              <li><a class="dropdown-item" href="/contact"><i class="bi bi-question-circle text-secondary me-2"></i>Help &amp; Support</a></li>
+            </ul>
+          </div>
+        <% } %>
       </div>
 
     </div>

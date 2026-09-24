@@ -3,6 +3,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  initHeroCarousel();
   initSearchAutocomplete();
   initWishlistButtons();
   initNewsletterForm();
@@ -71,17 +72,103 @@ function initNumberCounters() {
   counters.forEach(c => counterObserver.observe(c));
 }
 
-/* 4. Hero Background Subtle Parallax */
+/* 4. Navbar Scroll & Hero Subtle Parallax */
 function initHeroParallax() {
-  const hero = document.querySelector('.hero-wrapper');
-  if (!hero) return;
-
+  const navbar = document.querySelector('.navbar-tranoi-light') || document.querySelector('.navbar-tranoi-dark');
+  
   window.addEventListener('scroll', () => {
     const scrollPos = window.scrollY;
-    if (scrollPos < 1000) {
-      hero.style.backgroundPositionY = `${scrollPos * 0.4}px`;
+    if (navbar) {
+      if (scrollPos > 15) {
+        navbar.classList.add('navbar-scrolled');
+      } else {
+        navbar.classList.remove('navbar-scrolled');
+      }
     }
+  }, { passive: true });
+}
+
+/* 4b. Hero Interactive Destination Carousel Slider */
+function initHeroCarousel() {
+  const slides = document.querySelectorAll('.hero-slide');
+  const dots = document.querySelectorAll('#heroCarouselDots .dot');
+  const creditEl = document.getElementById('heroPhotoCredit');
+  const sliderEl = document.getElementById('heroSlider');
+
+  if (!slides.length || !dots.length) return;
+
+  let currentIndex = 0;
+  let autoTimer = null;
+  const slideDuration = 5000; // 5 seconds per slide
+
+  function showSlide(index) {
+    if (index < 0) index = slides.length - 1;
+    if (index >= slides.length) index = 0;
+    currentIndex = index;
+
+    slides.forEach((slide, i) => {
+      if (i === currentIndex) {
+        slide.classList.add('active');
+      } else {
+        slide.classList.remove('active');
+      }
+    });
+
+    dots.forEach((dot, i) => {
+      if (i === currentIndex) {
+        dot.classList.add('active');
+        dot.setAttribute('aria-current', 'true');
+      } else {
+        dot.classList.remove('active');
+        dot.removeAttribute('aria-current');
+      }
+    });
+
+    if (creditEl && slides[currentIndex]) {
+      const credit = slides[currentIndex].getAttribute('data-credit');
+      if (credit) {
+        creditEl.style.opacity = '0';
+        setTimeout(() => {
+          creditEl.innerText = credit;
+          creditEl.style.opacity = '1';
+        }, 220);
+      }
+    }
+  }
+
+  function nextSlide() {
+    showSlide(currentIndex + 1);
+  }
+
+  function startTimer() {
+    stopTimer();
+    autoTimer = setInterval(nextSlide, slideDuration);
+  }
+
+  function stopTimer() {
+    if (autoTimer) {
+      clearInterval(autoTimer);
+      autoTimer = null;
+    }
+  }
+
+  dots.forEach((dot) => {
+    dot.addEventListener('click', function(e) {
+      e.preventDefault();
+      const slideIdx = parseInt(this.getAttribute('data-slide'), 10);
+      if (!isNaN(slideIdx)) {
+        showSlide(slideIdx);
+        startTimer();
+      }
+    });
   });
+
+  if (sliderEl) {
+    sliderEl.addEventListener('mouseenter', stopTimer);
+    sliderEl.addEventListener('mouseleave', startTimer);
+  }
+
+  startTimer();
 }
 
 /* 5. Search Autocomplete with Live Motion Animation */

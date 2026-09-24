@@ -601,34 +601,39 @@ body {
    Navy Dark Header & Mega-Menu Navigation (Inspired by On The Go Tours)
    ========================================================================== */
 
+.navbar-tranoi-light,
 .navbar-tranoi-dark {
-  background-color: #002b54; /* Deep, luxurious navy blue matching reference */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: #ffffff; /* Clean white background matching reference */
+  border-bottom: 1px solid #eef2f6;
   padding: 0.65rem 0;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   z-index: 1050;
 }
 
+.navbar-tranoi-light.navbar-scrolled,
 .navbar-tranoi-dark.navbar-scrolled {
-  background-color: rgba(0, 38, 77, 0.98);
+  background-color: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(10px);
-  box-shadow: 0 10px 30px rgba(0, 20, 50, 0.25);
+  box-shadow: 0 4px 20px rgba(0, 20, 50, 0.08);
 }
 
+.navbar-tranoi-light .navbar-brand-logo,
 .navbar-tranoi-dark .navbar-brand-logo {
-  height: 44px;
+  height: 46px;
   object-fit: contain;
-  filter: brightness(0) invert(1);
+  /* Removed inverted filter: keeps real original brand blue & orange colors! */
   transition: transform 0.25s ease;
 }
 
+.navbar-tranoi-light .navbar-brand:hover .navbar-brand-logo,
 .navbar-tranoi-dark .navbar-brand:hover .navbar-brand-logo {
   transform: scale(1.03);
 }
 
 /* Nav Links Styling */
+.navbar-tranoi-light .nav-link,
 .navbar-tranoi-dark .nav-link {
-  color: #ffffff !important;
+  color: #1e293b !important;
   font-weight: 600;
   font-size: 0.93rem;
   padding: 0.55rem 0.85rem !important;
@@ -640,18 +645,22 @@ body {
   white-space: nowrap;
 }
 
+.navbar-tranoi-light .nav-link:hover,
+.navbar-tranoi-light .nav-link.active,
 .navbar-tranoi-dark .nav-link:hover,
 .navbar-tranoi-dark .nav-link.active {
-  color: #ffffff !important;
-  background-color: rgba(255, 255, 255, 0.08);
+  color: #004aad !important;
+  background-color: rgba(0, 74, 173, 0.06);
 }
 
+.navbar-tranoi-light .nav-link .nav-chevron,
 .navbar-tranoi-dark .nav-link .nav-chevron {
   font-size: 0.72rem;
+  color: #64748b;
   transition: transform 0.25s ease;
-  opacity: 0.85;
 }
 
+.navbar-tranoi-light .nav-item.dropdown:hover .nav-chevron,
 .navbar-tranoi-dark .nav-item.dropdown:hover .nav-chevron {
   transform: rotate(180deg);
 }
@@ -662,6 +671,7 @@ body {
 }
 
 @media (min-width: 992px) {
+  .navbar-tranoi-light .nav-item.dropdown:hover > .dropdown-menu,
   .navbar-tranoi-dark .nav-item.dropdown:hover > .dropdown-menu {
     display: block;
     opacity: 1;
@@ -669,6 +679,7 @@ body {
     transform: translateY(0);
   }
 
+  .navbar-tranoi-light .dropdown-menu,
   .navbar-tranoi-dark .dropdown-menu {
     display: block;
     opacity: 0;
@@ -676,8 +687,8 @@ body {
     transform: translateY(8px);
     transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s ease;
     border-radius: 20px;
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    box-shadow: 0 25px 60px -10px rgba(0, 25, 60, 0.22), 0 8px 20px -5px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 25px 60px -10px rgba(0, 25, 60, 0.16), 0 8px 20px -5px rgba(0, 0, 0, 0.06);
     margin-top: 0.5rem;
     background-color: #ffffff;
   }
@@ -691,6 +702,7 @@ body {
     padding: 28px 30px !important;
   }
 
+  .navbar-tranoi-light .nav-item.dropdown:hover > .mega-menu-destinations,
   .navbar-tranoi-dark .nav-item.dropdown:hover > .mega-menu-destinations {
     transform: translateX(-50%) translateY(0) !important;
   }
@@ -704,6 +716,7 @@ body {
     padding: 26px 28px !important;
   }
 
+  .navbar-tranoi-light .nav-item.dropdown:hover > .mega-menu-tours,
   .navbar-tranoi-dark .nav-item.dropdown:hover > .mega-menu-tours {
     transform: translateX(-50%) translateY(0) !important;
   }
@@ -767,10 +780,32 @@ body {
   border: 1px solid rgba(0, 74, 173, 0.08);
 }
 
-/* Nav Right Contact Us Outline Button */
-.btn-nav-contact {
-  border: 1.5px solid rgba(255, 255, 255, 0.85);
+/* Nav Right Plan Your Trip Pill Button (Matches Kimkim reference) */
+.btn-nav-plan {
+  border: 1.5px solid #004aad;
+  color: #004aad !important;
+  background: transparent;
+  border-radius: 50rem;
+  padding: 7px 22px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.22s ease;
+}
+
+.btn-nav-plan:hover {
+  background-color: #004aad;
   color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(0, 74, 173, 0.25);
+  transform: translateY(-1px);
+}
+
+/* Backward compatibility for contact class */
+.btn-nav-contact {
+  border: 1.5px solid #004aad;
+  color: #004aad !important;
   background: transparent;
   border-radius: 50rem;
   padding: 6px 20px;
@@ -783,26 +818,37 @@ body {
 }
 
 .btn-nav-contact:hover {
-  background-color: #ffffff;
-  color: #002b54 !important;
-  border-color: #ffffff;
-  box-shadow: 0 4px 14px rgba(255, 255, 255, 0.2);
+  background-color: #004aad;
+  color: #ffffff !important;
 }
 
 /* Account Icon & Dropdown */
 .nav-user-btn {
-  color: #ffffff !important;
+  color: #1e293b !important;
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 6px 10px;
+  padding: 6px 12px;
   border-radius: 50rem;
   text-decoration: none;
-  transition: background-color 0.2s ease;
+  font-weight: 600;
+  font-size: 0.92rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .nav-user-btn:hover {
-  background-color: rgba(255, 255, 255, 0.12);
+  background-color: #f1f5f9;
+  color: #004aad !important;
+}
+
+.nav-signin-text {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 0.92rem;
+}
+
+.nav-user-btn:hover .nav-signin-text {
+  color: #004aad;
 }
 
 .nav-user-dropdown-menu {
@@ -810,7 +856,7 @@ body {
   border-radius: 14px;
   padding: 10px;
   margin-top: 8px;
-  box-shadow: 0 15px 35px rgba(0, 20, 50, 0.18);
+  box-shadow: 0 15px 35px rgba(0, 20, 50, 0.14);
   border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
@@ -1121,55 +1167,462 @@ body {
 }
 
 @media (max-width: 991.98px) {
+  .navbar-tranoi-light .navbar-collapse,
   .navbar-tranoi-dark .navbar-collapse {
-    background-color: #002244;
+    background-color: #ffffff;
     border-radius: 16px;
     padding: 18px;
     margin-top: 12px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
     max-height: 80vh;
     overflow-y: auto;
   }
+  .navbar-tranoi-light .dropdown-menu,
   .navbar-tranoi-dark .dropdown-menu {
-    background-color: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
     border-radius: 12px;
     padding: 12px;
     margin: 8px 0;
   }
+  .navbar-tranoi-light .mega-link-list li a,
+  .navbar-tranoi-light .dropdown-menu a,
+  .navbar-tranoi-light .dropdown-menu h6,
+  .navbar-tranoi-light .dropdown-menu div,
   .navbar-tranoi-dark .mega-link-list li a,
   .navbar-tranoi-dark .dropdown-menu a,
   .navbar-tranoi-dark .dropdown-menu h6,
   .navbar-tranoi-dark .dropdown-menu div {
-    color: #f1f5f9 !important;
+    color: #1e293b !important;
   }
+  .navbar-tranoi-light .dropdown-menu a:hover,
   .navbar-tranoi-dark .dropdown-menu a:hover {
-    color: #ffffff !important;
-    background-color: rgba(255, 255, 255, 0.1);
+    color: #004aad !important;
+    background-color: rgba(0, 74, 173, 0.08);
   }
+  .navbar-tranoi-light .mega-feature-card,
   .navbar-tranoi-dark .mega-feature-card {
-    background-color: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: #f1f6fc;
+    border: 1px solid rgba(0, 74, 173, 0.1);
   }
+  .navbar-tranoi-light .mega-feature-card h6,
+  .navbar-tranoi-light .mega-feature-card p,
   .navbar-tranoi-dark .mega-feature-card h6,
   .navbar-tranoi-dark .mega-feature-card p {
-    color: #f1f5f9 !important;
-  }
-  .hero-floating-search-bar {
-    border-radius: 20px;
-    flex-direction: column;
-    padding: 16px;
-    gap: 12px;
-  }
-  .hero-search-segment {
-    width: 100%;
-    border-right: none;
-    border-bottom: 1px solid #e2e8f0;
-    padding: 8px 0;
-  }
-  .hero-search-btn {
-    width: 100%;
-    justify-content: center;
+    color: #1e293b !important;
   }
 }
 
+/* ==========================================================================
+   Kimkim-Style Hero Natural Section & Trust Badge (Real Colors, Clean CTA)
+   ========================================================================== */
+.hero-wrapper-natural {
+  position: relative;
+  min-height: 620px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #1a202c; /* Fallback */
+  padding: 130px 20px 110px;
+  overflow: hidden;
+}
+
+/* Background Slide Track for Smooth Cross-Fade Transitions */
+.hero-slides-track {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 38%;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), transform 7s ease-out;
+  transform: scale(1.03);
+}
+
+.hero-slide.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.hero-main-title {
+  font-size: 3.8rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.75), 0 1px 4px rgba(0, 0, 0, 0.9);
+}
+
+.hero-sub-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.15;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.75), 0 1px 4px rgba(0, 0, 0, 0.9);
+}
+
+/* Main CTA Button: "Explore All Tours" */
+.btn-hero-cta {
+  background-color: #ffc20e; /* Kimkim signature warm golden yellow */
+  color: #111827 !important;
+  font-weight: 800;
+  font-size: 1.15rem;
+  padding: 15px 44px;
+  border-radius: 50rem;
+  border: none;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.28);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-block;
+  text-decoration: none;
+  letter-spacing: 0.2px;
+}
+
+.btn-hero-cta:hover {
+  background-color: #f5b300;
+  color: #000000 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.38);
+}
+
+.hero-how-it-works {
+  color: #ffffff !important;
+  font-size: 0.96rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
+  transition: opacity 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+.hero-how-it-works:hover {
+  opacity: 0.9;
+  text-decoration: underline;
+}
+
+/* Hero Bottom Bar */
+.hero-bottom-bar {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  padding: 0 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Left: Trust Badge ("Our customers say..." + Media Recommendation) */
+.hero-bottom-left-card {
+  pointer-events: auto;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  padding: 12px 18px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  max-width: 460px;
+}
+
+.hero-trust-title {
+  color: #1e293b;
+  font-size: 0.88rem;
+}
+
+.hero-trust-stars {
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+}
+
+.hero-press-caption {
+  font-size: 0.78rem;
+  color: #64748b;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.hero-press-logos {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.press-item {
+  font-size: 0.88rem;
+  color: #1e293b;
+  user-select: none;
+}
+
+.press-bbc {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+  background: #000000;
+  color: #ffffff;
+  padding: 2px 7px;
+  border-radius: 2px;
+  font-size: 0.76rem;
+  display: inline-block;
+}
+
+.press-tc {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 800;
+  color: #00a562;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.press-tc .tc-icon {
+  background: #00a562;
+  color: #ffffff;
+  padding: 1px 4px;
+  border-radius: 2px;
+  margin-right: 4px;
+  font-weight: 900;
+  font-size: 0.74rem;
+}
+
+.press-nyt {
+  font-family: "Georgia", "Times New Roman", serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 0.88rem;
+  color: #111827;
+  letter-spacing: -0.3px;
+}
+
+/* Center Carousel Dots: Dead-Center 50% Horizontal Alignment Across the Banner */
+.hero-carousel-dots {
+  position: absolute !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  bottom: 24px !important;
+  z-index: 25 !important;
+  pointer-events: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 9px !important;
+  margin: 0 !important;
+  padding: 7px 16px;
+  background: rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 50rem;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.hero-carousel-dots .dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  background: transparent;
+  display: inline-block;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  padding: 0;
+  outline: none;
+}
+
+.hero-carousel-dots .dot:hover {
+  transform: scale(1.3);
+  background: rgba(255, 255, 255, 0.7);
+  border-color: #ffffff;
+}
+
+.hero-carousel-dots .dot.active {
+  background: #ffffff;
+  transform: scale(1.4);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.95);
+  border-color: #ffffff;
+}
+
+/* Right Photo Credit */
+.hero-photo-credit {
+  pointer-events: auto;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.78rem;
+  font-weight: 500;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
+  transition: opacity 0.25s ease;
+}
+
+@media (max-width: 991.98px) {
+  .hero-main-title {
+    font-size: 2.3rem;
+  }
+  .hero-sub-title {
+    font-size: 2rem;
+  }
+  .hero-bottom-bar {
+    position: static;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-top: 36px;
+    padding: 0 16px;
+  }
+  .hero-bottom-left-card {
+    max-width: 100%;
+    width: 100%;
+  }
+  .hero-photo-credit {
+    text-align: center;
+  }
+  .hero-carousel-dots {
+    bottom: 14px !important;
+  }
+}
+
+/* ==========================================================================
+   Value Propositions Icon Row & Pill CTA Button
+   ========================================================================== */
+.why-us-features-wrapper {
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  padding: 0 4px;
+}
+
+.why-us-features-row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.why-us-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 4px;
+  transition: transform 0.22s ease;
+  min-height: 52px;
+}
+
+.why-us-feature-item:hover {
+  transform: translateY(-2px);
+}
+
+.why-us-feature-icon {
+  font-size: 2.25rem;
+  color: var(--primary-color, #004AAD);
+  line-height: 1;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  transition: transform 0.2s ease;
+}
+
+.why-us-feature-item:hover .why-us-feature-icon {
+  transform: scale(1.08);
+}
+
+.why-us-feature-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.why-us-feature-label {
+  font-weight: 700;
+  font-size: 0.96rem;
+  color: #1e293b;
+  line-height: 1.35;
+  display: block;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Centered Fully-Rounded Pill CTA Button */
+.btn-why-us-cta {
+  background-color: #EF8934; /* Brand accent orange */
+  color: #ffffff !important;
+  font-weight: 700;
+  font-size: 1.05rem;
+  padding: 15px 50px;
+  border-radius: 50rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border: none;
+  letter-spacing: 0.25px;
+  box-shadow: 0 6px 20px rgba(239, 137, 52, 0.35);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-why-us-cta:hover {
+  background-color: #d97422;
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(239, 137, 52, 0.45);
+}
+
+.btn-why-us-cta:active {
+  transform: translateY(0);
+}
+
+/* Responsive Rules for Mobile/Tablet */
+@media (max-width: 991.98px) {
+  .why-us-feature-item {
+    gap: 12px;
+  }
+  .why-us-feature-icon {
+    font-size: 2rem;
+    width: 42px;
+    height: 42px;
+  }
+  .why-us-feature-label {
+    font-size: 0.92rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .why-us-features-wrapper {
+    margin-top: 2rem;
+  }
+  .why-us-feature-item {
+    padding: 6px 0;
+  }
+  .btn-why-us-cta {
+    width: 100%;
+    max-width: 320px;
+  }
+}
+
+/* ==========================================================================
+   Featured Tours Card Enhancements
+   ========================================================================== */
+.tour-route-stops {
+  color: var(--primary-color, #004AAD);
+  font-weight: 600;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  letter-spacing: 0.1px;
+}
+
+.tour-pace-rhythm {
+  font-size: 0.88rem;
+  color: #64748b;
+}
+
+.tour-pace-rhythm i {
+  font-size: 1rem;
+}

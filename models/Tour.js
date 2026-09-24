@@ -89,6 +89,24 @@ const Tour = sequelize.define('Tour', {
   routeMapPoints: {
     type: DataTypes.TEXT // JSON string array of stops for Vietnam map [{ name: 'Hanoi', lat: 21.0285, lng: 105.8542 }]
   },
+  destinations: {
+    type: DataTypes.VIRTUAL,
+    get() {
+      try {
+        const raw = this.getDataValue('routeMapPoints');
+        if (raw) {
+          const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
+          if (Array.isArray(parsed)) {
+            return parsed.map(p => typeof p === 'string' ? p : (p.name || p.title || '')).filter(Boolean);
+          }
+        }
+      } catch (e) {}
+      if (this.destination && this.destination.name) {
+        return [this.destination.name];
+      }
+      return [];
+    }
+  },
   includedServices: {
     type: DataTypes.TEXT // Generic fallback JSON string array
   },
