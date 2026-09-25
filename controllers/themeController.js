@@ -211,7 +211,6 @@ const getThemeBySlug = async (req, res, next) => {
 
     const breadcrumbSchema = generateSchemaOrg.breadcrumb([
       { name: 'Home', url: '/' },
-      { name: 'Themes', url: '/themes' },
       { name: theme.title, url: `/${theme.slug}` }
     ], process.env.APP_URL);
 

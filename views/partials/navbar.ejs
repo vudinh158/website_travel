@@ -153,7 +153,7 @@
 
         <!-- 3. Themes Dropdown -->
         <li class="nav-item dropdown">
-          <a class="nav-link <%= (typeof currentPath !== 'undefined' && ['/honeymoon', '/family', '/adventure', '/culinary', '/eco-tours', '/veterans-tours', '/educational-tours', '/themes'].some(p => currentPath.startsWith(p))) ? 'active' : '' %>" href="/themes" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link <%= (typeof currentPath !== 'undefined' && ['/honeymoon', '/family', '/adventure', '/culinary', '/eco-tours', '/veterans-tours', '/educational-tours'].some(p => currentPath.startsWith(p))) ? 'active' : '' %>" href="#" data-bs-toggle="dropdown" aria-expanded="false">
             <span>Themes</span>
             <i class="bi bi-chevron-down nav-chevron"></i>
           </a>
@@ -166,14 +166,13 @@
               <div class="col-6"><a class="dropdown-item rounded-3 py-1" href="/culinary"><i class="bi bi-cup-hot-fill text-warning me-1"></i> Culinary</a></div>
               <div class="col-6"><a class="dropdown-item rounded-3 py-1" href="/eco-tours"><i class="bi bi-tree-fill text-success me-1"></i> Eco-Tours</a></div>
               <div class="col-6"><a class="dropdown-item rounded-3 py-1" href="/veterans-tours"><i class="bi bi-award-fill text-secondary me-1"></i> Veterans</a></div>
+              <div class="col-6"><a class="dropdown-item rounded-3 py-1" href="/educational-tours"><i class="bi bi-mortarboard-fill text-info me-1"></i> Educational</a></div>
             </div>
             <div class="dropdown-divider my-2"></div>
             <div class="small fw-bold text-muted text-uppercase mb-2" style="font-size: 0.75rem; letter-spacing: 0.5px;">Tours by Origin</div>
             <a class="dropdown-item py-1" href="/vietnam-tours-from-usa"><i class="bi bi-airplane-engines me-2 text-primary"></i>Tours from USA</a>
             <a class="dropdown-item py-1" href="/vietnam-tours-from-australia"><i class="bi bi-airplane-engines me-2 text-primary"></i>Tours from Australia</a>
             <a class="dropdown-item py-1" href="/vietnam-tours-from-uae"><i class="bi bi-airplane-engines me-2 text-primary"></i>Tours from UAE</a>
-            <div class="dropdown-divider my-2"></div>
-            <a class="dropdown-item py-1 fw-bold text-primary" href="/themes"><i class="bi bi-grid me-2"></i>Explore All Themes</a>
           </div>
         </li>
 
