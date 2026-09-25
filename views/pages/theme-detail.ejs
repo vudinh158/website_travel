@@ -48,6 +48,52 @@
           </div>
         </div>
       <% } %>
+
+      <!-- Related Blogs & Travel Guides for this Theme -->
+      <% if (typeof relatedArticles !== 'undefined' && relatedArticles && relatedArticles.length > 0) { %>
+        <div class="mb-5">
+          <div class="d-flex justify-content-between align-items-end mb-4">
+            <div>
+              <span class="text-accent text-uppercase fw-bold small tracking-wider d-block mb-1">INSPIRATION &amp; FIELD ADVICE</span>
+              <h3 class="fw-bold text-dark mb-0">Related Guides &amp; Route Stories</h3>
+            </div>
+            <a href="/guides" class="text-primary fw-bold text-decoration-none small">View all guides &rarr;</a>
+          </div>
+          <div class="row g-4">
+            <% relatedArticles.forEach(article => { %>
+              <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden hover-lift transition-smooth bg-white">
+                  <div class="position-relative" style="height: 180px;">
+                    <img src="<%= article.image %>" alt="<%= article.title %>" class="w-100 h-100" style="object-fit: cover;" loading="lazy">
+                    <span class="position-absolute top-0 start-0 m-3 badge <%= article.badgeClass %> text-white rounded-pill px-2.5 py-1 small fw-bold shadow-sm">
+                      <%= article.typeBadge %>
+                    </span>
+                    <span class="position-absolute bottom-0 end-0 m-2 badge bg-dark bg-opacity-75 text-white rounded-pill px-2 py-1 shadow-sm" style="font-size: 0.75rem;">
+                      <i class="bi bi-clock me-1"></i><%= article.readTime %>
+                    </span>
+                  </div>
+                  <div class="card-body p-4 d-flex flex-column">
+                    <span class="text-muted small fw-semibold mb-1"><%= article.category %></span>
+                    <h5 class="fw-bold text-dark mb-2">
+                      <a href="<%= article.url %>" class="text-dark text-decoration-none hover-primary">
+                        <%= article.title %>
+                      </a>
+                    </h5>
+                    <p class="text-secondary small mb-3 flex-grow-1">
+                      <%= article.excerpt %>
+                    </p>
+                    <div class="pt-2 border-top">
+                      <a href="<%= article.url %>" class="btn btn-outline-primary btn-sm rounded-pill fw-semibold px-3">
+                        Read Story <i class="bi bi-arrow-right ms-1"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% }) %>
+          </div>
+        </div>
+      <% } %>
     </div>
 
     <!-- Sidebar Column: Other Themes & Consultation -->

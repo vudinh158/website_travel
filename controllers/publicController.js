@@ -46,8 +46,11 @@ const getHome = async (req, res, next) => {
       order: [['createdAt', 'DESC']]
     });
 
-    // Curated 4 Themes for "Start With A Feeling" (P1: Honeymoon, Family, Adventure + P2: Culinary)
-    const featuredThemeSlugs = ['honeymoon', 'family', 'adventure', 'culinary'];
+    // Curated Themes for "Start With A Feeling" Carousel (All 7 traveler styles)
+    const featuredThemeSlugs = [
+      'honeymoon', 'family', 'adventure', 'culinary',
+      'eco-tours', 'veterans-tours', 'educational-tours'
+    ];
     const featuredThemes = await Theme.findAll({
       where: { slug: featuredThemeSlugs }
     });
