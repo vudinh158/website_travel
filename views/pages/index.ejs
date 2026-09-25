@@ -252,11 +252,11 @@
 <div class="container my-5 py-4">
   <div class="d-flex flex-wrap justify-content-between align-items-end mb-4">
     <div>
-      <span class="text-accent text-uppercase fw-bold small tracking-wider">Where We Travel</span>
-      <h2 class="display-6 fw-extrabold mb-1">Key Vietnam Destinations</h2>
-      <p class="text-muted mb-0">From ancient northern capitals to lantern-lit merchant ports and southern waterways.</p>
+      <span class="text-accent text-uppercase fw-bold small tracking-wider">PLACES YOU'LL VISIT</span>
+      <h2 class="display-6 fw-extrabold mb-1">Destinations Woven Into Every Journey</h2>
+      <p class="text-muted mb-0">Most of our trips move through several of these places at once. Explore each one to see what's waiting along the way.</p>
     </div>
-    <a href="/vietnam" class="btn btn-outline-primary rounded-pill fw-bold px-4 mt-3 mt-md-0">All 17 Destinations &rarr;</a>
+    <a href="/vietnam" class="btn btn-outline-primary rounded-pill fw-bold px-4 mt-3 mt-md-0">View All Destinations &rarr;</a>
   </div>
 
   <div class="row g-4">
@@ -269,7 +269,7 @@
             <div class="position-absolute bottom-0 start-0 p-4 w-100">
               <span class="badge bg-white text-primary text-uppercase small mb-2 fw-bold"><%= dest.region.toUpperCase() %> VIETNAM</span>
               <h4 class="fw-bold text-white mb-1"><%= dest.name %></h4>
-              <p class="text-light opacity-90 small mb-0"><%= truncateText(dest.description, 70) %></p>
+              <p class="text-light opacity-90 small mb-0 destination-card-desc"><%= dest.description %></p>
             </div>
           </div>
         </a>
@@ -278,37 +278,139 @@
   </div>
 </div>
 
+<!-- Explore by Theme: Start With A Feeling (Section 6) -->
+<% if (typeof featuredThemes !== 'undefined' && featuredThemes && featuredThemes.length > 0) { 
+  const themeMetaMap = {
+    'honeymoon': {
+      name: 'Honeymoon',
+      subtitle: 'Romantic stays & secluded escapes',
+      image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80'
+    },
+    'family': {
+      name: 'Family',
+      subtitle: 'Engaging travel for all generations',
+      image: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80'
+    },
+    'adventure': {
+      name: 'Adventure',
+      subtitle: 'Treks, caves & cycling trails',
+      image: 'https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80'
+    },
+    'culinary': {
+      name: 'Culinary',
+      subtitle: 'Street food, markets & royal flavors',
+      image: 'https://images.unsplash.com/photo-1557750298-17ae4f2c0cf6?auto=format&fit=crop&w=800&q=80'
+    }
+  };
+%>
+<div class="container my-5 py-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-end mb-4">
+    <div>
+      <span class="text-accent text-uppercase fw-bold small tracking-wider">NOT SURE YET?</span>
+      <h2 class="display-6 fw-extrabold mb-1">Start With A Feeling.</h2>
+      <p class="text-muted mb-0">Pick a theme. We will find your suitable tours.</p>
+    </div>
+    <a href="/themes" class="btn btn-outline-primary rounded-pill fw-bold px-4 mt-3 mt-md-0">View All Themes &rarr;</a>
+  </div>
+
+  <!-- 4 Curated Theme Cards Grid -->
+  <div class="row g-4">
+    <% featuredThemes.forEach(theme => { 
+      const meta = themeMetaMap[theme.slug] || {
+        name: theme.slug.charAt(0).toUpperCase() + theme.slug.slice(1),
+        subtitle: theme.tagline || 'Curated Vietnam experiences',
+        image: theme.heroImage
+      };
+      const cardImg = meta.image || theme.heroImage;
+    %>
+      <div class="col-12 col-sm-6 col-lg-3">
+        <a href="/<%= theme.slug %>" class="text-decoration-none d-block h-100">
+          <div class="card border-0 rounded-4 overflow-hidden position-relative theme-card-item shadow-sm h-100">
+            <img src="<%= cardImg %>" alt="<%= meta.name %>" class="theme-card-img w-100 h-100">
+            <div class="theme-card-overlay position-absolute inset-0 w-100 h-100"></div>
+
+            <!-- Top-right circular arrow button matching reference screenshot -->
+            <div class="position-absolute top-0 end-0 m-3">
+              <div class="theme-card-arrow-circle">
+                <i class="bi bi-arrow-up-right"></i>
+              </div>
+            </div>
+
+            <!-- Bottom Content (Icon + Theme Name + Subtitle) -->
+            <div class="position-absolute bottom-0 start-0 p-4 w-100">
+              <div class="d-flex align-items-center gap-2 text-white fw-bold fs-5 mb-1 theme-card-title">
+                <i class="bi bi-geo-alt-fill text-accent" style="font-size: 1.05rem;"></i>
+                <span><%= meta.name %></span>
+              </div>
+              <p class="text-white opacity-90 small mb-0 theme-card-subtitle">
+                <%= meta.subtitle %>
+              </p>
+            </div>
+          </div>
+        </a>
+      </div>
+    <% }) %>
+  </div>
+</div>
+<% } %>
+
 <!-- Customer Stories & Social Proof (Section 9 & 10) -->
 <div class="container my-5 py-4">
   <div class="bg-light p-4 p-lg-5 rounded-4 border">
     <div class="row g-4 align-items-center mb-4">
       <div class="col-lg-8">
-        <span class="text-accent text-uppercase fw-bold small tracking-wider">Real Guest Experiences</span>
-        <h2 class="fw-extrabold mb-1">Stories from the Road</h2>
-        <p class="text-muted mb-0">Read how real families, couples, and independent travelers experienced our curated journeys.</p>
+        <span class="text-accent text-uppercase fw-bold small tracking-wider">REAL GUEST REVIEWS</span>
+        <h2 class="display-6 fw-extrabold mb-1">Stories from the Road</h2>
+        <p class="text-muted mb-0">Real families and couples on what their Tranoi journey actually looked like.</p>
       </div>
       <div class="col-lg-4 text-lg-end">
-        <a href="/customer-stories" class="btn btn-outline-primary rounded-pill fw-bold">Read All Stories &rarr;</a>
+        <a href="/trip-reviews" class="btn btn-outline-primary rounded-pill px-4 py-2 fw-semibold">Read All Reviews &rarr;</a>
       </div>
     </div>
 
     <div class="row g-4">
-      <% customerStories.forEach(story => { %>
+      <% customerStories.forEach(story => { 
+        let segment = { label: 'Family Trip', slug: 'family' };
+        const storyText = ((story.title || '') + ' ' + (story.travelerQuote || '') + ' ' + (story.travelerName || '')).toLowerCase();
+        if (storyText.includes('honeymoon') || storyText.includes('couple') || storyText.includes('claire & robert') || storyText.includes('vance')) {
+          segment = { label: 'Honeymoon', slug: 'honeymoon' };
+        }
+      %>
         <div class="col-lg-6">
-          <div class="card h-100 border-0 rounded-4 shadow-sm p-4 bg-white">
-            <div class="d-flex align-items-center gap-3 mb-3">
-              <img src="<%= story.heroImage %>" alt="<%= story.travelerName %>" class="rounded-circle" width="56" height="56" style="object-fit: cover;">
-              <div>
-                <h5 class="fw-bold mb-0"><%= story.travelerName %></h5>
-                <span class="text-muted small"><%= story.travelerLocation %> &bull; <%= story.tourTitle %></span>
+          <div class="card h-100 border-0 rounded-4 shadow-sm p-4 bg-white d-flex flex-column justify-content-between">
+            <div>
+              <div class="d-flex align-items-center gap-3 mb-3">
+                <img src="<%= story.heroImage %>" alt="<%= story.travelerName %>" class="rounded-circle" width="56" height="56" style="object-fit: cover;">
+                <div>
+                  <h5 class="fw-bold mb-1 text-dark"><%= story.travelerName %></h5>
+                  <span class="text-muted small"><%= story.travelerLocation %> &bull; <%= story.tourTitle %></span>
+                </div>
               </div>
+
+              <!-- Star Rating (★★★★★ 5.0) -->
+              <div class="d-flex align-items-center gap-1 mb-3">
+                <span class="text-warning small" style="color: #f59e0b !important; letter-spacing: 2px;">★★★★★</span>
+                <span class="fw-semibold text-dark small ms-1"><%= Number(story.rating || 5).toFixed(1) %></span>
+              </div>
+
+              <p class="text-secondary fst-italic leading-relaxed mb-4" style="font-size: 0.95rem;">
+                &ldquo;<%= story.travelerQuote %>&rdquo;
+              </p>
             </div>
-            <p class="text-secondary fst-italic mb-3">
-              &ldquo;<%= story.travelerQuote %>&rdquo;
-            </p>
+
+            <!-- Segment Badge, Format Badge, and Card Link -->
             <div class="mt-auto d-flex justify-content-between align-items-center pt-2">
-              <span class="badge badge-partial-guided"><%= story.formatTaken === 'private' ? 'Private Tour' : 'Partial-Guided' %></span>
-              <a href="/customer-stories/<%= story.slug %>" class="text-primary fw-bold text-decoration-none small">Read full story &rarr;</a>
+              <div class="d-flex align-items-center gap-2">
+                <a href="/<%= segment.slug %>" class="badge badge-segment-pill rounded-pill px-3 py-2 text-decoration-none fw-semibold" style="font-size: 0.8rem;">
+                  <%= segment.label %>
+                </a>
+                <span class="text-secondary small fw-medium ms-1">
+                  <%= story.formatTaken === 'private' ? 'Private Tour' : 'Partial-Guided' %>
+                </span>
+              </div>
+              <a href="/customer-stories/<%= story.slug %>" class="text-primary fw-semibold text-decoration-none small hover-underline">
+                Read full story &rarr;
+              </a>
             </div>
           </div>
         </div>
@@ -321,43 +423,137 @@
 <div class="container my-5 py-4">
   <div class="text-center mb-5">
     <span class="text-accent text-uppercase fw-bold small tracking-wider">The Tranoi Difference</span>
-    <h2 class="display-6 fw-extrabold">How We Curate Your Journey</h2>
+    <h2 class="display-6 fw-extrabold">The Details Most Agencies Skip</h2>
   </div>
 
   <div class="row g-4 text-center">
+    <!-- Card 1: Your Personal Travel Designer -->
     <div class="col-md-4">
-      <div class="p-4 rounded-4 bg-white shadow-sm border h-100">
-        <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-          <i class="bi bi-compass fs-4"></i>
+      <div class="p-4 p-lg-5 rounded-4 bg-white shadow-sm border h-100 d-flex flex-column align-items-center text-center">
+        <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-3 flex-shrink-0" style="width: 64px; height: 64px;">
+          <i class="bi bi-compass fs-3"></i>
         </div>
-        <h5 class="fw-bold mb-2">Curated Expertise</h5>
+        <h5 class="fw-bold mb-2 text-dark text-uppercase tracking-wide" style="font-size: 1.05rem;">YOUR PERSONAL TRAVEL DESIGNER</h5>
+        <p class="fw-semibold text-primary fst-italic mb-2" style="font-size: 0.95rem;">
+          &ldquo;We're travelers first, planners second.&rdquo;
+        </p>
         <p class="text-secondary small leading-relaxed mb-0">
-          We specialize solely in destinations we know intimately. Itineraries are refined within our expertise, not built from scratch to random guesses.
+          Deeply rooted in Vietnam for authentic advice. We build every route from real experience, not guesswork.
         </p>
       </div>
     </div>
 
+    <!-- Card 2: Your Local Storyteller -->
     <div class="col-md-4">
-      <div class="p-4 rounded-4 bg-white shadow-sm border h-100">
-        <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-          <i class="bi bi-people fs-4"></i>
+      <div class="p-4 p-lg-5 rounded-4 bg-white shadow-sm border h-100 d-flex flex-column align-items-center text-center">
+        <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-3 flex-shrink-0" style="width: 64px; height: 64px;">
+          <i class="bi bi-chat-heart fs-3"></i>
         </div>
-        <h5 class="fw-bold mb-2">Handpicked Insiders</h5>
+        <h5 class="fw-bold mb-2 text-dark text-uppercase tracking-wide" style="font-size: 1.05rem;">YOUR LOCAL STORYTELLER</h5>
+        <p class="fw-semibold text-primary fst-italic mb-2" style="font-size: 0.95rem;">
+          &ldquo;We share the stories you won't find in a guidebook.&rdquo;
+        </p>
         <p class="text-secondary small leading-relaxed mb-0">
-          Licensed local storytellers, architects, and food historians who treat you like a visiting friend rather than reciting memorized scripts.
+          Hand-picked local guides who treat you like a visiting friend, not a script to recite.
         </p>
       </div>
     </div>
 
+    <!-- Card 3: Your Point of Contact -->
     <div class="col-md-4">
-      <div class="p-4 rounded-4 bg-white shadow-sm border h-100">
-        <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-          <i class="bi bi-shield-check fs-4"></i>
+      <div class="p-4 p-lg-5 rounded-4 bg-white shadow-sm border h-100 d-flex flex-column align-items-center text-center">
+        <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-3 flex-shrink-0" style="width: 64px; height: 64px;">
+          <i class="bi bi-headset fs-3"></i>
         </div>
-        <h5 class="fw-bold mb-2">24/7 Care Promise</h5>
-        <p class="text-secondary small leading-relaxed mb-0">
-          Direct private WhatsApp concierge channel with our local team. Seamless flight monitoring, instant restaurant reservations, and complete peace of mind.
+        <h5 class="fw-bold mb-2 text-dark text-uppercase tracking-wide" style="font-size: 1.05rem;">YOUR POINT OF CONTACT</h5>
+        <p class="fw-semibold text-primary fst-italic mb-2" style="font-size: 0.95rem;">
+          &ldquo;One team, with you from first message to last mile.&rdquo;
         </p>
+        <p class="text-secondary small leading-relaxed mb-0">
+          Bookings, transfers, and logistics handled end to end, so all you have to do is show up.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA Newsletter Banner (Section 12 / Pre-Footer) -->
+<div class="container my-5 py-4">
+  <div class="cta-newsletter-banner p-4 p-md-5 rounded-4 position-relative overflow-hidden shadow-lg">
+    <!-- Ambient decorative light glow -->
+    <div class="cta-ambient-glow cta-glow-right"></div>
+    <div class="cta-ambient-glow cta-glow-left"></div>
+
+    <div class="row align-items-center g-4 position-relative z-1">
+      <!-- Left Column: Title & Value Highlights -->
+      <div class="col-lg-5">
+        <div class="d-inline-flex align-items-center gap-2 mb-2 px-3 py-1 rounded-pill cta-badge">
+          <i class="bi bi-compass text-warning"></i>
+          <span class="text-uppercase fw-bold small">Tranoi Dispatches</span>
+        </div>
+        <h3 class="text-white fw-bold mb-3" style="font-size: 2.1rem; line-height: 1.25;">
+          Stories &amp; Journeys Worth Knowing
+        </h3>
+        <p class="cta-newsletter-desc mb-3">
+          Seasonal routes, quiet places, and authentic travel insights from our local planners in Vietnam.
+        </p>
+        <div class="d-flex flex-wrap gap-3 cta-perks-list">
+          <span class="d-inline-flex align-items-center text-white-75 small">
+            <i class="bi bi-check2-circle text-warning me-1"></i> Handpicked routes
+          </span>
+          <span class="d-inline-flex align-items-center text-white-75 small">
+            <i class="bi bi-check2-circle text-warning me-1"></i> Local Vietnam insights
+          </span>
+          <span class="d-inline-flex align-items-center text-white-75 small">
+            <i class="bi bi-check2-circle text-warning me-1"></i> Special privileges
+          </span>
+        </div>
+      </div>
+
+      <!-- Right Column: Elevated Glassmorphic Card -->
+      <div class="col-lg-7">
+        <div class="cta-form-card p-4 rounded-4">
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <span class="text-white fw-semibold small text-uppercase letter-spacing-1">
+              <i class="bi bi-envelope-paper text-warning me-2"></i>Join Our Community
+            </span>
+          </div>
+
+          <form id="ctaNewsletterForm" class="cta-newsletter-form">
+            <!-- Row 1: First Name & Surname -->
+            <div class="row g-2 mb-2">
+              <div class="col-12 col-sm-6">
+                <div class="cta-input-wrap position-relative">
+                  <i class="bi bi-person cta-field-icon"></i>
+                  <input type="text" name="firstName" class="form-control cta-modern-input" placeholder="First Name" required>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6">
+                <div class="cta-input-wrap position-relative">
+                  <i class="bi bi-person cta-field-icon"></i>
+                  <input type="text" name="lastName" class="form-control cta-modern-input" placeholder="Surname" required>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 2: Email Address -->
+            <div class="mb-3">
+              <div class="cta-input-wrap position-relative">
+                <i class="bi bi-envelope cta-field-icon"></i>
+                <input type="email" name="email" class="form-control cta-modern-input" placeholder="Email Address" required>
+              </div>
+            </div>
+
+            <!-- Row 3: Action Button -->
+            <button type="submit" class="btn btn-cta-brand w-100 py-3">
+              <span>Subscribe to Dispatches</span>
+              <i class="bi bi-arrow-right ms-2"></i>
+            </button>
+
+            <!-- Ajax Response Message Container -->
+            <div id="ctaNewsletterFeedback" class="mt-2 text-white small ps-1 fw-semibold d-none"></div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
@@ -448,5 +644,53 @@
 
     // Initialize auto play
     startTimer();
+
+    // CTA Newsletter Form Submission (AJAX)
+    const ctaForm = document.getElementById('ctaNewsletterForm');
+    const ctaFeedback = document.getElementById('ctaNewsletterFeedback');
+    if (ctaForm) {
+      ctaForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = ctaForm.querySelector('button[type="submit"]');
+        const formData = new FormData(ctaForm);
+        const payload = {
+          firstName: formData.get('firstName'),
+          lastName: formData.get('lastName'),
+          email: formData.get('email')
+        };
+        const originalHtml = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Subscribing...';
+
+        try {
+          const res = await fetch('/newsletter/subscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          const data = await res.json();
+          if (ctaFeedback) {
+            ctaFeedback.classList.remove('d-none', 'text-danger');
+            ctaFeedback.classList.add(data.success ? 'text-warning' : 'text-danger');
+            ctaFeedback.innerHTML = `<i class="bi ${data.success ? 'bi-check-circle-fill' : 'bi-exclamation-circle-fill'} me-1"></i> ${data.message || 'Thank you for subscribing!'}`;
+          }
+          if (data.success) {
+            ctaForm.reset();
+            submitBtn.innerHTML = '<i class="bi bi-check-circle me-1"></i> Subscribed to Dispatches!';
+          } else {
+            submitBtn.innerHTML = originalHtml;
+            submitBtn.disabled = false;
+          }
+        } catch (err) {
+          if (ctaFeedback) {
+            ctaFeedback.classList.remove('d-none');
+            ctaFeedback.classList.add('text-danger');
+            ctaFeedback.innerHTML = '<i class="bi bi-exclamation-triangle-fill me-1"></i> Unable to connect. Please try again.';
+          }
+          submitBtn.innerHTML = originalHtml;
+          submitBtn.disabled = false;
+        }
+      });
+    }
   });
 </script>

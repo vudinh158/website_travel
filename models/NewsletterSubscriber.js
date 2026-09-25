@@ -12,6 +12,14 @@ const NewsletterSubscriber = sequelize.define('NewsletterSubscriber', {
     allowNull: false,
     unique: true
   },
+  firstName: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  lastName: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
   isSubscribed: {
     type: DataTypes.BOOLEAN,
     defaultValue: true

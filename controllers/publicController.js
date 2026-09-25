@@ -1,4 +1,4 @@
-const { Tour, Destination, Category, Review, Contact, NewsletterSubscriber, CustomerStory, Guide, User } = require('../models');
+const { Tour, Destination, Category, Review, Contact, NewsletterSubscriber, CustomerStory, Guide, User, Theme } = require('../models');
 const { generateSchemaOrg } = require('../helpers/seoHelper');
 const { formatCurrency, formatDate, truncateText } = require('../helpers/formatters');
 const { Op } = require('sequelize');
@@ -46,6 +46,13 @@ const getHome = async (req, res, next) => {
       order: [['createdAt', 'DESC']]
     });
 
+    // Curated 4 Themes for "Start With A Feeling" (P1: Honeymoon, Family, Adventure + P2: Culinary)
+    const featuredThemeSlugs = ['honeymoon', 'family', 'adventure', 'culinary'];
+    const featuredThemes = await Theme.findAll({
+      where: { slug: featuredThemeSlugs }
+    });
+    featuredThemes.sort((a, b) => featuredThemeSlugs.indexOf(a.slug) - featuredThemeSlugs.indexOf(b.slug));
+
     const schemaOrg = generateSchemaOrg.organization('Tranoi Travel', process.env.APP_URL || 'https://tranoitravel.com');
 
     res.render('pages/index', {
@@ -54,6 +61,7 @@ const getHome = async (req, res, next) => {
       metaDescription: 'Specialty travel agency offering tailored, curated Vietnam trips. Private and partial-guided long-duration tours. Travel more, plan less.',
       seedTours,
       p0Destinations,
+      featuredThemes,
       customerStories,
       customerReviews,
       travelGuides,
@@ -260,17 +268,27 @@ const getTerms = (req, res) => {
  */
 const subscribeNewsletter = async (req, res) => {
   try {
-    const { email } = req.body;
+    const { email, firstName, lastName } = req.body;
     if (!email) {
       return res.status(400).json({ success: false, message: 'Email address is required.' });
     }
     const [subscriber, created] = await NewsletterSubscriber.findOrCreate({
-      where: { email },
-      defaults: { status: 'active' }
+      where: { email: email.trim().toLowerCase() },
+      defaults: {
+        firstName: firstName ? firstName.trim() : null,
+        lastName: lastName ? lastName.trim() : null,
+        isSubscribed: true
+      }
     });
+    if (!created && (firstName || lastName)) {
+      await subscriber.update({
+        firstName: firstName ? firstName.trim() : subscriber.firstName,
+        lastName: lastName ? lastName.trim() : subscriber.lastName
+      });
+    }
     return res.json({
       success: true,
-      message: created ? 'Thank you for subscribing to Tranoi Travel insider notes!' : 'You are already subscribed to our newsletter.'
+      message: created ? 'Welcome to Tranoi Insider Dispatches! Check your inbox shortly.' : 'You are already on our priority insider list.'
     });
   } catch (err) {
     return res.status(500).json({ success: false, message: 'Unable to process subscription.' });
