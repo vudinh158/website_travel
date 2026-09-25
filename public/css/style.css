@@ -1883,3 +1883,279 @@ body {
   }
 }
 
+/* ==========================================================================
+   HOMEPAGE SELECTIVE HOVER MOTION SYSTEM (Luxury & Tactile Interactions)
+   Strategically applied to interactive cards, micro-actions, and discovery nodes.
+   Informational containers & input forms are intentionally kept stable.
+   ========================================================================== */
+
+/* --- 1. Hero Micro-Interactions (Section remains stable; elements respond) --- */
+.hero-how-it-works i {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-how-it-works:hover i {
+  transform: translateX(4px) scale(1.15);
+  color: #ffc20e !important;
+}
+
+.hero-bottom-left-card {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.hero-bottom-left-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.26);
+  border-color: rgba(255, 255, 255, 1);
+}
+
+/* --- 2. Differentiator Section: Standard Card (Editorial Stability) & Value Props --- */
+.standard-differentiator-card {
+  transition: box-shadow 0.35s ease, border-left-color 0.35s ease, transform 0.35s ease;
+}
+
+.standard-differentiator-card:hover {
+  box-shadow: 0 16px 36px -8px rgba(0, 74, 173, 0.12) !important;
+  border-left-color: var(--secondary-color, #EF8934) !important;
+}
+
+.standard-differentiator-card .btn {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.standard-differentiator-card .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(0, 74, 173, 0.32);
+}
+
+/* Value Proposition Interactive Feature Items */
+.why-us-feature-item {
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: transparent;
+  border: 1px solid transparent;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: default;
+}
+
+.why-us-feature-item:hover {
+  background: #ffffff;
+  border-color: rgba(0, 74, 173, 0.12);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px -6px rgba(0, 74, 173, 0.1);
+}
+
+.why-us-feature-item .why-us-feature-icon {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
+}
+
+.why-us-feature-item:hover .why-us-feature-icon {
+  transform: scale(1.16);
+  color: var(--secondary-color, #EF8934) !important;
+}
+
+.why-us-feature-item .why-us-feature-label {
+  transition: color 0.25s ease;
+}
+
+.why-us-feature-item:hover .why-us-feature-label {
+  color: var(--primary-color, #004AAD);
+}
+
+/* --- 3. Featured Tours Cards (Primary Conversion Nodes) --- */
+.tour-card-hover {
+  position: relative;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.35s ease;
+  border: 1px solid rgba(226, 232, 240, 0.8) !important;
+}
+
+.tour-card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 22px 42px -10px rgba(0, 74, 173, 0.18), 0 8px 16px -6px rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(0, 74, 173, 0.25) !important;
+}
+
+.tour-card-hover .position-relative {
+  overflow: hidden;
+}
+
+.tour-card-hover .position-relative img {
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tour-card-hover:hover .position-relative img {
+  transform: scale(1.07);
+}
+
+.tour-card-hover .card-title a {
+  transition: color 0.25s ease;
+}
+
+.tour-card-hover:hover .card-title a {
+  color: var(--primary-color, #004AAD) !important;
+}
+
+.tour-card-hover .tour-pace-rhythm i {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
+}
+
+.tour-card-hover:hover .tour-pace-rhythm i {
+  transform: scale(1.22) rotate(-8deg);
+  color: var(--secondary-color, #EF8934) !important;
+}
+
+/* --- 4. Destinations Showcase Cards (Visual Inspiration) --- */
+.group-hover-zoom {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+.group-hover-zoom:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 42px rgba(15, 23, 42, 0.32) !important;
+}
+
+.group-hover-zoom img {
+  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.group-hover-zoom:hover img {
+  transform: scale(1.09) !important;
+}
+
+.group-hover-zoom .badge {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.group-hover-zoom:hover .badge {
+  background-color: var(--secondary-color, #EF8934) !important;
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(239, 137, 52, 0.45);
+}
+
+.group-hover-zoom h4 {
+  transition: transform 0.3s ease;
+}
+
+.group-hover-zoom:hover h4 {
+  transform: translateX(4px);
+}
+
+/* --- 5. Curated Themes ("Start With A Feeling") --- */
+.theme-card-item:hover .theme-card-arrow-circle {
+  transform: scale(1.15) rotate(45deg);
+  background-color: var(--secondary-color, #EF8934) !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 18px rgba(239, 137, 52, 0.48);
+}
+
+.theme-card-title {
+  transition: transform 0.3s ease;
+}
+
+.theme-card-item:hover .theme-card-title {
+  transform: translateX(4px);
+}
+
+/* --- 6. Customer Stories / Reviews (Subtle & Calming Authenticity) --- */
+.testimonial-card-item {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.35s ease, 
+              border-color 0.35s ease;
+  border: 1px solid rgba(226, 232, 240, 0.8) !important;
+}
+
+.testimonial-card-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.08) !important;
+  border-color: rgba(0, 74, 173, 0.22) !important;
+}
+
+.testimonial-card-item img.rounded-circle {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-card-item:hover img.rounded-circle {
+  transform: scale(1.08);
+  box-shadow: 0 0 0 3px rgba(0, 74, 173, 0.16);
+}
+
+.testimonial-card-item .hover-underline {
+  transition: transform 0.25s ease, color 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+.testimonial-card-item:hover .hover-underline {
+  transform: translateX(4px);
+  color: var(--primary-hover, #003380) !important;
+}
+
+/* --- 7. The Tranoi Travel Promise Pillars (Commitment Cards) --- */
+.promise-pillar-card {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.35s ease;
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
+}
+
+.promise-pillar-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 18px 38px -8px rgba(0, 74, 173, 0.15) !important;
+  border-color: rgba(0, 74, 173, 0.28) !important;
+}
+
+.promise-pillar-card .rounded-circle.bg-primary {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.4s ease, 
+              background-color 0.4s ease;
+}
+
+.promise-pillar-card:hover .rounded-circle.bg-primary {
+  transform: scale(1.12) translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 74, 173, 0.38);
+  background-color: var(--primary-hover, #003380) !important;
+}
+
+.promise-pillar-card h5 {
+  transition: color 0.3s ease;
+}
+
+.promise-pillar-card:hover h5 {
+  color: var(--primary-color, #004AAD) !important;
+}
+
+/* --- 8. Section Header "View All ..." Pill Buttons --- */
+.btn-outline-primary.rounded-pill {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-outline-primary.rounded-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 74, 173, 0.2);
+}
+
+/* --- 9. Pre-Footer Newsletter Micro-Interactions (Inputs & Submit CTA) --- */
+.cta-perks-list span {
+  transition: transform 0.25s ease, color 0.25s ease;
+  cursor: default;
+}
+
+.cta-perks-list span:hover {
+  transform: translateY(-2px);
+  color: #ffffff !important;
+}
+
+.btn-cta-brand i {
+  transition: transform 0.25s ease;
+}
+
+.btn-cta-brand:hover i {
+  transform: translateX(4px);
+}
+
+
