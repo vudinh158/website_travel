@@ -1254,22 +1254,36 @@ body {
   transform: scale(1);
 }
 
-.hero-main-title {
-  font-size: 3.8rem;
-  font-weight: 800;
-  line-height: 1.1;
+.hero-specialty-badge {
+  background-color: #EF8934;
   color: #ffffff;
-  letter-spacing: -0.5px;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.75), 0 1px 4px rgba(0, 0, 0, 0.9);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  padding: 7px 20px;
+  border-radius: 50rem;
+  box-shadow: 0 4px 14px rgba(239, 137, 52, 0.4);
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
 }
 
-.hero-sub-title {
-  font-size: 3.5rem;
+.hero-main-title {
+  font-size: 4rem;
   font-weight: 800;
   line-height: 1.15;
   color: #ffffff;
   letter-spacing: -0.5px;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.75), 0 1px 4px rgba(0, 0, 0, 0.9);
+}
+
+.hero-subtitle-desc {
+  font-size: 1.15rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.94);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.85);
+  max-width: 840px;
+  font-weight: 400;
 }
 
 /* Main CTA Button: "Explore All Tours" */
@@ -1295,20 +1309,47 @@ body {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.38);
 }
 
-.hero-how-it-works {
-  color: #ffffff !important;
-  font-size: 0.96rem;
-  font-weight: 600;
-  text-decoration: none;
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
-  transition: opacity 0.2s ease;
-  display: inline-flex;
-  align-items: center;
+/* Popular Durations Pills */
+.hero-popular-durations {
+  color: #ffffff;
 }
 
-.hero-how-it-works:hover {
-  opacity: 0.9;
-  text-decoration: underline;
+.popular-durations-label {
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  color: #cbd5e1;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
+}
+
+.duration-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 20px;
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  border-radius: 50rem;
+  color: #ffffff !important;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  background: rgba(15, 23, 42, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.duration-pill:hover {
+  border-color: #ffffff;
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+.duration-pill:active {
+  transform: translateY(0);
 }
 
 /* Hero Bottom Bar */
@@ -1325,115 +1366,117 @@ body {
   z-index: 10;
 }
 
-/* Left: Trust Badge ("Our customers say..." + Media Recommendation) */
-.hero-bottom-left-card {
+/* Left: Transparent Single-Line Trust Badge (Trustpilot Style Social Proof) */
+.hero-trust-strip {
   pointer-events: auto;
-  background: rgba(255, 255, 255, 0.96);
-  backdrop-filter: blur(12px);
-  border-radius: 12px;
-  padding: 12px 18px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  max-width: 460px;
-}
-
-.hero-trust-title {
-  color: #1e293b;
-  font-size: 0.88rem;
-}
-
-.hero-trust-stars {
-  font-size: 0.95rem;
-  letter-spacing: 1px;
-}
-
-.hero-press-caption {
-  font-size: 0.78rem;
-  color: #64748b;
-  font-weight: 500;
-  line-height: 1.3;
-}
-
-.hero-press-logos {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.press-item {
-  font-size: 0.88rem;
-  color: #1e293b;
-  user-select: none;
-}
-
-.press-bbc {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-weight: 900;
-  letter-spacing: 1.2px;
-  background: #000000;
   color: #ffffff;
-  padding: 2px 7px;
-  border-radius: 2px;
-  font-size: 0.76rem;
-  display: inline-block;
-}
-
-.press-tc {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-weight: 800;
-  color: #00a562;
-  font-size: 0.85rem;
+  font-size: 0.92rem;
+  font-weight: 500;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
   display: inline-flex;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  background: transparent;
 }
 
-.press-tc .tc-icon {
-  background: #00a562;
+.hero-trust-strip .trust-say {
   color: #ffffff;
-  padding: 1px 4px;
-  border-radius: 2px;
-  margin-right: 4px;
-  font-weight: 900;
-  font-size: 0.74rem;
+  font-weight: 400;
+  opacity: 0.95;
 }
 
-.press-nyt {
-  font-family: "Georgia", "Times New Roman", serif;
+.hero-trust-strip .trust-rating-word {
+  color: #ffffff;
   font-weight: 700;
-  font-style: italic;
-  font-size: 0.88rem;
-  color: #111827;
-  letter-spacing: -0.3px;
+  margin-right: 2px;
 }
 
-/* Center Carousel Dots: Dead-Center 50% Horizontal Alignment Across the Banner */
+.trust-star-boxes {
+  display: inline-flex;
+  align-items: center;
+  gap: 2.5px;
+}
+
+.trust-star-box {
+  width: 20px;
+  height: 20px;
+  background-color: #00b67a;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 11px;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.trust-star-box.half-box {
+  background: linear-gradient(90deg, #00b67a 75%, #dcdce6 75%);
+}
+
+.hero-trust-strip .trust-score-text {
+  color: #ffffff;
+  opacity: 0.95;
+}
+
+.hero-trust-strip .trust-reviews-link {
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 600;
+  transition: opacity 0.2s ease;
+}
+
+.hero-trust-strip .trust-reviews-link:hover {
+  color: #ffffff;
+  opacity: 0.8;
+}
+
+.trust-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 2px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.trust-brand .trustpilot-star-icon {
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+/* Hero Carousel Vertical Dots: Centered on the Left Side of Banner */
 .hero-carousel-dots {
   position: absolute !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  bottom: 24px !important;
+  left: 32px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  bottom: auto !important;
   z-index: 25 !important;
   pointer-events: auto !important;
   display: flex !important;
+  flex-direction: column !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 9px !important;
+  gap: 10px !important;
   margin: 0 !important;
-  padding: 7px 16px;
-  background: rgba(0, 0, 0, 0.28);
+  padding: 14px 8px !important;
+  background: rgba(0, 0, 0, 0.32);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border-radius: 50rem;
   border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
 
 .hero-carousel-dots .dot {
-  width: 11px;
-  height: 11px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   border: 1.5px solid rgba(255, 255, 255, 0.95);
   background: transparent;
-  display: inline-block;
+  display: block;
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
@@ -1479,15 +1522,32 @@ body {
     margin-top: 36px;
     padding: 0 16px;
   }
-  .hero-bottom-left-card {
-    max-width: 100%;
-    width: 100%;
+  .hero-trust-strip {
+    justify-content: center;
+    text-align: center;
+    font-size: 0.85rem;
   }
   .hero-photo-credit {
     text-align: center;
   }
   .hero-carousel-dots {
-    bottom: 14px !important;
+    left: 14px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    padding: 10px 6px !important;
+    gap: 7px !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .hero-carousel-dots {
+    left: 8px !important;
+    padding: 8px 5px !important;
+    gap: 6px !important;
+  }
+  .hero-carousel-dots .dot {
+    width: 8px;
+    height: 8px;
   }
 }
 
@@ -2234,5 +2294,87 @@ body {
 .btn-cta-brand:hover i {
   transform: translateX(4px);
 }
+
+/* ==========================================================================
+   Homepage Alternating Section System (Visual Rhythm & Spatial Highlights)
+   ========================================================================== */
+.homepage-section {
+  position: relative;
+  width: 100%;
+  padding-top: 4.5rem;
+  padding-bottom: 4.5rem;
+}
+
+@media (max-width: 991.98px) {
+  .homepage-section {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .homepage-section {
+    padding-top: 2.75rem;
+    padding-bottom: 2.75rem;
+  }
+}
+
+/* 1. Pristine Pure White Sections */
+.bg-section-white {
+  background-color: #ffffff;
+}
+
+/* 2. Soft Architectural Slate Mist Sections (Visual Highlight & Contrast) */
+.bg-section-tint {
+  background-color: #f4f7fb;
+  border-top: 1px solid rgba(0, 46, 110, 0.06);
+  border-bottom: 1px solid rgba(0, 46, 110, 0.06);
+  position: relative;
+}
+
+/* Subtle luminous top highlight for tinted sections */
+.bg-section-tint::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 74, 173, 0.08) 25%, rgba(0, 74, 173, 0.08) 75%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Enhanced contrast & elevation for Tour Cards in Featured Tours Section */
+.section-featured-tours .tour-card-hover {
+  background-color: #ffffff !important;
+  box-shadow: 0 4px 18px rgba(0, 30, 80, 0.04);
+}
+
+.section-featured-tours .tour-card-hover:hover {
+  box-shadow: 0 22px 42px -10px rgba(0, 74, 173, 0.18), 0 8px 16px -6px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Elevated styling for Customer Story Cards */
+.section-customer-stories .testimonial-card-item {
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 46, 110, 0.08) !important;
+  box-shadow: 0 4px 20px rgba(0, 20, 50, 0.04) !important;
+}
+
+.section-customer-stories .testimonial-card-item:hover {
+  box-shadow: 0 16px 36px rgba(0, 46, 110, 0.1) !important;
+}
+
+/* Elevated styling for Promise Pillar Cards on tinted background */
+.section-promise-pillars .promise-pillar-card {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(0, 46, 110, 0.08) !important;
+  box-shadow: 0 4px 20px rgba(0, 30, 80, 0.04);
+}
+
+.section-promise-pillars .promise-pillar-card:hover {
+  box-shadow: 0 18px 38px -8px rgba(0, 74, 173, 0.15) !important;
+}
+
 
 
