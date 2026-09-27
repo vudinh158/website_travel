@@ -1569,7 +1569,7 @@ body {
 
 .why-tranoi-card:hover {
   transform: translateY(-5px);
-  border-color: rgba(239, 137, 52, 0.35);
+  border-color: rgba(0, 74, 173, 0.28);
   box-shadow: 0 14px 28px rgba(0, 46, 110, 0.09);
 }
 
@@ -1577,8 +1577,8 @@ body {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: rgba(239, 137, 52, 0.1);
-  color: #EF8934;
+  background: rgba(0, 74, 173, 0.08);
+  color: var(--primary-color, #004AAD);
   font-size: 1.7rem;
   display: inline-flex;
   align-items: center;
@@ -1587,7 +1587,7 @@ body {
 }
 
 .why-tranoi-card:hover .why-tranoi-icon {
-  background: #EF8934;
+  background: var(--primary-color, #004AAD);
   color: #ffffff;
   transform: scale(1.08);
 }
@@ -1598,9 +1598,9 @@ body {
   letter-spacing: -0.1px;
 }
 
-/* Centered Fully-Rounded Pill CTA Button */
+/* Centered Fully-Rounded Pill CTA Button in Tranoi Blue #004AAD */
 .btn-why-us-cta {
-  background: linear-gradient(135deg, #EF8934 0%, #D86B1E 100%);
+  background: linear-gradient(135deg, #004AAD 0%, #003380 100%);
   color: #ffffff !important;
   font-weight: 700;
   font-size: 1.05rem;
@@ -1612,15 +1612,15 @@ body {
   text-decoration: none;
   border: none;
   letter-spacing: 0.3px;
-  box-shadow: 0 6px 20px rgba(239, 137, 52, 0.35);
+  box-shadow: 0 6px 20px rgba(0, 74, 173, 0.32);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-why-us-cta:hover {
-  background: linear-gradient(135deg, #f59544 0%, #e07427 100%);
+  background: linear-gradient(135deg, #0056cc 0%, #004AAD 100%);
   color: #ffffff !important;
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(239, 137, 52, 0.45);
+  box-shadow: 0 10px 25px rgba(0, 74, 173, 0.42);
 }
 
 .btn-why-us-cta i {
@@ -1776,7 +1776,7 @@ body {
 
 .theme-card-item:hover .theme-card-arrow-circle {
   transform: scale(1.1) rotate(6deg);
-  background-color: var(--accent-color, #EF8934);
+  background-color: var(--secondary-color, #FF8F4C);
   color: #ffffff;
 }
 
@@ -1973,25 +1973,25 @@ body {
 .cta-modern-input:focus {
   background-color: #ffffff !important;
   color: #0f172a !important;
-  border-color: #EF8934 !important;
-  box-shadow: 0 0 0 4px rgba(239, 137, 52, 0.25) !important;
+  border-color: #FF8F4C !important;
+  box-shadow: 0 0 0 4px rgba(255, 143, 76, 0.25) !important;
   outline: none;
 }
 
 .cta-input-wrap:focus-within .cta-field-icon {
-  color: #EF8934;
+  color: #FF8F4C;
 }
 
 /* Brand Submit Button */
 .btn-cta-brand {
-  background: linear-gradient(135deg, #EF8934 0%, #D86B1E 100%) !important;
+  background: linear-gradient(135deg, #FF8F4C 0%, #e06c27 100%) !important;
   color: #ffffff !important;
   font-weight: 700;
   font-size: 1rem;
   border-radius: 12px !important;
   border: none !important;
   letter-spacing: 0.3px;
-  box-shadow: 0 6px 20px rgba(239, 137, 52, 0.38);
+  box-shadow: 0 6px 20px rgba(255, 143, 76, 0.38);
   transition: all 0.22s ease;
   display: inline-flex;
   align-items: center;
@@ -1999,10 +1999,10 @@ body {
 }
 
 .btn-cta-brand:hover {
-  background: linear-gradient(135deg, #f59544 0%, #e07427 100%) !important;
+  background: linear-gradient(135deg, #ffa266 0%, #eb7934 100%) !important;
   color: #ffffff !important;
   transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(239, 137, 52, 0.48);
+  box-shadow: 0 10px 24px rgba(255, 143, 76, 0.48);
 }
 
 .btn-cta-brand:active {
@@ -2053,7 +2053,7 @@ body {
 
 .standard-differentiator-card:hover {
   box-shadow: 0 16px 36px -8px rgba(0, 74, 173, 0.12) !important;
-  border-left-color: var(--secondary-color, #EF8934) !important;
+  border-left-color: var(--secondary-color, #FF8F4C) !important;
 }
 
 .standard-differentiator-card .btn {
@@ -2088,7 +2088,7 @@ body {
 
 .why-us-feature-item:hover .why-us-feature-icon {
   transform: scale(1.16);
-  color: var(--secondary-color, #EF8934) !important;
+  color: var(--secondary-color, #FF8F4C) !important;
 }
 
 .why-us-feature-item .why-us-feature-label {
@@ -2140,7 +2140,7 @@ body {
 
 .tour-card-hover:hover .tour-pace-rhythm i {
   transform: scale(1.22) rotate(-8deg);
-  color: var(--secondary-color, #EF8934) !important;
+  color: var(--secondary-color, #FF8F4C) !important;
 }
 
 /* --- 4. Destinations Showcase Cards (Visual Inspiration) --- */
@@ -2168,10 +2168,10 @@ body {
 }
 
 .group-hover-zoom:hover .badge {
-  background-color: var(--secondary-color, #EF8934) !important;
+  background-color: var(--secondary-color, #FF8F4C) !important;
   color: #ffffff !important;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(239, 137, 52, 0.45);
+  box-shadow: 0 4px 12px rgba(255, 143, 76, 0.45);
 }
 
 .group-hover-zoom h4 {
@@ -2185,9 +2185,9 @@ body {
 /* --- 5. Curated Themes ("Start With A Feeling") --- */
 .theme-card-item:hover .theme-card-arrow-circle {
   transform: scale(1.15) rotate(45deg);
-  background-color: var(--secondary-color, #EF8934) !important;
+  background-color: var(--secondary-color, #FF8F4C) !important;
   color: #ffffff !important;
-  box-shadow: 0 6px 18px rgba(239, 137, 52, 0.48);
+  box-shadow: 0 6px 18px rgba(255, 143, 76, 0.48);
 }
 
 .theme-card-title {
