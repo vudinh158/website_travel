@@ -1,43 +1,75 @@
-<div class="card h-100 border-0 rounded-4 shadow-sm overflow-hidden bg-white hover-lift transition-smooth">
-  <div class="position-relative" style="height: 220px;">
-    <img src="<%= tour.featuredImage %>" alt="<%= tour.name %>" class="w-100 h-100" style="object-fit: cover;" loading="lazy">
-    <div class="position-absolute top-0 start-0 m-3 d-flex gap-2">
-      <span class="badge bg-primary text-white rounded-pill px-3 py-1"><%= tour.duration %></span>
-      <span class="badge bg-accent text-white rounded-pill px-2 py-1 small">Private &bull; Partial-Guided</span>
+<%
+  const routeStops = (tour.destinations && Array.isArray(tour.destinations) && tour.destinations.length > 0)
+    ? tour.destinations
+    : (tour.routeMapPoints ? (() => {
+        try {
+          const pts = typeof tour.routeMapPoints === 'string' ? JSON.parse(tour.routeMapPoints) : tour.routeMapPoints;
+          return Array.isArray(pts) ? pts.map(p => p.name || p) : [];
+        } catch(e) { return []; }
+      })() : []);
+  const routeString = routeStops.join(' → ');
+  const cleanName = tour.name ? tour.name.replace(/\s*-\s*(Private|Partial-Guided|Guided).*$/i, '').trim() : 'Vietnam Journey';
+  let rhythmText = 'Guided mornings, free afternoons';
+  const days = tour.durationDays || (tour.duration ? parseInt(tour.duration, 10) : 10);
+  if (days >= 10 && days < 14) {
+    rhythmText = 'Full days, active exploring';
+  } else if (days >= 14) {
+    rhythmText = 'Balanced rhythm, guided highlights & free days';
+  }
+  const displayPrice = Math.round(tour.pricePartialGuided || tour.discountPrice || tour.price || 1290);
+  const ratingVal = tour.rating ? Number(tour.rating).toFixed(2) : '4.98';
+  const reviewsCount = tour.totalReviews || 48;
+%>
+<div class="card h-100 border-0 rounded-4 shadow-sm overflow-hidden tour-card-hover transition-smooth bg-white">
+  <!-- Top: Image with single duration badge -->
+  <div class="position-relative" style="height: 260px;">
+    <a href="/tours/<%= tour.slug %>" class="d-block w-100 h-100">
+      <img src="<%= tour.featuredImage %>" alt="<%= cleanName %>" class="w-100 h-100" style="object-fit: cover;" loading="lazy">
+    </a>
+    <!-- Single Duration Badge -->
+    <div class="position-absolute top-0 start-0 m-3">
+      <span class="badge rounded-pill px-3 py-2 fw-semibold" style="background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(4px); font-size: 0.82rem; color: #ffffff;">
+        <%= tour.duration %>
+      </span>
     </div>
-    <button class="position-absolute top-0 end-0 m-3 btn btn-light btn-sm rounded-circle shadow-sm btn-toggle-wishlist" data-tour-id="<%= tour.id %>" title="Save Tour" style="width: 34px; height: 34px; padding: 0;">
-      <i class="bi bi-heart text-danger"></i>
-    </button>
   </div>
-  <div class="card-body p-4 d-flex flex-column justify-content-between">
+
+  <div class="card-body p-4 d-flex flex-column justify-content-between flex-grow-1">
     <div>
-      <div class="d-flex justify-content-between align-items-center mb-2">
-        <span class="badge bg-light text-primary border"><i class="bi bi-speedometer2 me-1"></i> <%= tour.pace || 'Moderate' %></span>
-        <div class="small fw-bold text-warning">
-          <i class="bi bi-star-fill"></i> <%= (tour.rating || 4.9).toFixed(1) %> (<%= tour.totalReviews || 12 %>)
+      <!-- Route pulled directly from tour.destinations, in order -->
+      <% if (routeString) { %>
+        <div class="tour-route-stops mb-2">
+          <%= routeString %>
         </div>
-      </div>
+      <% } %>
 
-      <h5 class="fw-bold mb-2">
-        <a href="/tours/<%= tour.slug %>" class="text-decoration-none text-dark hover-primary">
-          <%= tour.name %>
+      <h4 class="card-title fw-bold mb-2">
+        <a href="/tours/<%= tour.slug %>" class="text-dark text-decoration-none hover-primary">
+          <%= cleanName %>
         </a>
-      </h5>
+      </h4>
 
-      <p class="text-muted small mb-3 flex-grow-1">
-        <i class="bi bi-geo-alt me-1 text-danger"></i> <%= tour.destination ? tour.destination.name : 'Vietnam' %>
+      <p class="card-text text-secondary small leading-relaxed mb-3">
+        <%= tour.shortDescription %>
       </p>
+
+      <!-- Travel pace & activity rhythm -->
+      <div class="tour-pace-rhythm d-flex align-items-center gap-2 small mb-3">
+        <i class="bi bi-person-walking text-accent" style="color: #ea580c !important;"></i>
+        <span class="text-secondary"><%= rhythmText %></span>
+      </div>
     </div>
 
+    <!-- Bottom Price & Rating Row -->
     <div class="pt-3 border-top d-flex justify-content-between align-items-center mt-auto">
-      <div>
-        <span class="small text-muted d-block">Starting from</span>
-        <span class="fw-extrabold fs-5 text-primary">$<%= Math.round(tour.pricePartialGuided || tour.discountPrice || tour.price) %></span>
-        <span class="small text-muted">/ guest</span>
+      <div class="d-flex align-items-baseline gap-1">
+        <span class="text-muted small">From</span>
+        <span class="fs-5 fw-bold text-dark">$<%= Number(displayPrice).toLocaleString() %></span>
+        <span class="text-muted small">pp</span>
       </div>
-      <a href="/tours/<%= tour.slug %>" class="btn btn-sm btn-primary rounded-pill px-3 fw-bold">
-        View Itinerary &rarr;
-      </a>
+      <div class="small fw-semibold">
+        <span class="text-warning">★</span> <span class="text-dark"><%= ratingVal %></span> <span class="text-muted">(<%= reviewsCount %>)</span>
+      </div>
     </div>
   </div>
 </div>

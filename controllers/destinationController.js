@@ -1,6 +1,7 @@
-const { Destination, Tour, Category } = require('../models');
+const { Destination, Tour, Category, Guide, Review, User } = require('../models');
 const { formatCurrency, formatDate, truncateText } = require('../helpers/formatters');
 const { generateSchemaOrg } = require('../helpers/seoHelper');
+const { getDestinationFaqs } = require('../helpers/destinationFaqHelper');
 const { Op } = require('sequelize');
 
 /**
@@ -96,6 +97,9 @@ const getDestinationDetail = async (req, res, next) => {
       });
     }
 
+    // Ensure exactly at most 3 related destinations are passed
+    relatedDestList = relatedDestList.slice(0, 3);
+
     // Parse attractions and gallery
     let attractions = [];
     if (destination.attractions) {
@@ -121,6 +125,113 @@ const getDestinationDetail = async (req, res, next) => {
       { name: destination.name, url: `/vietnam/${destination.slug}` }
     ], process.env.APP_URL);
 
+    // Fetch Travel Essentials guides for this destination:
+    // Query logic:
+    // 1. Destination-specific guides (guide.relatedDestinations contains destination.slug)
+    // 2. Universal guides (guide.relatedDestinations is empty/null/[])
+    // 3. Cap at 1 to 3 cards, prioritizing destination-specific matches over universal ones
+    let travelEssentials = [];
+    try {
+      const allGuides = await Guide.findAll({
+        order: [['createdAt', 'DESC']]
+      });
+
+      const specificGuides = [];
+      const universalGuides = [];
+
+      allGuides.forEach(guide => {
+        let related = [];
+        if (guide.relatedDestinations) {
+          try {
+            related = typeof guide.relatedDestinations === 'string'
+              ? JSON.parse(guide.relatedDestinations)
+              : guide.relatedDestinations;
+            if (!Array.isArray(related)) {
+              related = [String(related)];
+            }
+          } catch (e) {
+            related = String(guide.relatedDestinations).split(',').map(s => s.trim().toLowerCase());
+          }
+        }
+
+        const relatedSlugs = related.map(s => String(s).toLowerCase().trim()).filter(Boolean);
+
+        if (relatedSlugs.length === 0) {
+          universalGuides.push(guide);
+        } else if (
+          relatedSlugs.includes(destination.slug.toLowerCase()) ||
+          relatedSlugs.includes(destination.name.toLowerCase())
+        ) {
+          guide.isDestinationSpecific = true;
+          specificGuides.push(guide);
+        }
+      });
+
+      // Prioritize destination-specific matches first, followed by universal fallback guides, capped at 6 cards
+      travelEssentials = [...specificGuides, ...universalGuides].slice(0, 6);
+    } catch (e) {
+      travelEssentials = [];
+    }
+
+    // Fetch destination-specific FAQs (non-generic, genuine traveler Q&A)
+    const destinationFaqs = getDestinationFaqs(destination, relatedDestList);
+
+    // Combine breadcrumb and FAQPage schema for search engine rich snippets
+    let pageSchema = breadcrumbSchema;
+    if (destinationFaqs && destinationFaqs.length > 0) {
+      const faqSchema = generateSchemaOrg.faq(destinationFaqs);
+      if (faqSchema) {
+        pageSchema = `${breadcrumbSchema}\n${faqSchema}`;
+      }
+    }
+
+    // Fetch Traveler Reviews derived from tours passing through this destination:
+    // A review is linked to a tour (Review.tourId), and tours have destinations they pass through.
+    // Query: Find all tours passing through destination X -> Get approved reviews of those tours.
+    let travelerReviews = [];
+    try {
+      const allActiveTours = await Tour.findAll({
+        where: { status: 'active' }
+      });
+
+      const destNameLower = destination.name.toLowerCase();
+      const destSlugLower = destination.slug.toLowerCase();
+
+      const matchingTours = allActiveTours.filter(tour => {
+        if (tour.destinationId === destination.id) return true;
+        const stops = tour.destinations || [];
+        return stops.some(stop => {
+          const s = String(stop).toLowerCase().trim();
+          return s === destNameLower || s === destSlugLower;
+        });
+      });
+
+      // Update destination.tours to include all tours passing through this destination
+      if (matchingTours.length > 0) {
+        destination.tours = matchingTours;
+      }
+
+      const matchingTourIds = matchingTours.map(t => t.id);
+
+      if (matchingTourIds.length > 0) {
+        travelerReviews = await Review.findAll({
+          where: {
+            tourId: { [Op.in]: matchingTourIds },
+            status: 'approved'
+          },
+          include: [
+            { model: User, as: 'user', attributes: ['id', 'name', 'avatar', 'address'] },
+            { model: Tour, as: 'tour', attributes: ['id', 'name', 'slug', 'duration', 'formats'] }
+          ],
+          order: [['createdAt', 'DESC']],
+          limit: 12
+        });
+      }
+    } catch (e) {
+      console.error('Error fetching derived traveler reviews for destination:', e);
+      travelerReviews = [];
+    }
+
     res.render('pages/destination-detail', {
       title: `${destination.name} Travel Guide & Curated Tours | Tranoi Travel`,
       metaTitle: destination.metaTitle || `${destination.name} Travel Guide`,
@@ -129,7 +240,10 @@ const getDestinationDetail = async (req, res, next) => {
       attractions,
       gallery,
       relatedDestList,
-      schemaOrg: breadcrumbSchema,
+      travelEssentials,
+      destinationFaqs,
+      travelerReviews,
+      schemaOrg: pageSchema,
       formatCurrency,
       formatDate,
       truncateText

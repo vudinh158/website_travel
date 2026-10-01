@@ -7,3 +7,5 @@ public/uploads/*
 .DS_Store
 Tranoi_Travel_Brand_Guidelines.docx
 tranoi-travel-sitemap.md
+AGENT_INSTRUCTIONS.md
+.agents/

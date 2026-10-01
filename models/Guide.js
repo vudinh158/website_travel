@@ -37,6 +37,10 @@ const Guide = sequelize.define('Guide', {
   body: {
     type: DataTypes.TEXT
   },
+  relatedDestinations: {
+    type: DataTypes.TEXT, // JSON array of destination slugs, e.g. '["hanoi"]'
+    allowNull: true
+  },
   metaTitle: {
     type: DataTypes.STRING
   },

@@ -1311,6 +1311,76 @@ Certain routes should always be done by car. The famous Hai Van Pass between Hue
       metaDescription: 'Learn the best ways to travel across Vietnam by private car, plane, and train.'
     });
 
+    await Guide.create({
+      title: 'Hanoi Travel Essentials: Old Quarter, Egg Coffee & What to Know Before You Go',
+      slug: 'hanoi-travel-essentials',
+      category: 'Destination Essentials',
+      country: 'vietnam',
+      heroImage: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=80',
+      readTime: '6 min read',
+      excerpt: 'Navigate Hanoi with ease: crossing street traffic safely, the secret alleys of the 36 Guild Streets, and local street food etiquette.',
+      body: 'Hanoi is a sensory feast of narrow alleys, ancient banyan trees, and lively street-level dining...',
+      relatedDestinations: JSON.stringify(['hanoi']),
+      metaTitle: 'Hanoi Travel Essentials & Guide | Tranoi Travel',
+      metaDescription: 'Essential insider tips for traveling in Hanoi: Old Quarter street food, navigation, and cultural etiquette.'
+    });
+
+    await Guide.create({
+      title: 'When Is the Best Time to Visit Hanoi? Weather, Seasons & Festival Highlights',
+      slug: 'best-time-to-visit-hanoi',
+      category: 'Weather & Seasons',
+      country: 'vietnam',
+      heroImage: 'https://images.unsplash.com/photo-1557750298-17ae4f2c0cf6?auto=format&fit=crop&w=1200&q=80',
+      readTime: '5 min read',
+      excerpt: 'Detailed breakdown of Hanoi seasons: from crisp golden autumn days in October-November to vibrant Lunar New Year celebrations.',
+      body: 'Hanoi experiences four genuine seasons unlike southern Vietnam...',
+      relatedDestinations: JSON.stringify(['hanoi']),
+      metaTitle: 'Best Time to Visit Hanoi | Tranoi Travel',
+      metaDescription: 'Seasonal weather guide for Hanoi: temperatures, rainfall, and best months for travel.'
+    });
+
+    await Guide.create({
+      title: 'Ha Long Bay & Lan Ha Bay: How to Choose the Perfect Luxury Cruise',
+      slug: 'ha-long-bay-cruise-essentials',
+      category: 'Destination Essentials',
+      country: 'vietnam',
+      heroImage: 'https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=1200&q=80',
+      readTime: '7 min read',
+      excerpt: 'Understand the difference between classic Ha Long routes and secluded Lan Ha Bay waters, overnight itineraries, and onboard amenities.',
+      body: 'Cruising through towering emerald limestone karsts is an essential Vietnam experience...',
+      relatedDestinations: JSON.stringify(['ha-long-bay']),
+      metaTitle: 'Ha Long Bay Cruise Guide | Tranoi Travel',
+      metaDescription: 'Everything you need to know about booking an overnight luxury cruise in Ha Long Bay and Lan Ha Bay.'
+    });
+
+    await Guide.create({
+      title: 'Hoi An Travel Essentials: Tailors, Lantern Festivals & Ancient Town Secrets',
+      slug: 'hoi-an-travel-essentials',
+      category: 'Destination Essentials',
+      country: 'vietnam',
+      heroImage: 'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=1200&q=80',
+      readTime: '6 min read',
+      excerpt: 'Explore UNESCO merchant architecture, order bespoke tailoring, and cycle along peaceful rice paddies to An Bang beach.',
+      body: 'Hoi An is Vietnam’s most picturesque ancient trading port...',
+      relatedDestinations: JSON.stringify(['hoi-an']),
+      metaTitle: 'Hoi An Travel Essentials | Tranoi Travel',
+      metaDescription: 'Discover Hoi An ancient town: tailoring tips, cafe culture, cycling, and lantern evenings.'
+    });
+
+    await Guide.create({
+      title: 'Da Nang Coastal Guide: Golden Bridge, My Khe Beach & Food Hotspots',
+      slug: 'da-nang-travel-essentials',
+      category: 'Destination Essentials',
+      country: 'vietnam',
+      heroImage: 'https://images.unsplash.com/photo-1557750298-17ae4f2c0cf6?auto=format&fit=crop&w=1200&q=80',
+      readTime: '6 min read',
+      excerpt: 'From the spectacular Golden Hand Bridge on Ba Na Hills to sunset seafood along My Khe Beach, your ultimate Da Nang introduction.',
+      body: 'Da Nang blends urban beach resorts with easy access to both the Ba Na hills and neighboring Hoi An...',
+      relatedDestinations: JSON.stringify(['da-nang']),
+      metaTitle: 'Da Nang Travel Essentials | Tranoi Travel',
+      metaDescription: 'Essential guide to Da Nang: beaches, bridges, day trips, and local culinary specialties.'
+    });
+
     // 9. Signature Experiences (Sitemap Section 8 - 3 Differentiators)
     console.log('🌱 Seeding Signature Experiences (/experiences/)...');
 

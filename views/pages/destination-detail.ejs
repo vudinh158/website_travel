@@ -1,133 +1,630 @@
 <!-- Destination Banner -->
-<div class="position-relative text-white mb-5" style="min-height: 420px; background: linear-gradient(rgba(0, 45, 107, 0.7), rgba(0, 45, 107, 0.85)), url('<%= destination.banner %>') center/cover no-repeat; display: flex; align-items: flex-end;">
+<div class="position-relative text-white mb-0" style="min-height: 420px; background: linear-gradient(rgba(0, 45, 107, 0.7), rgba(0, 45, 107, 0.85)), url('<%= destination.banner %>') center/cover no-repeat; display: flex; align-items: flex-end;">
   <div class="container py-5">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb mb-3">
         <li class="breadcrumb-item"><a href="/" class="text-white-50 text-decoration-none">Home</a></li>
-        <li class="breadcrumb-item"><a href="/vietnam" class="text-white-50 text-decoration-none">Vietnam Destinations</a></li>
+        <li class="breadcrumb-item"><a href="/vietnam" class="text-white-50 text-decoration-none">Vietnam</a></li>
         <li class="breadcrumb-item active text-white" aria-current="page"><%= destination.name %></li>
       </ol>
     </nav>
     <div class="d-flex gap-2 mb-2">
       <span class="badge bg-accent text-white px-3 py-1 rounded-pill text-uppercase"><%= destination.region %> Vietnam</span>
-      <% if (destination.priority === 'P0') { %>
-        <span class="badge bg-white text-primary px-3 py-1 rounded-pill fw-bold">P0 Primary City</span>
-      <% } %>
     </div>
     <h1 class="display-4 fw-extrabold text-white mb-2"><%= destination.name %></h1>
     <p class="fs-5 text-white-50 max-w-2xl mb-0" style="max-width: 800px;"><%= destination.description %></p>
   </div>
 </div>
 
-<div class="container mb-5">
-  <div class="row g-5">
-    <!-- Main Content Column -->
-    <div class="col-lg-8">
-      <!-- 1. Destination Overview -->
-      <div class="mb-5">
-        <h3 class="fw-bold text-primary mb-3">Overview &amp; Culture</h3>
-        <p class="fs-6 text-secondary leading-relaxed"><%= destination.travelGuide || destination.description %></p>
-      </div>
-
-      <!-- 2. Key Attractions & Local Experiences -->
-      <% if (attractions && attractions.length > 0) { %>
-        <div class="card border-0 shadow-sm p-4 rounded-4 mb-5 bg-white">
-          <h4 class="fw-bold mb-3"><i class="bi bi-star-fill text-warning me-2"></i> Key Attractions &amp; Experiences</h4>
-          <p class="text-muted small mb-3">Signature activities and cultural landmarks in <%= destination.name %>.</p>
-          <div class="row g-3">
-            <% attractions.forEach(att => { %>
-              <div class="col-md-6">
-                <div class="p-3 bg-light rounded-3 d-flex align-items-center gap-3">
-                  <i class="bi bi-geo-alt-fill text-primary fs-4"></i>
-                  <span class="fw-bold text-dark"><%= att %></span>
-                </div>
-              </div>
-            <% }) %>
-          </div>
-        </div>
+<!-- Section Tab Directory Sub-Navigation (Sticky below main navbar) -->
+<nav class="destination-subnav sticky-top bg-white border-bottom shadow-xs mb-4" id="destinationTabNav">
+  <div class="container">
+    <ul class="nav destination-tabs flex-nowrap justify-content-center w-100" id="destinationNavTabs" role="tablist">
+      <li class="nav-item flex-fill text-center">
+        <a class="destination-tab-link active w-100" href="#overview">
+          <i class="bi bi-card-text me-1 d-none d-sm-inline opacity-75"></i> Overview
+        </a>
+      </li>
+      <% if (typeof travelEssentials !== 'undefined' && travelEssentials && travelEssentials.length > 0) { %>
+        <li class="nav-item flex-fill text-center">
+          <a class="destination-tab-link w-100" href="#essentials">
+            <i class="bi bi-compass me-1 d-none d-sm-inline opacity-75"></i> Travel Essentials
+          </a>
+        </li>
       <% } %>
+      <li class="nav-item flex-fill text-center">
+        <a class="destination-tab-link w-100" href="#tours">
+          <i class="bi bi-backpack me-1 d-none d-sm-inline opacity-75"></i> Tours
+        </a>
+      </li>
+      <li class="nav-item flex-fill text-center">
+        <a class="destination-tab-link w-100" href="#related-destinations">
+          <i class="bi bi-geo-alt me-1 d-none d-sm-inline opacity-75"></i> Related Destinations
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
 
-      <!-- 3. Available Tours in this Destination -->
-      <div class="mb-5">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-          <h3 class="fw-bold text-primary mb-0">Tours Featuring <%= destination.name %></h3>
-          <a href="/tours" class="text-primary fw-bold text-decoration-none small">All Tours &rarr;</a>
+<!-- 1. Overview Section (Full Row: Overview & Culture + Attractions on Left, Travel Quick Facts on Right) -->
+<section id="overview" class="destination-section py-4 mb-5">
+  <div class="container">
+    <div class="row g-4 g-lg-5">
+      <!-- Left Column: Overview & Culture + Key Attractions & Experiences -->
+      <div class="col-lg-8 d-flex flex-column">
+        <div class="mb-4">
+          <h2 class="fw-bold text-primary mb-3">Overview &amp; Culture</h2>
+          <p class="fs-6 text-secondary leading-relaxed mb-0">
+            <%= destination.travelGuide || destination.description %>
+          </p>
         </div>
-        
-        <% if (destination.tours && destination.tours.length > 0) { %>
-          <div class="row g-4">
-            <% destination.tours.forEach(tour => { %>
-              <div class="col-md-6">
-                <%- include('../partials/tour_card', { tour: tour }) %>
-              </div>
-            <% }) %>
-          </div>
-        <% } else { %>
-          <div class="p-4 bg-light rounded-4 text-center">
-            <p class="text-muted mb-2">Our multi-day Vietnam itineraries frequently include <%= destination.name %>.</p>
-            <a href="/tours" class="btn btn-sm btn-outline-primary rounded-pill px-3">Browse Multi-Region Tours</a>
+
+        <% if (attractions && attractions.length > 0) { %>
+          <div class="card border-0 shadow-sm p-4 rounded-4 bg-white flex-grow-1 d-flex flex-column mb-0">
+            <h5 class="fw-bold mb-3"><i class="bi bi-star-fill text-warning me-2"></i> Key Attractions &amp; Experiences</h5>
+            <p class="text-muted small mb-3">Signature activities and cultural landmarks in <%= destination.name %>.</p>
+            <div class="row g-3 flex-grow-1 align-content-start">
+              <% attractions.forEach(att => { %>
+                <div class="col-md-6">
+                  <div class="p-3 bg-light rounded-3 d-flex align-items-center gap-3 h-100">
+                    <i class="bi bi-geo-alt-fill text-primary fs-4"></i>
+                    <span class="fw-bold text-dark"><%= att %></span>
+                  </div>
+                </div>
+              <% }) %>
+            </div>
           </div>
         <% } %>
       </div>
 
-      <!-- 4. Related Destinations (Sitemap Section 3) -->
-      <% if (relatedDestList && relatedDestList.length > 0) { %>
-        <div class="mb-5">
-          <h4 class="fw-bold mb-3">Related Destinations in Vietnam</h4>
-          <div class="row g-3">
-            <% relatedDestList.forEach(rel => { %>
-              <div class="col-md-4">
-                <a href="/vietnam/<%= rel.slug %>" class="text-decoration-none">
-                  <div class="p-3 bg-white rounded-3 border shadow-sm h-100 hover-lift transition-smooth">
-                    <span class="badge bg-light text-primary text-uppercase small mb-1"><%= rel.region %></span>
-                    <h6 class="fw-bold text-dark mb-1"><%= rel.name %></h6>
-                    <span class="text-muted small">Explore Guide &rarr;</span>
-                  </div>
-                </a>
+      <!-- Right Column: Best Time, Getting There, Climate Snapshot -->
+      <div class="col-lg-4 d-flex flex-column gap-3">
+        <div class="card border-0 shadow-sm p-4 rounded-4 bg-white flex-fill mb-0">
+          <h5 class="fw-bold text-primary mb-3"><i class="bi bi-clock-history me-2"></i> Best Time to Visit</h5>
+          <p class="text-secondary small leading-relaxed mb-0">
+            <%= destination.bestTimeNote || 'October to April offers mild, dry, and sunny days ideal for walking and street food exploration.' %>
+          </p>
+        </div>
+
+        <div class="card border-0 shadow-sm p-4 rounded-4 bg-white flex-fill mb-0">
+          <h5 class="fw-bold text-primary mb-3"><i class="bi bi-airplane me-2"></i> Getting There</h5>
+          <p class="text-secondary small leading-relaxed mb-0">
+            <%= destination.gettingThere || 'Noi Bai International Airport (HAN) connects directly to global hubs. 35 minutes by private transfer to city center.' %>
+          </p>
+        </div>
+
+        <% if (destination.weatherInfo) { %>
+          <% const weather = typeof destination.weatherInfo === 'string' ? JSON.parse(destination.weatherInfo) : destination.weatherInfo; %>
+          <div class="card border-0 shadow-sm p-4 rounded-4 bg-white flex-fill mb-0">
+            <h5 class="fw-bold text-primary mb-3"><i class="bi bi-thermometer-sun me-2"></i> Climate Snapshot</h5>
+            <% Object.keys(weather).forEach(k => { %>
+              <div class="d-flex justify-content-between py-2 border-bottom small">
+                <span class="text-muted text-capitalize"><%= k.replace(/([A-Z])/g, ' $1') %>:</span>
+                <span class="fw-bold text-dark"><%= weather[k] %></span>
               </div>
             <% }) %>
           </div>
-        </div>
-      <% } %>
-    </div>
+        <% } %>
 
-    <!-- Sidebar Column: Best Time, Getting There & Weather -->
-    <div class="col-lg-4">
-      <div class="card border-0 shadow-sm p-4 rounded-4 mb-4 bg-white">
-        <h5 class="fw-bold text-primary mb-3"><i class="bi bi-clock-history me-2"></i> Best Time to Visit</h5>
-        <p class="text-secondary small leading-relaxed mb-0">
-          <%= destination.bestTimeNote || 'October to April offers pleasant temperatures and sunny skies.' %>
-        </p>
-      </div>
-
-      <div class="card border-0 shadow-sm p-4 rounded-4 mb-4 bg-white">
-        <h5 class="fw-bold text-primary mb-3"><i class="bi bi-airplane me-2"></i> Getting There</h5>
-        <p class="text-secondary small leading-relaxed mb-0">
-          <%= destination.gettingThere || 'Accessible via domestic flights or private chauffeured transfers.' %>
-        </p>
-      </div>
-
-      <% if (destination.weatherInfo) { %>
-        <% const weather = typeof destination.weatherInfo === 'string' ? JSON.parse(destination.weatherInfo) : destination.weatherInfo; %>
-        <div class="card border-0 shadow-sm p-4 rounded-4 mb-4 bg-white">
-          <h5 class="fw-bold text-primary mb-3"><i class="bi bi-thermometer-sun me-2"></i> Climate Snapshot</h5>
-          <% Object.keys(weather).forEach(k => { %>
-            <div class="d-flex justify-content-between py-2 border-bottom small">
-              <span class="text-muted text-capitalize"><%= k.replace(/([A-Z])/g, ' $1') %>:</span>
-              <span class="fw-bold text-dark"><%= weather[k] %></span>
-            </div>
-          <% }) %>
-        </div>
-      <% } %>
-
-      <!-- Need Help Planning Box -->
-      <div class="card border-0 rounded-4 p-4 text-white" style="background: linear-gradient(135deg, #004AAD 0%, #002d6b 100%);">
-        <h5 class="fw-bold text-white mb-2">Want to visit <%= destination.name %>?</h5>
-        <p class="small text-white-50 mb-3">Speak directly with our Vietnam destination specialists for a tailored itinerary.</p>
-        <a href="/contact" class="btn btn-accent w-100 rounded-pill fw-bold text-white">
-          Plan With An Expert
-        </a>
       </div>
     </div>
   </div>
-</div>
+</section>
+
+<!-- 2. Travel Essentials Section (Curated & Auto-Linked Destination Guides) -->
+<% if (typeof travelEssentials !== 'undefined' && travelEssentials && travelEssentials.length > 0) { %>
+<section id="essentials" class="destination-section py-4 mb-5">
+  <div class="container">
+    <div class="mb-4 pb-2 border-bottom">
+      <span class="badge bg-accent text-white px-3 py-1 rounded-pill fw-bold text-uppercase mb-2" style="font-size: 0.72rem;">Practical Insights</span>
+      <h2 class="fw-bold text-primary mb-1"><%= destination.name %> Travel Essentials — What to Know Before You Go</h2>
+      <p class="text-muted small mb-0">
+        Planning your trip to <%= destination.name %>? Dive into our curated travel essentials covering local transportation, seasonal advice, and cultural etiquette.
+      </p>
+    </div>
+
+    <div class="row g-4">
+      <% travelEssentials.forEach(guide => { %>
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 border-0 rounded-4 shadow-sm overflow-hidden bg-white essential-guide-card position-relative d-flex flex-column">
+            <!-- Image & Badges -->
+            <div class="position-relative overflow-hidden" style="height: 220px;">
+              <img src="<%= guide.heroImage || destination.banner %>" alt="<%= guide.title %>" class="w-100 h-100 object-fit-cover essential-card-img">
+              <div class="position-absolute top-0 start-0 m-3 d-flex flex-wrap gap-2">
+                <span class="badge bg-primary bg-opacity-90 text-white rounded-pill px-3 py-1 small fw-semibold shadow-sm">
+                  <%= guide.category || 'Travel Guide' %>
+                </span>
+                <% if (guide.isDestinationSpecific) { %>
+                  <span class="badge bg-accent text-white rounded-pill px-2 py-1 small fw-bold shadow-sm">
+                    <i class="bi bi-pin-angle-fill me-1"></i> <%= destination.name %>
+                  </span>
+                <% } %>
+              </div>
+              <div class="position-absolute bottom-0 start-0 w-100 px-3 py-2 text-white d-flex justify-content-between align-items-center" style="background: linear-gradient(to top, rgba(0,0,0,0.65), transparent);">
+                <span class="small fw-medium"><i class="bi bi-clock me-1"></i> <%= guide.readTime || '5 min read' %></span>
+                <span class="small opacity-75">Travel Insights</span>
+              </div>
+            </div>
+
+            <!-- Content Body -->
+            <div class="card-body p-4 d-flex flex-column justify-content-between flex-grow-1">
+              <div>
+                <h5 class="fw-bold mb-2 lh-base">
+                  <a href="/guides/<%= guide.slug %>" class="text-dark text-decoration-none essential-card-title stretched-link line-clamp-2">
+                    <%= guide.title %>
+                  </a>
+                </h5>
+                <p class="text-secondary small leading-relaxed mb-3 line-clamp-3">
+                  <%= truncateText(guide.excerpt || guide.body, 130) %>
+                </p>
+              </div>
+
+              <!-- Footer CTA -->
+              <div class="pt-3 border-top d-flex justify-content-between align-items-center position-relative" style="z-index: 2;">
+                <span class="text-muted small fw-medium">Updated 2026</span>
+                <span class="text-primary fw-bold small d-inline-flex align-items-center gap-1">
+                  Read Guide <i class="bi bi-arrow-right"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<!-- 3. Tours Section (Full-Width Content Section) -->
+<section id="tours" class="destination-section py-4 mb-5">
+  <div class="container">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 pb-2 border-bottom">
+      <div>
+        <span class="badge bg-accent text-white px-3 py-1 rounded-pill fw-bold text-uppercase mb-2" style="font-size: 0.72rem;">Curated Itineraries</span>
+        <h2 class="fw-bold text-primary mb-1">Tours Featuring <%= destination.name %></h2>
+        <p class="text-muted small mb-0">Handcrafted private and partial-guided journeys connecting <%= destination.name %> with Vietnam's most iconic highlights.</p>
+      </div>
+      <a href="/tours" class="btn btn-outline-primary rounded-pill px-4 fw-bold mt-3 mt-md-0 my-md-auto text-nowrap">
+        All Tours &rarr;
+      </a>
+    </div>
+
+    <% if (destination.tours && destination.tours.length > 0) { %>
+      <div class="row g-4">
+        <% destination.tours.forEach(tour => { %>
+          <div class="col-lg-6">
+            <%- include('../partials/tour_card', { tour: tour }) %>
+          </div>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <div class="p-5 bg-light rounded-4 text-center">
+        <i class="bi bi-map text-primary display-4 mb-3 d-block"></i>
+        <h4 class="fw-bold text-dark mb-2">Multi-Day Journeys Connecting <%= destination.name %></h4>
+        <p class="text-muted mb-4" style="max-width: 600px; margin: 0 auto;">Our multi-day Vietnam routes seamlessly connect <%= destination.name %> with surrounding regions. Explore our full itinerary catalog or request a tailor-made private route.</p>
+        <div class="d-flex justify-content-center gap-3">
+          <a href="/tours" class="btn btn-primary rounded-pill px-4 fw-bold">Browse Multi-Region Tours</a>
+          <a href="/contact" class="btn btn-outline-primary rounded-pill px-4 fw-bold">Custom Route Request</a>
+        </div>
+      </div>
+    <% } %>
+  </div>
+</section>
+
+<!-- 4. Traveler Reviews Section (Derived from Tours Passing Through This Destination) -->
+<% if (typeof travelerReviews !== 'undefined' && travelerReviews && travelerReviews.length > 0) { %>
+<section id="reviews" class="destination-section py-4 mb-5">
+  <div class="container">
+    <div class="mb-4 pb-2 border-bottom">
+      <span class="badge bg-accent text-white px-3 py-1 rounded-pill fw-bold text-uppercase mb-2" style="font-size: 0.72rem;">Verified Experiences</span>
+      <h2 class="fw-bold text-primary mb-1">Travel with Confidence</h2>
+      <p class="text-muted small mb-0">Real reviews from our travelers who explored <%= destination.name %> on our curated Vietnam journeys.</p>
+    </div>
+
+    <!-- Review Carousel Container with Floating Nav Arrows -->
+    <div class="review-carousel-wrapper position-relative">
+      
+      <!-- Previous Arrow (matching reference: white/light circle with grey chevron) -->
+      <button type="button" class="review-nav-arrow review-nav-prev" id="reviewCarouselPrev" aria-label="Previous traveler reviews">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+
+      <!-- Next Arrow (matching reference: terracotta/orange circle with white chevron) -->
+      <button type="button" class="review-nav-arrow review-nav-next" id="reviewCarouselNext" aria-label="Next traveler reviews">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+
+      <!-- Carousel Track with Responsive Scroll-Snap -->
+      <div class="review-carousel-track" id="reviewCarouselTrack">
+        <% travelerReviews.forEach(review => { %>
+          <div class="review-carousel-slide">
+            <div class="card h-100 border-0 rounded-4 shadow-sm bg-white traveler-review-card position-relative d-flex flex-column p-4">
+              
+              <!-- Top Row: Verified Pill + Review Date -->
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="badge rounded-pill px-3 py-1 fw-semibold d-inline-flex align-items-center gap-1" style="background-color: #ecfdf5; color: #059669; font-size: 0.8rem; border: 1px solid rgba(16, 185, 129, 0.2);">
+                  <i class="bi bi-patch-check-fill text-success"></i> Verified Review
+                </span>
+                <span class="text-muted small fw-medium">
+                  <%= formatDate ? formatDate(review.createdAt) : new Date(review.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) %>
+                </span>
+              </div>
+
+              <!-- Tour Title Link -->
+              <div class="mb-2">
+                <a href="/tours/<%= review.tour ? review.tour.slug : '' %>" class="text-dark text-decoration-none fw-bold text-hover-primary" style="font-size: 1.05rem; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;" title="<%= review.tour ? review.tour.name : '' %>">
+                  <%= review.tour ? review.tour.name : 'Vietnam Journey' %>
+                </a>
+              </div>
+
+              <!-- Star Rating -->
+              <div class="d-flex align-items-center gap-2 mb-3">
+                <div class="text-warning d-flex gap-1" style="font-size: 0.95rem;">
+                  <% for (let i = 1; i <= 5; i++) { %>
+                    <i class="bi bi-star-fill <%= i <= (review.rating || 5) ? 'text-warning' : 'text-muted opacity-25' %>"></i>
+                  <% } %>
+                </div>
+                <span class="fw-bold text-dark small"><%= Number(review.rating || 5).toFixed(1) %></span>
+              </div>
+
+              <!-- Review Body Content -->
+              <div class="flex-grow-1 mb-3">
+                <% if (review.title) { %>
+                  <h6 class="fw-bold text-dark mb-2" style="font-size: 0.95rem;"><%= review.title %></h6>
+                <% } %>
+                <p class="text-secondary review-comment-text line-clamp-4 mb-2" id="reviewText<%= review.id %>">
+                  <%= review.comment %>
+                </p>
+                <% if (review.comment && review.comment.length > 170) { %>
+                  <button type="button" class="btn btn-link p-0 text-primary small fw-semibold text-decoration-none d-inline-flex align-items-center gap-1 review-toggle-btn" data-target="reviewText<%= review.id %>">
+                    <span>Read more</span> <i class="bi bi-chevron-down small"></i>
+                  </button>
+                <% } %>
+              </div>
+
+              <!-- Footer Details matching traveler profile (Pixel-perfect matching reference) -->
+              <div class="review-card-footer mt-auto">
+                <% 
+                  const addressStr = (review.user && review.user.address) ? review.user.address : '';
+                  const parts = addressStr.split('•').map(p => p.trim());
+                  let countryCode = 'us';
+                  let countryName = 'United States';
+                  let ageText = 'Age 40-49';
+                  let travelersText = '2 travelers';
+                  let currencyText = '$ USD';
+
+                  if (addressStr.includes('Australia') || addressStr.includes('🇦🇺')) {
+                    countryCode = 'au'; countryName = 'Australia'; currencyText = '$ AUD';
+                  } else if (addressStr.includes('New Zealand') || addressStr.includes('🇳🇿')) {
+                    countryCode = 'nz'; countryName = 'New Zealand'; currencyText = '$ NZD';
+                  } else if (addressStr.includes('United Kingdom') || addressStr.includes('🇬🇧') || addressStr.includes('UK')) {
+                    countryCode = 'gb'; countryName = 'United Kingdom'; currencyText = '£ GBP';
+                  } else if (addressStr.includes('Germany') || addressStr.includes('🇩🇪')) {
+                    countryCode = 'de'; countryName = 'Germany'; currencyText = '€ EUR';
+                  } else if (addressStr.includes('Canada') || addressStr.includes('🇨🇦')) {
+                    countryCode = 'ca'; countryName = 'Canada'; currencyText = '$ CAD';
+                  } else {
+                    countryCode = 'us'; countryName = 'United States'; currencyText = '$ USD';
+                  }
+
+                  if (parts.length >= 3) {
+                    ageText = parts[1];
+                    travelersText = parts[2];
+                  } else if (parts.length === 2) {
+                    ageText = parts[1];
+                  }
+                %>
+                <div class="d-flex align-items-center justify-content-between text-secondary" style="font-size: 0.85rem;">
+                  <!-- Flag & Name -->
+                  <div class="d-flex align-items-center gap-2 flex-shrink-0">
+                    <img src="https://flagcdn.com/w40/<%= countryCode %>.png" 
+                         alt="<%= countryName %>" 
+                         class="review-flag-img rounded-1" 
+                         width="20" height="15" 
+                         loading="lazy"
+                         onerror="this.style.display='none'">
+                    <span class="fw-bold text-dark"><%= review.user ? review.user.name.split(' ')[0] : 'Traveler' %></span>
+                  </div>
+
+                  <!-- Divider -->
+                  <div class="review-footer-divider"></div>
+
+                  <!-- Age Group -->
+                  <div class="text-secondary flex-shrink-0 text-nowrap fw-normal" style="font-size: 0.82rem;">
+                    <%= ageText %>
+                  </div>
+
+                  <!-- Divider -->
+                  <div class="review-footer-divider"></div>
+
+                  <!-- Travelers Count -->
+                  <div class="text-secondary flex-shrink-0 text-nowrap fw-normal" style="font-size: 0.82rem;">
+                    <%= travelersText %>
+                  </div>
+
+                  <!-- Divider -->
+                  <div class="review-footer-divider"></div>
+
+                  <!-- Currency / Value Tag -->
+                  <div class="fw-semibold text-dark flex-shrink-0 text-nowrap" style="font-size: 0.82rem;">
+                    <%= currencyText %>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<!-- 5. Destination FAQs Section (Authentic Local Traveler Q&A) -->
+<% if (typeof destinationFaqs !== 'undefined' && destinationFaqs && destinationFaqs.length > 0) { %>
+<section id="faqs" class="destination-section py-4 mb-5">
+  <div class="container">
+    <div class="p-4 p-lg-5 rounded-4 bg-light bg-opacity-75 border">
+      <!-- Section Header -->
+      <div class="mb-4 pb-2 border-bottom">
+        <span class="badge bg-accent text-white px-3 py-1 rounded-pill fw-bold text-uppercase mb-2" style="font-size: 0.72rem;">Local Knowledge</span>
+        <h2 class="fw-bold text-primary mb-1">Frequently Asked Questions about <%= destination.name %> Travel</h2>
+        <p class="text-muted small mb-0">
+          Practical insider answers to the most common questions travelers ask our specialists about exploring <%= destination.name %>.
+        </p>
+      </div>
+
+      <!-- FAQ Accordion -->
+      <div class="accordion" id="destinationFaqAccordion">
+        <% destinationFaqs.forEach((faq, index) => { %>
+          <div class="accordion-item destination-faq-card rounded-4 shadow-sm mb-3 overflow-hidden bg-white">
+            <h3 class="accordion-header" id="destFaqHeading<%= index %>">
+              <button class="accordion-button <%= index !== 0 ? 'collapsed' : '' %> p-3 p-md-4 fw-bold text-dark bg-white shadow-none d-flex align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#destFaqCollapse<%= index %>" aria-expanded="<%= index === 0 ? 'true' : 'false' %>" aria-controls="destFaqCollapse<%= index %>">
+                <span class="faq-number-badge me-3 d-inline-flex align-items-center justify-content-center rounded-circle fw-bold flex-shrink-0"><%= index + 1 %></span>
+                <span class="flex-grow-1 fs-6 pe-2"><%= faq.question %></span>
+              </button>
+            </h3>
+            <div id="destFaqCollapse<%= index %>" class="accordion-collapse collapse <%= index === 0 ? 'show' : '' %>" aria-labelledby="destFaqHeading<%= index %>" data-bs-parent="#destinationFaqAccordion">
+              <div class="accordion-body px-3 px-md-4 pb-4 pt-1 text-secondary leading-relaxed small faq-answer-body">
+                <%= faq.answer %>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+
+      <!-- Bottom Helpful Advice Bar -->
+      <div class="mt-4 pt-3 border-top d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3">
+        <div class="d-flex align-items-center gap-2 text-muted small">
+          <i class="bi bi-chat-quote-fill text-primary fs-5"></i>
+          <span>Have a specific question about <%= destination.name %> not listed here?</span>
+        </div>
+        <div class="d-flex gap-2">
+          <a href="/contact" class="btn btn-sm btn-primary rounded-pill px-4 fw-bold text-nowrap">
+            Ask a Specialist &rarr;
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<!-- 5. Related Destinations Section (Full-Width Content Section) -->
+<% if (relatedDestList && relatedDestList.length > 0) { %>
+  <section id="related-destinations" class="destination-section py-4 mb-5 border-top">
+    <div class="container pt-3">
+      <div class="mb-4 pb-2 border-bottom">
+        <span class="badge bg-secondary-subtle text-secondary px-3 py-1 rounded-pill fw-bold text-uppercase mb-2" style="font-size: 0.72rem;">Route Inspiration</span>
+        <h2 class="fw-bold text-primary mb-1">Related Destinations in Vietnam</h2>
+        <p class="text-muted small mb-0">Pair <%= destination.name %> with these nearby specialty destinations on your Vietnam journey.</p>
+      </div>
+
+      <div class="row g-4">
+        <% relatedDestList.slice(0, 3).forEach(rel => { %>
+          <div class="col-lg-4 col-md-6">
+            <a href="/vietnam/<%= rel.slug %>" class="text-decoration-none">
+              <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100 hover-lift transition-smooth bg-white">
+                <div class="position-relative" style="height: 180px;">
+                  <img src="<%= rel.banner %>" alt="<%= rel.name %>" class="w-100 h-100 object-fit-cover" style="object-fit: cover;">
+                  <span class="badge bg-dark bg-opacity-75 text-white position-absolute top-0 start-0 m-3 px-3 py-1 rounded-pill small text-uppercase"><%= rel.region %></span>
+                </div>
+                <div class="p-3 d-flex flex-column flex-grow-1">
+                  <h5 class="fw-bold text-dark mb-1"><%= rel.name %></h5>
+                  <p class="text-secondary small mb-3 flex-grow-1" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;"><%= rel.description %></p>
+                  <span class="text-primary fw-bold small d-inline-flex align-items-center gap-1">Explore Travel Guide <i class="bi bi-arrow-right"></i></span>
+                </div>
+              </div>
+            </a>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+<% } %>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const tabs = document.querySelectorAll('.destination-tab-link');
+  const sections = document.querySelectorAll('.destination-section');
+  const navbar = document.querySelector('.navbar-tranoi-light') || document.querySelector('.navbar');
+  const subnav = document.getElementById('destinationTabNav');
+
+  function getOffset() {
+    const navH = navbar ? navbar.offsetHeight : 66;
+    const subH = subnav ? subnav.offsetHeight : 52;
+    return navH + subH + 12;
+  }
+
+  // Smooth click scroll
+  tabs.forEach(tab => {
+    tab.addEventListener('click', function(e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('href');
+      const targetEl = document.querySelector(targetId);
+      if (targetEl) {
+        const offset = getOffset();
+        const top = targetEl.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+        tabs.forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+      }
+    });
+  });
+
+  // ScrollSpy to update active tab based on scroll position
+  function onScroll() {
+    const scrollPos = window.scrollY + getOffset() + 30;
+    let activeSecId = null;
+    sections.forEach(sec => {
+      const top = sec.offsetTop;
+      const height = sec.offsetHeight;
+      const id = sec.getAttribute('id');
+      if (scrollPos >= top && scrollPos < top + height) {
+        activeSecId = id;
+      }
+    });
+
+    if (activeSecId) {
+      // If user is currently viewing reviews or faqs, keep Tours tab active
+      const targetTabId = (activeSecId === 'reviews' || activeSecId === 'faqs') ? 'tours' : activeSecId;
+      tabs.forEach(t => {
+        if (t.getAttribute('href') === '#' + targetTabId) {
+          t.classList.add('active');
+        } else {
+          t.classList.remove('active');
+        }
+      });
+    }
+  }
+
+  // Review Read more / Read less toggle
+  document.querySelectorAll('.review-toggle-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const targetId = this.getAttribute('data-target');
+      const targetEl = document.getElementById(targetId);
+      const textSpan = this.querySelector('span');
+      const icon = this.querySelector('i');
+      if (targetEl) {
+        if (targetEl.classList.contains('line-clamp-4')) {
+          targetEl.classList.remove('line-clamp-4');
+          if (textSpan) textSpan.textContent = 'Read less';
+          if (icon) {
+            icon.classList.remove('bi-chevron-down');
+            icon.classList.add('bi-chevron-up');
+          }
+        } else {
+          targetEl.classList.add('line-clamp-4');
+          if (textSpan) textSpan.textContent = 'Read more';
+          if (icon) {
+            icon.classList.remove('bi-chevron-up');
+            icon.classList.add('bi-chevron-down');
+          }
+        }
+      }
+    });
+  });
+
+  // Review Carousel Navigation & Auto-Play Controls
+  const reviewTrack = document.getElementById('reviewCarouselTrack');
+  const reviewPrevBtn = document.getElementById('reviewCarouselPrev');
+  const reviewNextBtn = document.getElementById('reviewCarouselNext');
+  const reviewSection = document.getElementById('reviews');
+
+  if (reviewTrack && reviewPrevBtn && reviewNextBtn) {
+    let autoPlayTimer = null;
+    let isPaused = false;
+    const AUTO_PLAY_INTERVAL = 4200; // 4.2 seconds per slide
+
+    function getScrollStep() {
+      const firstSlide = reviewTrack.querySelector('.review-carousel-slide');
+      return firstSlide ? (firstSlide.offsetWidth + 24) : 360;
+    }
+
+    function updateReviewNavArrows() {
+      const maxScroll = reviewTrack.scrollWidth - reviewTrack.clientWidth;
+      if (maxScroll <= 5) {
+        reviewPrevBtn.style.display = 'none';
+        reviewNextBtn.style.display = 'none';
+        return;
+      }
+      reviewPrevBtn.style.display = 'flex';
+      reviewNextBtn.style.display = 'flex';
+      reviewPrevBtn.disabled = reviewTrack.scrollLeft <= 5;
+      reviewNextBtn.disabled = reviewTrack.scrollLeft >= maxScroll - 5;
+    }
+
+    function nextSlide() {
+      if (isPaused) return;
+      const maxScroll = reviewTrack.scrollWidth - reviewTrack.clientWidth;
+      if (maxScroll <= 5) return;
+
+      if (reviewTrack.scrollLeft >= maxScroll - 15) {
+        reviewTrack.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        reviewTrack.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
+      }
+    }
+
+    function startAutoPlay() {
+      stopAutoPlay();
+      autoPlayTimer = setInterval(nextSlide, AUTO_PLAY_INTERVAL);
+    }
+
+    function stopAutoPlay() {
+      if (autoPlayTimer) {
+        clearInterval(autoPlayTimer);
+        autoPlayTimer = null;
+      }
+    }
+
+    // Manual navigation clicks
+    reviewNextBtn.addEventListener('click', function() {
+      reviewTrack.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
+      startAutoPlay();
+    });
+
+    reviewPrevBtn.addEventListener('click', function() {
+      reviewTrack.scrollBy({ left: -getScrollStep(), behavior: 'smooth' });
+      startAutoPlay();
+    });
+
+    // Pause on hover
+    reviewTrack.addEventListener('mouseenter', function() { isPaused = true; });
+    reviewTrack.addEventListener('mouseleave', function() { isPaused = false; });
+    [reviewPrevBtn, reviewNextBtn].forEach(btn => {
+      btn.addEventListener('mouseenter', function() { isPaused = true; });
+      btn.addEventListener('mouseleave', function() { isPaused = false; });
+    });
+
+    // Pause on mobile touch/swipe
+    reviewTrack.addEventListener('touchstart', function() { isPaused = true; }, { passive: true });
+    reviewTrack.addEventListener('touchend', function() { isPaused = false; startAutoPlay(); }, { passive: true });
+
+    reviewTrack.addEventListener('scroll', updateReviewNavArrows, { passive: true });
+    window.addEventListener('resize', updateReviewNavArrows, { passive: true });
+
+    // Auto-play when review section is in viewport
+    if ('IntersectionObserver' in window && reviewSection) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            startAutoPlay();
+          } else {
+            stopAutoPlay();
+          }
+        });
+      }, { threshold: 0.15 });
+      observer.observe(reviewSection);
+    } else {
+      startAutoPlay();
+    }
+
+    // Initial state check
+    setTimeout(updateReviewNavArrows, 150);
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+});
+</script>

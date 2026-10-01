@@ -695,7 +695,7 @@ body {
 
   /* Specific Mega-Menu for Destinations */
   .mega-menu-destinations {
-    width: 960px;
+    width: 760px;
     max-width: calc(100vw - 60px);
     left: 50% !important;
     transform: translateX(-50%) translateY(8px) !important;
@@ -2143,6 +2143,14 @@ body {
   color: var(--secondary-color, #FF8F4C) !important;
 }
 
+.tour-route-stops {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary-color, #004AAD);
+  line-height: 1.45;
+  letter-spacing: -0.1px;
+}
+
 /* --- 4. Destinations Showcase Cards (Visual Inspiration) --- */
 .group-hover-zoom {
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
@@ -2375,6 +2383,372 @@ body {
 .section-promise-pillars .promise-pillar-card:hover {
   box-shadow: 0 18px 38px -8px rgba(0, 74, 173, 0.15) !important;
 }
+
+/* ==========================================================================
+   Destination Detail Sticky Tab Directory Sub-Navigation
+   ========================================================================== */
+
+.destination-subnav {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 66px;
+  z-index: 1020;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+
+.destination-tabs {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  scrollbar-width: none;
+}
+
+.destination-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.destination-tabs .nav-item {
+  flex: 1 1 0;
+  min-width: 0;
+  text-align: center;
+}
+
+.destination-tab-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 15px 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #334155;
+  text-decoration: none;
+  border: none;
+  background-color: transparent;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  letter-spacing: -0.15px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.destination-tab-link:hover {
+  background-color: #f1f5f9;
+  color: var(--primary-color, #004AAD);
+}
+
+/* Active tab style matching the reference: prominent filled tab */
+.destination-tab-link.active {
+  background-color: var(--primary-color, #004AAD);
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+.destination-section {
+  scroll-margin-top: 135px;
+}
+
+@media (max-width: 991px) {
+  .destination-subnav {
+    top: 60px;
+  }
+  .destination-tabs {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  .destination-tab-link {
+    padding: 12px 14px;
+    font-size: 0.85rem;
+  }
+  .destination-section {
+    scroll-margin-top: 125px;
+  }
+}
+
+@media (max-width: 768px) {
+  .destination-tabs {
+    justify-content: flex-start;
+  }
+}
+
+/* Travel Essentials Guide Cards */
+.essential-guide-card {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
+.essential-guide-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 35px -8px rgba(0, 74, 173, 0.16) !important;
+}
+
+.essential-guide-card .essential-card-title {
+  transition: color 0.25s ease;
+}
+
+.essential-guide-card:hover .essential-card-title {
+  color: var(--primary-color, #004AAD) !important;
+}
+
+.essential-guide-card .essential-card-img {
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.essential-guide-card:hover .essential-card-img {
+  transform: scale(1.05);
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Destination FAQ Section Accordion */
+.destination-faq-card {
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
+.destination-faq-card:hover {
+  box-shadow: 0 10px 25px -5px rgba(0, 74, 173, 0.08) !important;
+}
+
+.faq-number-badge {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  background-color: rgba(0, 74, 173, 0.08);
+  color: var(--primary-color, #004AAD);
+  font-size: 0.85rem;
+  transition: all 0.25s ease;
+}
+
+.accordion-button:not(.collapsed) .faq-number-badge {
+  background-color: var(--primary-color, #004AAD);
+  color: #ffffff;
+}
+
+.destination-faq-card .accordion-button {
+  background-color: #ffffff !important;
+  color: #1e293b !important;
+  transition: color 0.2s ease;
+}
+
+.destination-faq-card .accordion-button:not(.collapsed) {
+  color: var(--primary-color, #004AAD) !important;
+}
+
+.destination-faq-card .accordion-button:focus {
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.destination-faq-card .accordion-button::after {
+  background-size: 0.95rem;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-answer-body {
+  margin-left: 3.25rem;
+}
+
+@media (max-width: 575px) {
+  .faq-answer-body {
+    margin-left: 0;
+  }
+}
+
+/* Traveler Review Cards & Carousel Slider */
+.traveler-review-card {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+.traveler-review-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px -8px rgba(0, 74, 173, 0.14) !important;
+}
+
+.review-comment-text {
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.line-clamp-4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Review Carousel Track & Layout */
+.review-carousel-wrapper {
+  position: relative;
+  padding: 0;
+}
+
+.review-carousel-track {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  padding: 8px 4px 18px 4px;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.review-carousel-track::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.review-carousel-slide {
+  flex: 0 0 calc((100% - 48px) / 3);
+  min-width: calc((100% - 48px) / 3);
+  scroll-snap-align: start;
+}
+
+@media (max-width: 991.98px) {
+  .review-carousel-slide {
+    flex: 0 0 calc((100% - 24px) / 2);
+    min-width: calc((100% - 24px) / 2);
+  }
+}
+
+@media (max-width: 640px) {
+  .review-carousel-slide {
+    flex: 0 0 90%;
+    min-width: 90%;
+  }
+}
+
+/* Floating Navigation Arrows (Matching User Design) */
+.review-nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  outline: none;
+}
+
+.review-nav-arrow i {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.review-nav-prev {
+  left: -18px;
+  background-color: #ffffff;
+  color: #4b5563;
+  border: 1px solid #e5e7eb;
+}
+
+.review-nav-prev:hover:not(:disabled) {
+  background-color: #f3f4f6;
+  color: #111827;
+  transform: translateY(-50%) scale(1.08);
+}
+
+.review-nav-prev:disabled,
+.review-nav-prev.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+  transform: translateY(-50%);
+  box-shadow: none;
+}
+
+.review-nav-next {
+  right: -18px;
+  background-color: #e26a38; /* Signature Terracotta Accent from Reference */
+  color: #ffffff;
+}
+
+.review-nav-next:hover:not(:disabled) {
+  background-color: #d15826;
+  color: #ffffff;
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 8px 24px rgba(226, 106, 56, 0.4);
+}
+
+.review-nav-next:disabled,
+.review-nav-next.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+  transform: translateY(-50%);
+  box-shadow: none;
+}
+
+@media (max-width: 767.98px) {
+  .review-nav-prev {
+    left: 4px;
+    width: 38px;
+    height: 38px;
+  }
+  .review-nav-next {
+    right: 4px;
+    width: 38px;
+    height: 38px;
+  }
+}
+
+/* Review Card Bottom / Footer (Pixel-perfect matching reference) */
+.review-card-footer {
+  border-top: 1px solid #edf2f7;
+  padding-top: 14px;
+}
+
+.review-flag-img {
+  width: 20px;
+  height: 15px;
+  object-fit: cover;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+.review-footer-divider {
+  width: 1px;
+  height: 14px;
+  background-color: #cbd5e1;
+  flex-shrink: 0;
+  margin: 0 6px;
+}
+
+@media (max-width: 480px) {
+  .review-footer-divider {
+    margin: 0 3px;
+  }
+}
+
+
 
 
 

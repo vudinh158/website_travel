@@ -69,6 +69,9 @@ const Destination = sequelize.define('Destination', {
   },
   metaDescription: {
     type: DataTypes.TEXT
+  },
+  faqs: {
+    type: DataTypes.TEXT // JSON array of [{ question, answer }]
   }
 }, {
   timestamps: true,
