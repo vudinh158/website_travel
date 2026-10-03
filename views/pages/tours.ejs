@@ -29,11 +29,15 @@
           </div>
         </div>
 
-        <!-- Duration Filter (7, 10, 14, 21 Days) -->
+        <!-- Duration Filter (Ranges & Days) -->
         <div class="col-lg-2 col-md-6 col-6">
           <label class="form-label small fw-bold text-muted">Duration</label>
           <select name="duration" class="form-select bg-light" onchange="this.form.submit()">
             <option value="">Any Duration</option>
+            <option value="5-10" <%= query.duration == '5-10' ? 'selected' : '' %>>5–10 Days</option>
+            <option value="11-14" <%= query.duration == '11-14' ? 'selected' : '' %>>11–14 Days</option>
+            <option value="15-21" <%= query.duration == '15-21' ? 'selected' : '' %>>15–21 Days</option>
+            <option value="21plus" <%= (query.duration == '21plus' || query.duration == '21+') ? 'selected' : '' %>>21+ Days</option>
             <option value="7" <%= query.duration == '7' ? 'selected' : '' %>>7 Days (1 Week)</option>
             <option value="10" <%= query.duration == '10' ? 'selected' : '' %>>10 Days</option>
             <option value="14" <%= query.duration == '14' ? 'selected' : '' %>>14 Days (2 Weeks)</option>

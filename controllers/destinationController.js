@@ -1,4 +1,4 @@
-const { Destination, Tour, Category, Guide, Review, User } = require('../models');
+const { Destination, Tour, Category, Guide, Review, User, Itinerary } = require('../models');
 const { formatCurrency, formatDate, truncateText } = require('../helpers/formatters');
 const { generateSchemaOrg } = require('../helpers/seoHelper');
 const { getDestinationFaqs } = require('../helpers/destinationFaqHelper');
@@ -18,10 +18,112 @@ const getDestinations = async (req, res, next) => {
       include: [{ model: Tour, as: 'tours', where: { status: 'active' }, required: false }]
     });
 
+    // Dynamic Active Tours for Quick Stats and Destination Tour Counts
+    const allActiveTours = await Tour.findAll({
+      where: { status: 'active' },
+      attributes: ['id', 'name', 'duration', 'durationDays', 'price', 'pricePartialGuided', 'discountPrice', 'routeMapPoints', 'destinationId']
+    });
+
+    // Compute tourCount for each destination: count tours that visit this destination in tour.destinations
+    allDestinations.forEach(dest => {
+      const destNameLower = dest.name.trim().toLowerCase();
+      const count = allActiveTours.filter(t => {
+        if (t.destinationId === dest.id) return true;
+        if (Array.isArray(t.destinations)) {
+          return t.destinations.some(dName => {
+            const dLower = String(dName).trim().toLowerCase();
+            return dLower === destNameLower || dLower.includes(destNameLower) || destNameLower.includes(dLower);
+          });
+        }
+        return false;
+      }).length;
+      dest.tourCount = count;
+      dest.setDataValue('tourCount', count);
+    });
+
     const p0Destinations = allDestinations.filter(d => d.priority === 'P0');
     const northDestinations = allDestinations.filter(d => d.region === 'north');
     const centralDestinations = allDestinations.filter(d => d.region === 'central');
     const southDestinations = allDestinations.filter(d => d.region === 'south');
+
+    const daysList = allActiveTours.map(t => {
+      if (t.durationDays && t.durationDays > 0) return t.durationDays;
+      if (t.duration) {
+        const match = t.duration.match(/\d+/);
+        if (match) return parseInt(match[0], 10);
+      }
+      return 0;
+    }).filter(d => d > 0);
+
+    const minDays = daysList.length ? Math.min(...daysList) : 7;
+    const maxDays = daysList.length ? Math.max(...daysList) : 21;
+
+    const prices = allActiveTours.map(t => {
+      const candidates = [t.pricePartialGuided, t.discountPrice, t.price].filter(p => p && p > 0);
+      return candidates.length ? Math.min(...candidates) : 0;
+    }).filter(p => p > 0);
+
+    const minPrice = prices.length ? Math.min(...prices) : 890;
+
+    const bestTimeGuide = await Guide.findOne({
+      where: { slug: 'best-time-to-visit-vietnam' }
+    });
+
+    const durationCounts = { '5-10': 0, '11-14': 0, '15-21': 0, '21plus': 0 };
+    allActiveTours.forEach(t => {
+      const d = t.durationDays || (t.duration ? parseInt(t.duration, 10) : 0);
+      if (d >= 5 && d <= 10) durationCounts['5-10']++;
+      if (d >= 11 && d <= 14) durationCounts['11-14']++;
+      if (d >= 15 && d <= 21) durationCounts['15-21']++;
+      if (d >= 21) durationCounts['21plus']++;
+    });
+
+    const quickStats = {
+      totalTours: allActiveTours.length,
+      minDays,
+      maxDays,
+      minPrice,
+      bestTimeText: 'Mar, Apr, Nov',
+      bestTimeGuideSlug: bestTimeGuide ? bestTimeGuide.slug : 'best-time-to-visit-vietnam',
+      durationCounts
+    };
+
+    // Plan a Trip to Vietnam Itineraries (ordered by duration ASC, max 3)
+    const tripItineraries = await Itinerary.findAll({
+      order: [['duration', 'ASC']],
+      limit: 3
+    });
+
+    // Travel Essentials Guides (Universal guides without specific destination, max 6, best-time pinned #1)
+    const universalGuidesRaw = await Guide.findAll({
+      where: {
+        [Op.or]: [
+          { relatedDestinations: null },
+          { relatedDestinations: '' },
+          { relatedDestinations: '[]' }
+        ]
+      }
+    });
+
+    const travelEssentials = universalGuidesRaw.sort((a, b) => {
+      if (a.slug === 'best-time-to-visit-vietnam') return -1;
+      if (b.slug === 'best-time-to-visit-vietnam') return 1;
+      return a.id - b.id;
+    }).slice(0, 6);
+
+    // Traveler Reviews: TOP 3 trip reviews (nationwide, rating DESC, recency DESC, max 3)
+    const travelerReviews = await Review.findAll({
+      where: { status: 'approved' },
+      include: [
+        { model: User, as: 'user', attributes: ['id', 'name', 'avatar', 'address'] },
+        { model: Tour, as: 'tour', attributes: ['id', 'name', 'slug', 'duration', 'durationDays'] }
+      ],
+      order: [
+        ['rating', 'DESC'],
+        ['createdAt', 'DESC']
+      ],
+      limit: 3
+    });
 
     const schemaOrg = generateSchemaOrg.breadcrumb([
       { name: 'Home', url: '/' },
@@ -37,6 +139,11 @@ const getDestinations = async (req, res, next) => {
       northDestinations,
       centralDestinations,
       southDestinations,
+      quickStats,
+      tripItineraries,
+      travelEssentials,
+      travelerReviews,
+      formatDate,
       schemaOrg,
       truncateText
     });

@@ -23,11 +23,27 @@ const getTours = async (req, res, next) => {
       ];
     }
 
-    // Duration filter (7, 10, 14, 21 days)
+    // Duration filter ('5-10', '11-14', '15-21', '21+' or exact number 7, 10, 14, 21)
     if (duration) {
-      const durDays = parseInt(duration, 10);
-      if (!isNaN(durDays)) {
-        whereClause.durationDays = durDays;
+      const durStr = String(duration).trim().toLowerCase();
+      if (durStr === '5-10' || durStr === '5_10') {
+        whereClause.durationDays = { [Op.between]: [5, 10] };
+      } else if (durStr === '11-14' || durStr === '11_14') {
+        whereClause.durationDays = { [Op.between]: [11, 14] };
+      } else if (durStr === '15-21' || durStr === '15_21') {
+        whereClause.durationDays = { [Op.between]: [15, 21] };
+      } else if (durStr === '21+' || durStr === '21plus' || durStr === '21-plus' || durStr === '21%2b') {
+        whereClause.durationDays = { [Op.gte]: 21 };
+      } else if (durStr.includes('-')) {
+        const parts = durStr.split('-').map(p => parseInt(p, 10)).filter(n => !isNaN(n));
+        if (parts.length === 2) {
+          whereClause.durationDays = { [Op.between]: [Math.min(...parts), Math.max(...parts)] };
+        }
+      } else {
+        const durDays = parseInt(duration, 10);
+        if (!isNaN(durDays)) {
+          whereClause.durationDays = durDays;
+        }
       }
     }
 

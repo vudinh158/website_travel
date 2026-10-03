@@ -1,96 +1,153 @@
-<div class="bg-primary text-white py-5 mb-5" style="background: linear-gradient(135deg, #004AAD 0%, #002d6b 100%);">
-  <div class="container py-3">
-    <nav aria-label="breadcrumb">
+<!-- Vietnam Hub Panoramic Banner -->
+<div class="position-relative text-white mb-5" style="min-height: 540px; background: linear-gradient(180deg, rgba(0, 20, 50, 0.15) 0%, rgba(0, 30, 70, 0.38) 50%, rgba(0, 25, 65, 0.74) 100%), url('https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=2000&q=85') center/cover no-repeat; display: flex; align-items: flex-end;">
+  <div class="container py-5 pb-lg-5">
+    <nav aria-label="breadcrumb" style="text-shadow: 0 1px 5px rgba(0, 0, 0, 0.6);">
       <ol class="breadcrumb mb-3">
-        <li class="breadcrumb-item"><a href="/" class="text-white-50 text-decoration-none">Home</a></li>
-        <li class="breadcrumb-item active text-white" aria-current="page">Vietnam</li>
+        <li class="breadcrumb-item"><a href="/" class="text-white opacity-75 text-decoration-none">Home</a></li>
+        <li class="breadcrumb-item active text-white fw-medium" aria-current="page">Vietnam</li>
       </ol>
     </nav>
-    <span class="badge bg-accent text-white px-3 py-2 rounded-pill fw-bold text-uppercase mb-2">Destination Hub</span>
-    <h1 class="display-4 fw-extrabold text-white mb-2">Explore Vietnam: North to South</h1>
-    <p class="fs-5 text-white-50 mb-0" style="max-width: 720px;">
-      Discover all 17 specialty destinations across Vietnam. Each destination serves as an anchor connecting our tailored tours, scenic routes, and travel guides.
+    <h1 class="display-4 fw-extrabold text-white mb-3" style="text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);">Explore Vietnam: North to South</h1>
+    <p class="fs-5 text-white mb-0 leading-relaxed" style="max-width: 840px; opacity: 0.95; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.65);">
+      From the misty mountain passes and limestone karst bays of the north to the lantern-lit heritage coast and vibrant Mekong waterways of the south, Vietnam offers an extraordinary tapestry of culture and natural wonder. This directory serves as your foundational travel hub across all 17 regional destinations, connecting our curated itineraries, scenic stops, and practical guides.
     </p>
   </div>
 </div>
 
-<div class="container mb-5">
-  <!-- Region Filter Tabs -->
-  <ul class="nav nav-pills justify-content-center mb-5 gap-2" id="regionTabs" role="tablist">
-    <li class="nav-item" role="presentation">
-      <button class="nav-link active rounded-pill px-4 py-2 fw-bold" id="all-tab" data-bs-toggle="pill" data-bs-target="#all-regions" type="button" role="tab">
-        All 17 Destinations
-      </button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link rounded-pill px-4 py-2 fw-bold" id="north-tab" data-bs-toggle="pill" data-bs-target="#north-region" type="button" role="tab">
-        North Vietnam (6)
-      </button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link rounded-pill px-4 py-2 fw-bold" id="central-tab" data-bs-toggle="pill" data-bs-target="#central-region" type="button" role="tab">
-        Central Vietnam (7)
-      </button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link rounded-pill px-4 py-2 fw-bold" id="south-tab" data-bs-toggle="pill" data-bs-target="#south-region" type="button" role="tab">
-        South Vietnam (4)
-      </button>
-    </li>
-  </ul>
+<div class="container mb-0 pb-4">
+  <!-- 2a. Quick Stats Bar (Dynamic from active tours & guides) -->
+  <% if (typeof quickStats !== 'undefined' && quickStats) { %>
+  <div class="quick-stats-card mb-4" id="vietnam-quick-stats">
+    <div class="quick-stats-header">
+      <h2 class="quick-stats-title">Vietnam tours at a glance</h2>
+      <a href="/tours" class="quick-stats-link">
+        Browse all <%= quickStats.totalTours %> tours &rarr;
+      </a>
+    </div>
 
-  <!-- Tab Content -->
-  <div class="tab-content" id="regionTabContent">
-    <!-- All Destinations Tab -->
-    <div class="tab-pane fade show active" id="all-regions" role="tabpanel">
-      <!-- Section 1: North Vietnam -->
-      <div class="mb-5">
-        <div class="d-flex align-items-center gap-3 mb-4 pb-2 border-bottom">
-          <h3 class="fw-bold mb-0 text-primary"><i class="bi bi-compass me-2"></i>North Vietnam</h3>
-          <span class="text-muted small">Mountains, Karst Bays &amp; Thousand-Year Heritage</span>
-        </div>
-        <div class="row g-4">
-          <% northDestinations.forEach(dest => { %>
-            <div class="col-lg-4 col-md-6">
-              <%- include('../partials/destination-card', { dest: dest }) %>
-            </div>
-          <% }) %>
+    <div class="row g-3 g-md-0 quick-stats-grid">
+      <!-- 1. Tours Available -->
+      <div class="col-6 col-md-3 quick-stat-item">
+        <div class="quick-stat-label">TOURS AVAILABLE</div>
+        <div class="quick-stat-value">
+          <strong class="stat-number"><%= quickStats.totalTours %></strong>
+          <span class="stat-unit">tours</span>
         </div>
       </div>
 
-      <!-- Section 2: Central Vietnam -->
-      <div class="mb-5">
-        <div class="d-flex align-items-center gap-3 mb-4 pb-2 border-bottom">
-          <h3 class="fw-bold mb-0 text-primary"><i class="bi bi-brightness-high me-2"></i>Central Vietnam</h3>
-          <span class="text-muted small">Imperial Dynasties, Lantern Towns &amp; Karst Caves</span>
-        </div>
-        <div class="row g-4">
-          <% centralDestinations.forEach(dest => { %>
-            <div class="col-lg-4 col-md-6">
-              <%- include('../partials/destination-card', { dest: dest }) %>
-            </div>
-          <% }) %>
+      <!-- 2. Trip Length -->
+      <div class="col-6 col-md-3 quick-stat-item quick-stat-divider">
+        <div class="quick-stat-label">TRIP LENGTH</div>
+        <div class="quick-stat-value">
+          <strong class="stat-number"><%= quickStats.minDays %>–<%= quickStats.maxDays %></strong>
+          <span class="stat-unit">days</span>
         </div>
       </div>
 
-      <!-- Section 3: South Vietnam -->
-      <div class="mb-5">
-        <div class="d-flex align-items-center gap-3 mb-4 pb-2 border-bottom">
-          <h3 class="fw-bold mb-0 text-primary"><i class="bi bi-water me-2"></i>South Vietnam</h3>
-          <span class="text-muted small">Dynamic Metropolises, Mekong Waterways &amp; Tropical Isles</span>
+      <!-- 3. Prices From -->
+      <div class="col-6 col-md-3 quick-stat-item quick-stat-divider">
+        <div class="quick-stat-label">PRICES FROM</div>
+        <div class="quick-stat-value">
+          <span class="quick-stat-currency">USD $<%= Number(quickStats.minPrice).toLocaleString() %></span>
+          <span class="stat-unit">pp</span>
         </div>
-        <div class="row g-4">
-          <% southDestinations.forEach(dest => { %>
-            <div class="col-lg-4 col-md-6">
-              <%- include('../partials/destination-card', { dest: dest }) %>
-            </div>
-          <% }) %>
+      </div>
+
+      <!-- 4. Best Time -->
+      <div class="col-6 col-md-3 quick-stat-item quick-stat-divider">
+        <div class="quick-stat-label">BEST TIME</div>
+        <div class="quick-stat-value">
+          <a href="/guides/<%= quickStats.bestTimeGuideSlug %>" class="quick-stat-link-val" title="Read Best Time to Visit Vietnam Guide">
+            <%= quickStats.bestTimeText %>
+          </a>
         </div>
       </div>
     </div>
 
-    <!-- North Only Tab -->
-    <div class="tab-pane fade" id="north-region" role="tabpanel">
+    <!-- Integrated Duration Quick Filter Shelf inside Card -->
+    <div class="quick-stats-footer">
+      <div class="quick-stats-filter-tag">
+        <div class="quick-stats-filter-icon">
+          <i class="bi bi-clock-history"></i>
+        </div>
+        <div>
+          <span class="quick-stats-filter-title">Find tours by trip length:</span>
+        </div>
+      </div>
+
+      <div class="quick-stats-pills-row">
+        <a href="/tours?duration=5-10" class="integrated-duration-pill" title="Browse 5 to 10 day tours">
+          <span>5 to 10 day tours</span>
+          <% if (quickStats.durationCounts && quickStats.durationCounts['5-10']) { %>
+            <span class="pill-count-badge"><%= quickStats.durationCounts['5-10'] %></span>
+          <% } %>
+          <i class="bi bi-arrow-right-short pill-arrow"></i>
+        </a>
+
+        <a href="/tours?duration=11-14" class="integrated-duration-pill" title="Browse 11 to 14 day tours">
+          <span>11 to 14 day tours</span>
+          <% if (quickStats.durationCounts && quickStats.durationCounts['11-14']) { %>
+            <span class="pill-count-badge"><%= quickStats.durationCounts['11-14'] %></span>
+          <% } %>
+          <i class="bi bi-arrow-right-short pill-arrow"></i>
+        </a>
+
+        <a href="/tours?duration=15-21" class="integrated-duration-pill" title="Browse 15 to 21 day tours">
+          <span>15 to 21 day tours</span>
+          <% if (quickStats.durationCounts && quickStats.durationCounts['15-21']) { %>
+            <span class="pill-count-badge"><%= quickStats.durationCounts['15-21'] %></span>
+          <% } %>
+          <i class="bi bi-arrow-right-short pill-arrow"></i>
+        </a>
+
+        <a href="/tours?duration=21plus" class="integrated-duration-pill" title="Browse 21+ day tours">
+          <span>21 day plus tours</span>
+          <% if (quickStats.durationCounts && quickStats.durationCounts['21plus']) { %>
+            <span class="pill-count-badge"><%= quickStats.durationCounts['21plus'] %></span>
+          <% } %>
+          <i class="bi bi-arrow-right-short pill-arrow"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  <% } %>
+
+  <!-- Region Filter Pills -->
+  <div class="region-filter-wrapper text-center" id="region-filter-nav">
+    <div class="region-filter-pills" role="navigation" aria-label="Vietnam Regions Filter">
+      <a href="#all-regions" class="region-nav-pill active" data-region-target="all-regions">
+        All <%= allDestinations.length %> Destinations
+      </a>
+      <a href="#north-vietnam" class="region-nav-pill" data-region-target="north-vietnam">
+        North Vietnam (<%= northDestinations.length %>)
+      </a>
+      <a href="#central-vietnam" class="region-nav-pill" data-region-target="central-vietnam">
+        Central Vietnam (<%= centralDestinations.length %>)
+      </a>
+      <a href="#south-vietnam" class="region-nav-pill" data-region-target="south-vietnam">
+        South Vietnam (<%= southDestinations.length %>)
+      </a>
+    </div>
+  </div>
+
+  <!-- 4. Destinations by Region — 3 Blocks (North / Central / South) -->
+  <div id="all-regions" class="destinations-hub-container">
+    <!-- Block 1: North Vietnam -->
+    <section id="north-vietnam" class="region-block-section mb-5 pb-2">
+      <div class="region-block-header d-flex flex-wrap align-items-center justify-content-between mb-4 pb-3 gap-2">
+        <div class="d-flex align-items-center gap-3">
+          <div class="region-header-icon bg-primary-subtle text-primary">
+            <i class="bi bi-compass"></i>
+          </div>
+          <div>
+            <h2 class="h3 fw-extrabold mb-1 text-navy">North Vietnam</h2>
+            <p class="text-muted mb-0 small">Mountains, Karst Bays &amp; Thousand-Year Heritage</p>
+          </div>
+        </div>
+        <span class="badge bg-light text-secondary border rounded-pill px-3 py-2 fw-semibold">
+          <%= northDestinations.length %> Destinations
+        </span>
+      </div>
       <div class="row g-4">
         <% northDestinations.forEach(dest => { %>
           <div class="col-lg-4 col-md-6">
@@ -98,10 +155,24 @@
           </div>
         <% }) %>
       </div>
-    </div>
+    </section>
 
-    <!-- Central Only Tab -->
-    <div class="tab-pane fade" id="central-region" role="tabpanel">
+    <!-- Block 2: Central Vietnam -->
+    <section id="central-vietnam" class="region-block-section mb-5 pb-2">
+      <div class="region-block-header d-flex flex-wrap align-items-center justify-content-between mb-4 pb-3 gap-2">
+        <div class="d-flex align-items-center gap-3">
+          <div class="region-header-icon bg-warning-subtle text-warning">
+            <i class="bi bi-brightness-high"></i>
+          </div>
+          <div>
+            <h2 class="h3 fw-extrabold mb-1 text-navy">Central Vietnam</h2>
+            <p class="text-muted mb-0 small">Imperial Dynasties, Lantern Towns &amp; Karst Caves</p>
+          </div>
+        </div>
+        <span class="badge bg-light text-secondary border rounded-pill px-3 py-2 fw-semibold">
+          <%= centralDestinations.length %> Destinations
+        </span>
+      </div>
       <div class="row g-4">
         <% centralDestinations.forEach(dest => { %>
           <div class="col-lg-4 col-md-6">
@@ -109,10 +180,24 @@
           </div>
         <% }) %>
       </div>
-    </div>
+    </section>
 
-    <!-- South Only Tab -->
-    <div class="tab-pane fade" id="south-region" role="tabpanel">
+    <!-- Block 3: South Vietnam -->
+    <section id="south-vietnam" class="region-block-section mb-5 pb-2">
+      <div class="region-block-header d-flex flex-wrap align-items-center justify-content-between mb-4 pb-3 gap-2">
+        <div class="d-flex align-items-center gap-3">
+          <div class="region-header-icon bg-info-subtle text-info">
+            <i class="bi bi-water"></i>
+          </div>
+          <div>
+            <h2 class="h3 fw-extrabold mb-1 text-navy">South Vietnam</h2>
+            <p class="text-muted mb-0 small">Dynamic Metropolises, Mekong Waterways &amp; Tropical Isles</p>
+          </div>
+        </div>
+        <span class="badge bg-light text-secondary border rounded-pill px-3 py-2 fw-semibold">
+          <%= southDestinations.length %> Destinations
+        </span>
+      </div>
       <div class="row g-4">
         <% southDestinations.forEach(dest => { %>
           <div class="col-lg-4 col-md-6">
@@ -120,6 +205,384 @@
           </div>
         <% }) %>
       </div>
+    </section>
+  </div>
+
+  <!-- Plan a Trip to Vietnam Section (Itinerary Cards) -->
+  <% if (typeof tripItineraries !== 'undefined' && tripItineraries && tripItineraries.length > 0) { %>
+  <section class="plan-trip-section mb-5 pb-2" id="plan-trip">
+    <div class="d-flex flex-wrap align-items-center justify-content-between mb-4 pb-2 border-bottom gap-2">
+      <div>
+        <h2 class="h3 fw-extrabold mb-1 text-navy">Plan a Trip to Vietnam</h2>
+        <p class="text-muted mb-0 small">Curated day-by-day itineraries and route ideas to help you design your ideal journey</p>
+      </div>
+      <a href="/trips" class="text-primary text-decoration-none fw-semibold d-inline-flex align-items-center gap-1 browse-all-link">
+        Browse all itineraries <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+
+    <div class="row g-4">
+      <% tripItineraries.forEach(item => { %>
+        <div class="col-lg-4 col-md-6 col-12">
+          <a href="/trips/<%= item.slug %>/" class="plan-trip-card text-decoration-none h-100" title="<%= item.title %>">
+            <div class="plan-trip-img-wrap">
+              <img src="<%= item.heroImage %>" alt="<%= item.title %>" class="plan-trip-img" loading="lazy">
+              <span class="badge rounded-pill plan-trip-duration-badge position-absolute top-0 start-0 m-3 px-3 py-1.5">
+                <i class="bi bi-clock-history me-1 text-primary"></i> <%= item.duration %> Days
+              </span>
+            </div>
+            <div class="plan-trip-body">
+              <h3 class="plan-trip-title">
+                <%= item.title %>
+              </h3>
+            </div>
+          </a>
+        </div>
+      <% }) %>
+    </div>
+  </section>
+  <% } %>
+
+  <!-- Travel Essentials Section (Universal Travel Guides) -->
+  <% if (typeof travelEssentials !== 'undefined' && travelEssentials && travelEssentials.length > 0) { %>
+  <section class="travel-essentials-section mb-5 pb-2" id="travel-essentials">
+    <div class="d-flex flex-wrap align-items-center justify-content-between mb-4 pb-2 border-bottom gap-2">
+      <div>
+        <h2 class="h3 fw-extrabold mb-1 text-navy">Travel Essentials</h2>
+        <p class="text-muted mb-0 small">Essential planning guides, visa rules, practical tips &amp; local insights for Vietnam</p>
+      </div>
+      <a href="/guides" class="text-primary text-decoration-none fw-semibold d-inline-flex align-items-center gap-1 browse-all-link">
+        Browse all guides <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+
+    <div class="row g-4">
+      <% travelEssentials.forEach(guide => { %>
+        <div class="col-lg-4 col-md-6 col-12">
+          <a href="/guides/<%= guide.slug %>/" class="travel-essential-card text-decoration-none h-100" title="<%= guide.title %>">
+            <div class="travel-essential-img-wrap">
+              <img src="<%= guide.heroImage %>" alt="<%= guide.title %>" class="travel-essential-img" loading="lazy">
+              <% if (guide.readTime) { %>
+                <span class="badge travel-essential-badge position-absolute top-0 start-0 m-2.5 rounded-pill px-2.5 py-1">
+                  <i class="bi bi-clock me-1 text-primary"></i> <%= guide.readTime %>
+                </span>
+              <% } %>
+            </div>
+            <div class="travel-essential-body d-flex flex-column justify-content-between">
+              <div>
+                <h3 class="travel-essential-title mb-2">
+                  <%= guide.title %>
+                </h3>
+                <p class="travel-essential-excerpt">
+                  <%= truncateText(guide.excerpt || guide.body, 110) %>
+                </p>
+              </div>
+              <div class="pt-3 mt-2 border-top d-flex align-items-center justify-content-between">
+                <span class="travel-essential-read text-primary">
+                  Read guide <i class="bi bi-arrow-right ms-1"></i>
+                </span>
+              </div>
+            </div>
+          </a>
+        </div>
+      <% }) %>
+    </div>
+  </section>
+  <% } %>
+
+  <!-- 5. Traveler Reviews Section (TOP 3 Nationwide Reviews) -->
+    <% if (typeof travelerReviews !== 'undefined' && travelerReviews && travelerReviews.length > 0) { %>
+    <section class="traveler-reviews-hub-section mb-5 pb-2" id="traveler-reviews">
+      <div class="d-flex flex-wrap align-items-center justify-content-between mb-4 pb-2 border-bottom gap-2">
+        <div>
+          <h2 class="h3 fw-extrabold mb-1 text-navy">Traveler Reviews</h2>
+          <p class="text-muted mb-0 small">Real reviews from travelers who explored Vietnam on our curated journeys</p>
+        </div>
+        <a href="/trip-reviews/" class="text-primary text-decoration-none fw-semibold d-inline-flex align-items-center gap-1 browse-all-link">
+          View All Reviews <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+
+      <div class="row g-4">
+        <% travelerReviews.forEach(review => { %>
+          <div class="col-lg-4 col-md-6 col-12">
+            <div class="card h-100 border-0 rounded-4 shadow-sm bg-white traveler-review-card position-relative d-flex flex-column p-4">
+              
+              <!-- Top Row: Verified Pill + Review Date -->
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="badge rounded-pill px-3 py-1 fw-semibold d-inline-flex align-items-center gap-1" style="background-color: #ecfdf5; color: #059669; font-size: 0.8rem; border: 1px solid rgba(16, 185, 129, 0.2);">
+                  <i class="bi bi-patch-check-fill text-success"></i> Verified Review
+                </span>
+                <span class="text-muted small fw-medium">
+                  <%= typeof formatDate !== 'undefined' && formatDate ? formatDate(review.createdAt) : new Date(review.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) %>
+                </span>
+              </div>
+
+              <!-- Tour Title Link -->
+              <div class="mb-2">
+                <a href="/tours/<%= review.tour ? review.tour.slug : '' %>/" class="text-dark text-decoration-none fw-bold text-hover-primary" style="font-size: 1.02rem; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;" title="<%= review.tour ? review.tour.name : '' %>">
+                  <%= review.tour ? review.tour.name : 'Vietnam Journey' %>
+                </a>
+              </div>
+
+              <!-- Star Rating -->
+              <div class="d-flex align-items-center gap-2 mb-3">
+                <div class="text-warning d-flex gap-1" style="font-size: 0.95rem;">
+                  <% for (let i = 1; i <= 5; i++) { %>
+                    <i class="bi bi-star-fill <%= i <= (review.rating || 5) ? 'text-warning' : 'text-muted opacity-25' %>"></i>
+                  <% } %>
+                </div>
+                <span class="fw-bold text-dark small"><%= Number(review.rating || 5).toFixed(1) %></span>
+              </div>
+
+              <!-- Review Body Content -->
+              <div class="flex-grow-1 mb-3">
+                <% if (review.title) { %>
+                  <h6 class="fw-bold text-dark mb-2" style="font-size: 0.95rem; line-height: 1.35;"><%= review.title %></h6>
+                <% } %>
+                <p class="text-secondary review-comment-text line-clamp-4 mb-2" id="hubReviewText<%= review.id %>">
+                  <%= review.comment %>
+                </p>
+                <% if (review.comment && review.comment.length > 170) { %>
+                  <button type="button" class="btn btn-link p-0 text-primary small fw-semibold text-decoration-none d-inline-flex align-items-center gap-1 review-toggle-btn" data-target="hubReviewText<%= review.id %>">
+                    <span>Read more</span> <i class="bi bi-chevron-down small"></i>
+                  </button>
+                <% } %>
+              </div>
+
+              <!-- Footer Details: Traveler Avatar + Country Flag & Name + Demographics -->
+              <div class="review-card-footer mt-auto">
+                <% 
+                  const addressStr = (review.user && review.user.address) ? review.user.address : '';
+                  const parts = addressStr.split('•').map(p => p.trim());
+                  let countryCode = 'us';
+                  let countryName = 'United States';
+                  let ageText = 'Age 40-49';
+                  let travelersText = '2 travelers';
+                  let currencyText = '$ USD';
+
+                  if (addressStr.includes('Australia') || addressStr.includes('🇦🇺')) {
+                    countryCode = 'au'; countryName = 'Australia'; currencyText = '$ AUD';
+                  } else if (addressStr.includes('New Zealand') || addressStr.includes('🇳🇿')) {
+                    countryCode = 'nz'; countryName = 'New Zealand'; currencyText = '$ NZD';
+                  } else if (addressStr.includes('United Kingdom') || addressStr.includes('🇬🇧') || addressStr.includes('UK')) {
+                    countryCode = 'gb'; countryName = 'United Kingdom'; currencyText = '£ GBP';
+                  } else if (addressStr.includes('Germany') || addressStr.includes('🇩🇪')) {
+                    countryCode = 'de'; countryName = 'Germany'; currencyText = '€ EUR';
+                  } else if (addressStr.includes('Canada') || addressStr.includes('🇨🇦')) {
+                    countryCode = 'ca'; countryName = 'Canada'; currencyText = '$ CAD';
+                  } else {
+                    countryCode = 'us'; countryName = 'United States'; currencyText = '$ USD';
+                  }
+
+                  if (parts.length >= 3) {
+                    ageText = parts[1];
+                    travelersText = parts[2];
+                  } else if (parts.length === 2) {
+                    ageText = parts[1];
+                  }
+
+                  const userAvatar = (review.user && review.user.avatar) ? review.user.avatar : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80';
+                %>
+                <div class="d-flex align-items-center justify-content-between text-secondary" style="font-size: 0.85rem;">
+                  <!-- Traveler Avatar + Name + Flag -->
+                  <div class="d-flex align-items-center gap-2 flex-shrink-0">
+                    <img src="<%= userAvatar %>" 
+                         alt="<%= review.user ? review.user.name : 'Traveler' %>" 
+                         class="rounded-circle border" 
+                         width="34" height="34" 
+                         style="object-fit: cover;"
+                         loading="lazy"
+                         onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'">
+                    <div class="d-flex flex-column" style="line-height: 1.2;">
+                      <span class="fw-bold text-dark text-truncate" style="max-width: 95px; font-size: 0.85rem;"><%= review.user ? review.user.name : 'Traveler' %></span>
+                      <div class="d-flex align-items-center gap-1 mt-0.5">
+                        <img src="https://flagcdn.com/w40/<%= countryCode %>.png" 
+                             alt="<%= countryName %>" 
+                             class="review-flag-img rounded-1" 
+                             width="15" height="11" 
+                             loading="lazy"
+                             onerror="this.style.display='none'">
+                        <span class="text-muted" style="font-size: 0.72rem;"><%= countryName %></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Divider -->
+                  <div class="review-footer-divider"></div>
+
+                  <!-- Age Group -->
+                  <div class="text-secondary flex-shrink-0 text-nowrap fw-normal" style="font-size: 0.8rem;">
+                    <%= ageText %>
+                  </div>
+
+                  <!-- Divider -->
+                  <div class="review-footer-divider"></div>
+
+                  <!-- Travelers Count -->
+                  <div class="text-secondary flex-shrink-0 text-nowrap fw-normal" style="font-size: 0.8rem;">
+                    <%= travelersText %>
+                  </div>
+
+                  <!-- Divider -->
+                  <div class="review-footer-divider"></div>
+
+                  <!-- Currency / Value Tag -->
+                  <div class="fw-semibold text-dark flex-shrink-0 text-nowrap" style="font-size: 0.8rem;">
+                    <%= currencyText %>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        <% }) %>
+      </div>
+
+      <!-- Centered View All Reviews CTA button -->
+      <div class="text-center mt-4 pt-2">
+        <a href="/trip-reviews/" class="btn btn-outline-primary rounded-pill px-4 py-2.5 fw-bold shadow-sm">
+          View All Reviews <i class="bi bi-arrow-right ms-1"></i>
+        </a>
+      </div>
+    </section>
+    <% } %>
+</div>
+
+<!-- Full-Width Bottom Planning CTA Band (Pre-Footer Conversion Point) -->
+<section class="vietnam-planning-cta-band position-relative text-center overflow-hidden" aria-label="Ready to start planning your Vietnam journey">
+  <div class="cta-band-ambient-glow cta-band-glow-top"></div>
+  <div class="cta-band-ambient-glow cta-band-glow-bottom"></div>
+  <div class="container position-relative py-5" style="z-index: 2;">
+    <div class="row justify-content-center">
+      <div class="col-lg-9 col-xl-8 col-12">
+        
+        <!-- Headline & Subtitle -->
+        <h2 class="display-5 fw-extrabold text-white mb-3 tracking-tight cta-headline">
+          Ready to start planning?
+        </h2>
+        <p class="lead text-white-50 mb-4 pb-2 mx-auto cta-subline" style="max-width: 680px; font-size: 1.15rem; line-height: 1.6;">
+          Browse all our Vietnam tours and find your perfect journey, or connect with our local travel specialists to design a tailor-made private route.
+        </p>
+
+        <!-- CTA Action Buttons -->
+        <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
+          <a href="/tours/" class="btn btn-cta-primary shadow-lg">
+            <i class="bi bi-compass-fill me-2"></i>
+            <span>Explore All Tours</span>
+            <i class="bi bi-arrow-right ms-2 btn-arrow-icon"></i>
+          </a>
+          <a href="/contact" class="btn btn-cta-secondary shadow-sm">
+            <i class="bi bi-chat-dots-fill me-2 text-accent"></i>
+            <span>Tailor-Made Trip</span>
+          </a>
+        </div>
+
+        <!-- Trust Highlights Bar -->
+        <div class="cta-trust-bar mt-4 pt-3 d-flex flex-wrap justify-content-center align-items-center gap-4 gap-md-5 text-white-50">
+          <div class="cta-trust-item d-flex align-items-center gap-2">
+            <i class="bi bi-shield-check text-warning fs-5"></i>
+            <span class="text-white-75 small fw-medium">100% Tailored Routes</span>
+          </div>
+          <div class="cta-trust-item d-flex align-items-center gap-2">
+            <i class="bi bi-person-check-fill text-info fs-5"></i>
+            <span class="text-white-75 small fw-medium">Dedicated Local Guides</span>
+          </div>
+          <div class="cta-trust-item d-flex align-items-center gap-2">
+            <i class="bi bi-star-fill text-warning fs-5"></i>
+            <span class="text-white-75 small fw-medium">4.97 / 5 Traveler Rating</span>
+          </div>
+          <div class="cta-trust-item d-flex align-items-center gap-2">
+            <i class="bi bi-clock-history text-success fs-5"></i>
+            <span class="text-white-75 small fw-medium">24h Response Guarantee</span>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
-</div>
+</section>
+
+<!-- Smooth Scroll & Active Pill Sync Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const pills = document.querySelectorAll('.region-nav-pill');
+    const sections = ['north-vietnam', 'central-vietnam', 'south-vietnam'];
+
+    pills.forEach(pill => {
+      pill.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('data-region-target');
+        const targetEl = document.getElementById(targetId);
+        if (targetEl) {
+          const navOffset = 90;
+          const elementPosition = targetEl.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - navOffset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+          pills.forEach(p => p.classList.remove('active'));
+          this.classList.add('active');
+        }
+      });
+    });
+
+    // Review Read more / Read less toggle
+    document.querySelectorAll('.review-toggle-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const targetId = this.getAttribute('data-target');
+        const targetEl = document.getElementById(targetId);
+        const textSpan = this.querySelector('span');
+        const icon = this.querySelector('i');
+        if (targetEl) {
+          if (targetEl.classList.contains('line-clamp-4')) {
+            targetEl.classList.remove('line-clamp-4');
+            if (textSpan) textSpan.textContent = 'Read less';
+            if (icon) {
+              icon.classList.remove('bi-chevron-down');
+              icon.classList.add('bi-chevron-up');
+            }
+          } else {
+            targetEl.classList.add('line-clamp-4');
+            if (textSpan) textSpan.textContent = 'Read more';
+            if (icon) {
+              icon.classList.remove('bi-chevron-up');
+              icon.classList.add('bi-chevron-down');
+            }
+          }
+        }
+      });
+    });
+
+    // Sync active pill on scroll
+    window.addEventListener('scroll', function () {
+      let current = 'all-regions';
+      const scrollPos = window.pageYOffset + 120;
+
+      sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            current = id;
+          }
+        }
+      });
+
+      const allEl = document.getElementById('all-regions');
+      if (allEl && scrollPos < allEl.offsetTop + 100) {
+        current = 'all-regions';
+      }
+
+      pills.forEach(pill => {
+        if (pill.getAttribute('data-region-target') === current) {
+          pill.classList.add('active');
+        } else {
+          pill.classList.remove('active');
+        }
+      });
+    }, { passive: true });
+  });
+</script>
