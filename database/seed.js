@@ -582,7 +582,8 @@ async function seedDatabase() {
       totalReviews: 34,
       isFeatured: true,
       isBestSeller: true,
-      isPopular: true
+      isPopular: true,
+      status: 'active'
     });
 
     const tour10Days = await Tour.create({
@@ -726,7 +727,8 @@ async function seedDatabase() {
       totalReviews: 62,
       isFeatured: true,
       isBestSeller: true,
-      isPopular: true
+      isPopular: true,
+      status: 'active'
     });
 
     const tour14Days = await Tour.create({
@@ -825,7 +827,8 @@ async function seedDatabase() {
       totalReviews: 48,
       isFeatured: true,
       isBestSeller: true,
-      isPopular: true
+      isPopular: true,
+      status: 'active'
     });
 
     const tour21Days = await Tour.create({
@@ -935,7 +938,8 @@ async function seedDatabase() {
       totalReviews: 29,
       isFeatured: true,
       isBestSeller: false,
-      isPopular: true
+      isPopular: true,
+      status: 'active'
     });
 
     // 6. Itineraries (Editorial / Blog per Sitemap Section 4 - Grouped by Duration)

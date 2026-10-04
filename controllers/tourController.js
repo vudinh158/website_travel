@@ -156,9 +156,30 @@ const getCategorySilo = async (req, res, next) => {
 const getTourDetail = async (req, res, next) => {
   try {
     const { slug } = req.params;
+    const cleanSlug = String(slug || '').trim().toLowerCase();
+
+    // Friendly/navbar slug aliases mapping to canonical active tours
+    const TOUR_SLUG_ALIASES = {
+      'essential-north-vietnam-7-days': '7-days-north-vietnam-private',
+      'classic-vietnam-explorer-10-days': '10-days-vietnam-highlights-private',
+      'grand-vietnam-discovery-14-days': '14-days-north-to-south-partial-guided',
+      'complete-vietnam-expedition-21-days': '21-days-vietnam-partial-guided',
+      '7-days-north-vietnam': '7-days-north-vietnam-private',
+      '10-days-vietnam-highlights': '10-days-vietnam-highlights-private',
+      '14-days-north-to-south': '14-days-north-to-south-partial-guided',
+      '21-days-vietnam': '21-days-vietnam-partial-guided',
+      '7-days': '7-days-north-vietnam-private',
+      '10-days': '10-days-vietnam-highlights-private',
+      '14-days': '14-days-north-to-south-partial-guided',
+      '21-days': '21-days-vietnam-partial-guided'
+    };
+
+    if (TOUR_SLUG_ALIASES[cleanSlug]) {
+      return res.redirect(301, `/tours/${TOUR_SLUG_ALIASES[cleanSlug]}`);
+    }
 
     const tour = await Tour.findOne({
-      where: { slug, status: 'active' },
+      where: { slug: cleanSlug, status: 'active' },
       include: [
         { model: Destination, as: 'destination' },
         { model: Category, as: 'category' },

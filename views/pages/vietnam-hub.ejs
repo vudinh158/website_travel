@@ -320,7 +320,7 @@
 
               <!-- Tour Title Link -->
               <div class="mb-2">
-                <a href="/tours/<%= review.tour ? review.tour.slug : '' %>/" class="text-dark text-decoration-none fw-bold text-hover-primary" style="font-size: 1.02rem; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;" title="<%= review.tour ? review.tour.name : '' %>">
+                <a href="/tours/<%= review.tour ? review.tour.slug : '' %>" class="text-dark text-decoration-none fw-bold text-hover-primary" style="font-size: 1.02rem; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;" title="<%= review.tour ? review.tour.name : '' %>">
                   <%= review.tour ? review.tour.name : 'Vietnam Journey' %>
                 </a>
               </div>
@@ -467,7 +467,7 @@
 
         <!-- CTA Action Buttons -->
         <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
-          <a href="/tours/" class="btn btn-cta-primary shadow-lg">
+          <a href="/tours" class="btn btn-cta-primary shadow-lg">
             <i class="bi bi-compass-fill me-2"></i>
             <span>Explore All Tours</span>
             <i class="bi bi-arrow-right ms-2 btn-arrow-icon"></i>
