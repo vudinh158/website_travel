@@ -3457,11 +3457,598 @@ body {
   }
 }
 
+/* ==========================================================================
+   Tours Search & Listing Page (On The Go Tours Inspired Layout)
+   ========================================================================== */
 
+/* 1. Fast Finder & Search Bar */
+.tours-hero-search-wrapper {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 16px 40px -10px rgba(0, 74, 173, 0.15), 0 0 1px 1px rgba(0, 0, 0, 0.05);
+  padding: 1.25rem 1.5rem;
+  margin-top: -2.5rem;
+  position: relative;
+  z-index: 20;
+}
 
+.search-field-pill {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 0.6rem 0.9rem;
+  transition: all 0.25s ease;
+}
 
+.search-field-pill:focus-within {
+  background-color: #ffffff;
+  border-color: var(--primary-color, #004AAD);
+  box-shadow: 0 0 0 3px rgba(0, 74, 173, 0.12);
+}
 
+.search-field-pill .form-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  margin-bottom: 0.15rem;
+  display: block;
+}
 
+.search-field-pill .form-control,
+.search-field-pill .form-select {
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  font-weight: 600;
+  color: #0f172a;
+  font-size: 0.95rem;
+  box-shadow: none !important;
+}
 
+.trust-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #e2e8f0;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #1e293b;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
 
+.trust-badge-pill i {
+  color: var(--secondary-color, #FF8F4C);
+  font-size: 0.95rem;
+}
+
+/* 2. Filter Sidebar */
+.tour-sidebar-card {
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid #edf2f7;
+  overflow: hidden;
+  position: sticky;
+  top: 90px;
+}
+
+.filter-section-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #0f172a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 0;
+  cursor: pointer;
+  border-bottom: 1px solid #f1f5f9;
+  margin-bottom: 0.75rem;
+}
+
+.filter-section-title i {
+  transition: transform 0.25s ease;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.filter-section-title[aria-expanded="false"] i {
+  transform: rotate(-90deg);
+}
+
+.filter-check-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 0.2rem;
+  font-size: 0.9rem;
+  color: #334155;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.15s ease;
+}
+
+.filter-check-item:hover {
+  color: var(--primary-color, #004AAD);
+}
+
+.filter-check-item .form-check-input {
+  cursor: pointer;
+  border-color: #cbd5e1;
+}
+
+.filter-check-item .form-check-input:checked {
+  background-color: var(--primary-color, #004AAD);
+  border-color: var(--primary-color, #004AAD);
+}
+
+.filter-count-badge {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  background: #f1f5f9;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.active-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: var(--primary-color, #004AAD);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  margin-right: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+
+.active-chip-remove {
+  cursor: pointer;
+  color: #94a3b8;
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+.active-chip-remove:hover {
+  color: #dc2626;
+}
+
+/* Specialist Consultation Box in Sidebar */
+.sidebar-specialist-widget {
+  background: linear-gradient(145deg, #f0f7ff 0%, #e6f0fa 100%);
+  border: 1px solid #c7ddf5;
+  border-radius: 16px;
+  padding: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.specialist-avatar-wrap {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+}
+
+.specialist-avatar-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.specialist-online-dot {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 12px;
+  height: 12px;
+  background-color: #22c55e;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+}
+
+/* 3. Results Utility Bar */
+.results-utility-bar {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #edf2f7;
+  padding: 0.85rem 1.25rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  margin-bottom: 1.5rem;
+}
+
+.view-mode-btn {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #64748b;
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.view-mode-btn.active,
+.view-mode-btn:hover {
+  background: var(--primary-color, #004AAD);
+  color: #ffffff;
+  border-color: var(--primary-color, #004AAD);
+}
+
+/* 4. Horizontal Tour Card (On The Go Tours Signature Style) */
+.otg-tour-card {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid #edf2f7;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.otg-tour-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px -6px rgba(0, 74, 173, 0.12), 0 4px 12px rgba(0,0,0,0.04);
+  border-color: #bfdbfe;
+}
+
+/* Card Visual / Thumbnail */
+.otg-card-media {
+  position: relative;
+  overflow: hidden;
+  min-height: 250px;
+}
+
+.otg-card-img {
+  width: 100%;
+  height: 100%;
+  min-height: 250px;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.otg-tour-card:hover .otg-card-img {
+  transform: scale(1.05);
+}
+
+.otg-badge-top-left {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.otg-badge-duration {
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+.otg-badge-format {
+  background: var(--primary-color, #004AAD);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.74rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  box-shadow: 0 4px 10px rgba(0, 74, 173, 0.35);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.otg-badge-bestseller {
+  background: var(--secondary-color, #FF8F4C);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.72rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  box-shadow: 0 3px 8px rgba(255, 143, 76, 0.4);
+}
+
+.otg-card-departure-tag {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0.6rem 0.9rem;
+  background: linear-gradient(transparent, rgba(15, 23, 42, 0.85));
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  z-index: 2;
+}
+
+/* Card Content Body */
+.otg-card-content {
+  padding: 1.35rem 1.5rem;
+}
+
+/* Route Trail */
+.otg-route-trail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0.65rem;
+  font-size: 0.82rem;
+  color: #004AAD;
+  font-weight: 700;
+}
+
+.otg-route-stop {
+  background: #f1f5f9;
+  color: #1e293b;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.otg-route-arrow {
+  color: #94a3b8;
+  font-size: 0.75rem;
+}
+
+.otg-card-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 1.35;
+  margin-bottom: 0.6rem;
+}
+
+.otg-card-title a {
+  color: #0f172a;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.otg-card-title a:hover {
+  color: var(--primary-color, #004AAD);
+}
+
+/* Quick specs row (Starts/Ends, Pace, Group Size) */
+.otg-specs-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.82rem;
+  color: #64748b;
+}
+
+.otg-spec-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.otg-spec-item i {
+  color: var(--primary-color, #004AAD);
+  font-size: 0.9rem;
+}
+
+.otg-card-excerpt {
+  color: #475569;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  margin-bottom: 0.85rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.otg-highlights-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.82rem;
+  color: #334155;
+}
+
+.otg-highlights-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  margin-bottom: 0.3rem;
+  line-height: 1.4;
+}
+
+.otg-highlights-list li i {
+  color: #16a34a;
+  font-size: 0.85rem;
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+}
+
+/* Pricing & Booking CTA Column */
+.otg-card-pricing {
+  padding: 1.35rem 1.5rem;
+  background-color: #fafcff;
+  border-left: 1px solid #edf2f7;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.otg-rating-score {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+}
+
+.otg-rating-badge {
+  background: #fef3c7;
+  color: #92400e;
+  font-weight: 800;
+  font-size: 0.82rem;
+  padding: 0.25rem 0.55rem;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.otg-price-block {
+  margin-bottom: 1rem;
+}
+
+.otg-price-label {
+  font-size: 0.78rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+  margin-bottom: 0.15rem;
+}
+
+.otg-price-amount {
+  font-size: 1.85rem;
+  font-weight: 900;
+  color: var(--primary-color, #004AAD);
+  line-height: 1;
+}
+
+.otg-price-subtext {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin-top: 0.25rem;
+}
+
+.otg-private-comparison {
+  font-size: 0.76rem;
+  color: #0f172a;
+  background: #f1f5f9;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  margin-top: 0.45rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.otg-btn-primary {
+  background-color: var(--primary-color, #004AAD);
+  color: #ffffff;
+  border: 1px solid var(--primary-color, #004AAD);
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 0.65rem 1.25rem;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+}
+
+.otg-btn-primary:hover {
+  background-color: #003380;
+  border-color: #003380;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 74, 173, 0.25);
+}
+
+.otg-btn-enquire {
+  background-color: transparent;
+  color: var(--primary-color, #004AAD);
+  border: 1.5px solid #c7ddf5;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.55rem 1.15rem;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.otg-btn-enquire:hover {
+  background-color: #f0f7ff;
+  border-color: var(--primary-color, #004AAD);
+  color: var(--primary-color, #004AAD);
+}
+
+/* 5. Grid View Card Layout */
+.tours-grid-mode .otg-tour-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.tours-grid-mode .otg-card-media {
+  min-height: 220px;
+  height: 220px;
+}
+
+.tours-grid-mode .otg-card-pricing {
+  border-left: none;
+  border-top: 1px solid #edf2f7;
+  padding: 1.25rem;
+}
+
+/* 6. Quick Enquiry Modal Custom Styling */
+.modal-tranoi-header {
+  background: linear-gradient(135deg, #004AAD 0%, #002d6b 100%);
+  color: #ffffff;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  padding: 1.5rem 2rem;
+}
+
+.modal-tranoi-header .btn-close {
+  filter: brightness(0) invert(1);
+}
+
+.modal-tranoi-body {
+  padding: 2rem;
+}
+
+/* Media Queries */
+@media (max-width: 991.98px) {
+  .otg-card-media {
+    min-height: 220px;
+    height: 220px;
+  }
+  .otg-card-pricing {
+    border-left: none;
+    border-top: 1px solid #edf2f7;
+  }
+  .tours-hero-search-wrapper {
+    margin-top: -1.5rem;
+    padding: 1.2rem;
+  }
+}
 

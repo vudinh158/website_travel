@@ -9,8 +9,10 @@ const { Op } = require('sequelize');
  */
 const getTours = async (req, res, next) => {
   try {
-    const { destination, format, duration, region, theme } = req.query;
+    const { destination, format, duration, region, theme, pace, sort, minPrice, maxPrice } = req.query;
     const searchQuery = (req.query.search || req.query.q || '').trim();
+    const numberOfAdults = parseInt(req.query.numberOfAdults || req.query.adults || '2', 10) || 2;
+    const anytime = req.query.anytime === 'false' ? false : true;
 
     let whereClause = { status: 'active' };
 
@@ -19,15 +21,21 @@ const getTours = async (req, res, next) => {
       whereClause[Op.or] = [
         { name: { [Op.like]: `%${searchQuery}%` } },
         { shortDescription: { [Op.like]: `%${searchQuery}%` } },
-        { departureLocation: { [Op.like]: `%${searchQuery}%` } }
+        { departureLocation: { [Op.like]: `%${searchQuery}%` } },
+        { routeMapPoints: { [Op.like]: `%${searchQuery}%` } },
+        { highlights: { [Op.like]: `%${searchQuery}%` } }
       ];
     }
 
-    // Duration filter ('5-10', '11-14', '15-21', '21+' or exact number 7, 10, 14, 21)
+    // Duration filter ('5-7', '8-10', '11-14', '15-21', '21+' or ranges)
     if (duration) {
       const durStr = String(duration).trim().toLowerCase();
-      if (durStr === '5-10' || durStr === '5_10') {
+      if (durStr === '5-7' || durStr === '5_7') {
+        whereClause.durationDays = { [Op.between]: [5, 7] };
+      } else if (durStr === '5-10' || durStr === '5_10') {
         whereClause.durationDays = { [Op.between]: [5, 10] };
+      } else if (durStr === '8-10' || durStr === '8_10') {
+        whereClause.durationDays = { [Op.between]: [8, 10] };
       } else if (durStr === '11-14' || durStr === '11_14') {
         whereClause.durationDays = { [Op.between]: [11, 14] };
       } else if (durStr === '15-21' || durStr === '15_21') {
@@ -48,7 +56,7 @@ const getTours = async (req, res, next) => {
     }
 
     // Format filter ('private' or 'partial-guided')
-    if (format) {
+    if (format && format !== 'all') {
       whereClause.formats = { [Op.like]: `%${format}%` };
     }
 
@@ -62,18 +70,51 @@ const getTours = async (req, res, next) => {
       whereClause.theme = { [Op.like]: `%${theme}%` };
     }
 
+    // Pace filter ('Relaxed', 'Moderate', 'Active')
+    if (pace && pace !== 'all') {
+      whereClause.pace = { [Op.like]: `%${pace}%` };
+    }
+
+    // Price range filter
+    if (minPrice || maxPrice) {
+      const minP = parseFloat(minPrice) || 0;
+      const maxP = parseFloat(maxPrice) || 999999;
+      whereClause[Op.or] = [
+        { pricePartialGuided: { [Op.between]: [minP, maxP] } },
+        { price: { [Op.between]: [minP, maxP] } }
+      ];
+    }
+
+    // Sorting order
+    let orderClause = [['durationDays', 'ASC']];
+    if (sort === 'price-asc') {
+      orderClause = [['pricePartialGuided', 'ASC'], ['price', 'ASC']];
+    } else if (sort === 'price-desc') {
+      orderClause = [['price', 'DESC'], ['pricePartialGuided', 'DESC']];
+    } else if (sort === 'duration-asc') {
+      orderClause = [['durationDays', 'ASC']];
+    } else if (sort === 'duration-desc') {
+      orderClause = [['durationDays', 'DESC']];
+    } else if (sort === 'rating-desc') {
+      orderClause = [['rating', 'DESC'], ['totalReviews', 'DESC']];
+    } else {
+      orderClause = [['isFeatured', 'DESC'], ['durationDays', 'ASC']];
+    }
+
     const allTours = await Tour.findAll({
       where: whereClause,
       include: [
         { model: Destination, as: 'destination' },
         { model: Category, as: 'category' }
       ],
-      order: [['durationDays', 'ASC']]
+      order: orderClause
     });
 
     const destinations = await Destination.findAll({
       where: { navFeatured: true }
     });
+
+    const totalActiveTours = await Tour.count({ where: { status: 'active' } });
 
     const breadcrumbSchema = generateSchemaOrg.breadcrumb([
       { name: 'Home', url: '/' },
@@ -81,13 +122,17 @@ const getTours = async (req, res, next) => {
     ], process.env.APP_URL);
 
     res.render('pages/tours', {
-      title: searchQuery ? `Search Results for "${searchQuery}" | Tranoi Travel` : 'Curated Vietnam Tours: Private & Partial-Guided | Tranoi Travel',
-      metaTitle: 'Vietnam Tour Packages: Private & Partial-Guided | Tranoi Travel',
-      metaDescription: 'Filter by duration (7, 10, 14, 21 days), format (private or partial-guided), region, and theme. Handcrafted Vietnam travel by Tranoi Travel.',
+      title: searchQuery ? `Vietnam Tours for "${searchQuery}" | Tranoi Travel` : 'Vietnam Tours & Tailor-Made Holidays | Tranoi Travel',
+      metaTitle: 'Curated Vietnam Tours: Private & Partial-Guided | Tranoi Travel',
+      metaDescription: 'Discover handcrafted Vietnam journeys with instant format toggle between Private Chauffeured and Partial-guided styles. Local specialists on the ground.',
       allTours,
       destinations,
+      totalActiveTours,
       query: req.query,
       searchQuery,
+      numberOfAdults,
+      anytime,
+      sort: sort || 'recommended',
       schemaOrg: breadcrumbSchema,
       formatCurrency,
       formatDate,
